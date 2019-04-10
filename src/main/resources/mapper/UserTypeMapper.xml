@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pu.carrent.dao.UserTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.pu.carrent.entity.UserType" >
+    <id column="uTypeId" property="utypeid" jdbcType="INTEGER" />
+    <result column="uTypeName" property="utypename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uTypeId, uTypeName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entity.UserTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_usertype
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_usertype
+    where uTypeId = #{utypeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_usertype
+    where uTypeId = #{utypeid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pu.carrent.entity.UserTypeExample" >
+    delete from t_usertype
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pu.carrent.entity.UserType" >
+    insert into t_usertype (uTypeId, uTypeName)
+    values (#{utypeid,jdbcType=INTEGER}, #{utypename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pu.carrent.entity.UserType" >
+    insert into t_usertype
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="utypeid != null" >
+        uTypeId,
+      </if>
+      <if test="utypename != null" >
+        uTypeName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="utypeid != null" >
+        #{utypeid,jdbcType=INTEGER},
+      </if>
+      <if test="utypename != null" >
+        #{utypename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pu.carrent.entity.UserTypeExample" resultType="java.lang.Integer" >
+    select count(*) from t_usertype
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_usertype
+    <set >
+      <if test="record.utypeid != null" >
+        uTypeId = #{record.utypeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.utypename != null" >
+        uTypeName = #{record.utypename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_usertype
+    set uTypeId = #{record.utypeid,jdbcType=INTEGER},
+      uTypeName = #{record.utypename,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pu.carrent.entity.UserType" >
+    update t_usertype
+    <set >
+      <if test="utypename != null" >
+        uTypeName = #{utypename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uTypeId = #{utypeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pu.carrent.entity.UserType" >
+    update t_usertype
+    set uTypeName = #{utypename,jdbcType=VARCHAR}
+    where uTypeId = #{utypeid,jdbcType=INTEGER}
+  </update>
+</mapper>

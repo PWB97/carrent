@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pu.carrent.dao.CarMapper" >
+  <resultMap id="BaseResultMap" type="com.pu.carrent.entity.Car" >
+    <id column="carId" property="carid" jdbcType="INTEGER" />
+    <result column="carName" property="carname" jdbcType="VARCHAR" />
+    <result column="cTypeId" property="ctypeid" jdbcType="INTEGER" />
+    <result column="brandId" property="brandid" jdbcType="INTEGER" />
+    <result column="plate" property="plate" jdbcType="VARCHAR" />
+    <result column="pictures" property="pictures" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="isOnline" property="isonline" jdbcType="INTEGER" />
+    <result column="isDeleted" property="isdeleted" jdbcType="INTEGER" />
+    <result column="lId" property="lid" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="files" property="files" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    carId, carName, cTypeId, brandId, plate, pictures, detail, price, isOnline, isDeleted, 
+    lId, userId, files
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entity.CarExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_car
+    where carId = #{carid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_car
+    where carId = #{carid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pu.carrent.entity.CarExample" >
+    delete from t_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pu.carrent.entity.Car" >
+    insert into t_car (carId, carName, cTypeId, 
+      brandId, plate, pictures, 
+      detail, price, isOnline, 
+      isDeleted, lId, userId, 
+      files)
+    values (#{carid,jdbcType=INTEGER}, #{carname,jdbcType=VARCHAR}, #{ctypeid,jdbcType=INTEGER}, 
+      #{brandid,jdbcType=INTEGER}, #{plate,jdbcType=VARCHAR}, #{pictures,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{isonline,jdbcType=INTEGER}, 
+      #{isdeleted,jdbcType=INTEGER}, #{lid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{files,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pu.carrent.entity.Car" >
+    insert into t_car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="carid != null" >
+        carId,
+      </if>
+      <if test="carname != null" >
+        carName,
+      </if>
+      <if test="ctypeid != null" >
+        cTypeId,
+      </if>
+      <if test="brandid != null" >
+        brandId,
+      </if>
+      <if test="plate != null" >
+        plate,
+      </if>
+      <if test="pictures != null" >
+        pictures,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="isonline != null" >
+        isOnline,
+      </if>
+      <if test="isdeleted != null" >
+        isDeleted,
+      </if>
+      <if test="lid != null" >
+        lId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="files != null" >
+        files,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="carid != null" >
+        #{carid,jdbcType=INTEGER},
+      </if>
+      <if test="carname != null" >
+        #{carname,jdbcType=VARCHAR},
+      </if>
+      <if test="ctypeid != null" >
+        #{ctypeid,jdbcType=INTEGER},
+      </if>
+      <if test="brandid != null" >
+        #{brandid,jdbcType=INTEGER},
+      </if>
+      <if test="plate != null" >
+        #{plate,jdbcType=VARCHAR},
+      </if>
+      <if test="pictures != null" >
+        #{pictures,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="isonline != null" >
+        #{isonline,jdbcType=INTEGER},
+      </if>
+      <if test="isdeleted != null" >
+        #{isdeleted,jdbcType=INTEGER},
+      </if>
+      <if test="lid != null" >
+        #{lid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="files != null" >
+        #{files,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pu.carrent.entity.CarExample" resultType="java.lang.Integer" >
+    select count(*) from t_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_car
+    <set >
+      <if test="record.carid != null" >
+        carId = #{record.carid,jdbcType=INTEGER},
+      </if>
+      <if test="record.carname != null" >
+        carName = #{record.carname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctypeid != null" >
+        cTypeId = #{record.ctypeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.brandid != null" >
+        brandId = #{record.brandid,jdbcType=INTEGER},
+      </if>
+      <if test="record.plate != null" >
+        plate = #{record.plate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pictures != null" >
+        pictures = #{record.pictures,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detail != null" >
+        detail = #{record.detail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isonline != null" >
+        isOnline = #{record.isonline,jdbcType=INTEGER},
+      </if>
+      <if test="record.isdeleted != null" >
+        isDeleted = #{record.isdeleted,jdbcType=INTEGER},
+      </if>
+      <if test="record.lid != null" >
+        lId = #{record.lid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.files != null" >
+        files = #{record.files,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_car
+    set carId = #{record.carid,jdbcType=INTEGER},
+      carName = #{record.carname,jdbcType=VARCHAR},
+      cTypeId = #{record.ctypeid,jdbcType=INTEGER},
+      brandId = #{record.brandid,jdbcType=INTEGER},
+      plate = #{record.plate,jdbcType=VARCHAR},
+      pictures = #{record.pictures,jdbcType=VARCHAR},
+      detail = #{record.detail,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      isOnline = #{record.isonline,jdbcType=INTEGER},
+      isDeleted = #{record.isdeleted,jdbcType=INTEGER},
+      lId = #{record.lid,jdbcType=INTEGER},
+      userId = #{record.userid,jdbcType=INTEGER},
+      files = #{record.files,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pu.carrent.entity.Car" >
+    update t_car
+    <set >
+      <if test="carname != null" >
+        carName = #{carname,jdbcType=VARCHAR},
+      </if>
+      <if test="ctypeid != null" >
+        cTypeId = #{ctypeid,jdbcType=INTEGER},
+      </if>
+      <if test="brandid != null" >
+        brandId = #{brandid,jdbcType=INTEGER},
+      </if>
+      <if test="plate != null" >
+        plate = #{plate,jdbcType=VARCHAR},
+      </if>
+      <if test="pictures != null" >
+        pictures = #{pictures,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="isonline != null" >
+        isOnline = #{isonline,jdbcType=INTEGER},
+      </if>
+      <if test="isdeleted != null" >
+        isDeleted = #{isdeleted,jdbcType=INTEGER},
+      </if>
+      <if test="lid != null" >
+        lId = #{lid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="files != null" >
+        files = #{files,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where carId = #{carid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pu.carrent.entity.Car" >
+    update t_car
+    set carName = #{carname,jdbcType=VARCHAR},
+      cTypeId = #{ctypeid,jdbcType=INTEGER},
+      brandId = #{brandid,jdbcType=INTEGER},
+      plate = #{plate,jdbcType=VARCHAR},
+      pictures = #{pictures,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      isOnline = #{isonline,jdbcType=INTEGER},
+      isDeleted = #{isdeleted,jdbcType=INTEGER},
+      lId = #{lid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      files = #{files,jdbcType=VARCHAR}
+    where carId = #{carid,jdbcType=INTEGER}
+  </update>
+  <select id="selectCarWithDetail" resultMap="CarDetail">
+    select
+    from t_car c join t_carbrand tc on c.brandId = tc.brandId join t_cartype t on c.cTypeId = t.cTypeId join t_user tu on c.userId = tu.userId
+    where c.isDeleted=0 and c.isOnline=1
+  </select>
+  <resultMap id="CarDetail" type="com.pu.carrent.entity.Car">
+    <id column="carId" property="carid"/>
+    <result column="carName" property="carname"/>
+    <result column="plate" property="plate"/>
+    <result column="pictures" property="pictures"/>
+    <result column="detail" property="detail"/>
+    <collection property="carBrand" ofType="com.pu.carrent.entity.CarBrand">
+      <result column="brandName" property="brandname"/>
+    </collection>
+    <collection property="carType" ofType="com.pu.carrent.entity.CarType">
+      <result column="cTypeName" property="ctypename"/>
+    </collection>
+    <collection property="owner" ofType="com.pu.carrent.entity.User">
+      <result column="userName" property="username"/>
+    </collection>
+  </resultMap>
+  <select id="selectCarNotOnlineWithDetail" resultMap="CarDetail">
+    select
+    from t_car c join t_carbrand tc on c.brandId = tc.brandId join t_cartype t on c.cTypeId = t.cTypeId join t_user tu on c.userId = tu.userId
+    where c.isDeleted=0 and c.isOnline=1
+  </select>
+</mapper>
