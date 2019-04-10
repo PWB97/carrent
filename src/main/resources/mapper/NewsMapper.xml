@@ -220,4 +220,8 @@
       <result column="userName" property="username"/>
     </collection>
   </resultMap>
+  <select id="selectNewsWithDetailById" resultMap="NewsDetail">
+    select * from t_news join t_user tu on t_news.userId = tu.userId
+    where newsId=#{newsId,jdbcType=INTEGER}
+  </select>
 </mapper>

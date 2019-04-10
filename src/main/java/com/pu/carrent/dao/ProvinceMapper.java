@@ -32,4 +32,6 @@ public interface ProvinceMapper {
     int updateByPrimaryKeySelective(Province record);
 
     int updateByPrimaryKey(Province record);
+
+    List<Province> selectLoactionsWithDetail();
 }

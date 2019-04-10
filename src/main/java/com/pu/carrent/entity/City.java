@@ -1,5 +1,7 @@
 package com.pu.carrent.entity;
 
+import java.util.List;
+
 public class City {
     private Integer cid;
 
@@ -8,6 +10,16 @@ public class City {
     private Integer pid;
 
     private Province province;
+
+    private List<Location> locations;
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
+    }
 
     public Province getProvince() {
         return province;

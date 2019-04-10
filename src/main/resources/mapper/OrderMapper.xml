@@ -243,7 +243,6 @@
   <select id="selectOrdersWithDetail" resultMap="OrderDetail">
     select *
     from t_order join t_user tu on t_order.userId = tu.userId join t_car tc on t_order.carId = tc.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
-    where isOnline=1
   </select>
   <resultMap id="OrderDetail" type="com.pu.carrent.entity.Order">
     <id property="orderid" column="orderId"/>
@@ -258,7 +257,7 @@
       <result property="plate" column="plate"/>
       <result property="pictures" column="pictures"/>
       <collection property="carType" ofType="com.pu.carrent.entity.CarType">
-        <result column="cTypeName" property="ctypename"
+        <result column="cTypeName" property="ctypename"/>
       </collection>
       <collection property="carBrand" ofType="com.pu.carrent.entity.CarBrand">
         <result property="brandname" column="brandName"/>
@@ -268,6 +267,11 @@
   <select id="selectOrdersNotPaidWithDetail" resultMap="OrderDetail">
     select *
     from t_order join t_user tu on t_order.userId = tu.userId join t_car tc on t_order.carId = tc.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
-    where isOnline=1 and isPaid=0
+    where isPaid=0
+  </select>
+  <select id="selectOrderWithDetailById" resultMap="OrderDetail">
+    select *
+    from t_order join t_user tu on t_order.userId = tu.userId join t_car tc on t_order.carId = tc.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
+    where orderId=#{orderId,jdbcType=INTEGER}
   </select>
 </mapper>

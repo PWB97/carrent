@@ -37,4 +37,6 @@ public interface OrderMapper {
     List<Order> selectOrdersNotPaidWithDetail();
 
     List<Order> selectOrdersWithDetail();
+
+    Order selectOrderWithDetailById(Integer orderId);
 }

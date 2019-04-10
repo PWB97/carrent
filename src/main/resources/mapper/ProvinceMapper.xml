@@ -161,4 +161,20 @@
     set pName = #{pname,jdbcType=VARCHAR}
     where pId = #{pid,jdbcType=INTEGER}
   </update>
+  <select id="selectLoactionsWithDetail" resultMap="LocationDetail">
+    select *
+    from t_province join t_city tc on t_province.pId = tc.pId join t_location tl on tc.cId = tl.cId
+  </select>
+  <resultMap id="LocationDetail" type="com.pu.carrent.entity.Province">
+    <id column="pId" property="pid"/>
+    <result column="pName" property="pname"/>
+    <collection property="cities" ofType="com.pu.carrent.entity.City">
+      <id column="cId" property="cid"/>
+      <result column="cName" property="cname"/>
+      <collection property="locations" ofType="com.pu.carrent.entity.Location">
+        <id column="lId" property="lid"/>
+        <result column="lName" property="lname"/>
+      </collection>
+    </collection>
+  </resultMap>
 </mapper>

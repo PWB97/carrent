@@ -335,7 +335,7 @@
       files = #{files,jdbcType=VARCHAR}
     where carId = #{carid,jdbcType=INTEGER}
   </update>
-  <select id="selectCarWithDetail" resultMap="CarDetail">
+  <select id="selectCarsWithDetail" resultMap="CarDetail">
     select
     from t_car c join t_carbrand tc on c.brandId = tc.brandId join t_cartype t on c.cTypeId = t.cTypeId join t_user tu on c.userId = tu.userId
     where c.isDeleted=0 and c.isOnline=1
@@ -356,9 +356,14 @@
       <result column="userName" property="username"/>
     </collection>
   </resultMap>
-  <select id="selectCarNotOnlineWithDetail" resultMap="CarDetail">
+  <select id="selectCarsNotOnlineWithDetail" resultMap="CarDetail">
     select
     from t_car c join t_carbrand tc on c.brandId = tc.brandId join t_cartype t on c.cTypeId = t.cTypeId join t_user tu on c.userId = tu.userId
     where c.isDeleted=0 and c.isOnline=1
+  </select>
+  <select id="selctCarWithDetailById" resultMap="CarDetail">
+    select
+    from t_car c join t_carbrand tc on c.brandId = tc.brandId join t_cartype t on c.cTypeId = t.cTypeId join t_user tu on c.userId = tu.userId
+    where carId=#{carid,jdbcType=INTEGER}
   </select>
 </mapper>

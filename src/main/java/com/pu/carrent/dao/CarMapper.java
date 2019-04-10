@@ -33,7 +33,9 @@ public interface CarMapper {
 
     int updateByPrimaryKey(Car record);
 
-    List<Car> selectCarWithDetail();
+    List<Car> selectCarsWithDetail();
 
-    List<Car> selectCarNotOnlineWithDetail();
+    List<Car> selectCarsNotOnlineWithDetail();
+
+    Car selectCarWithDetailById(Integer carId);
 }
