@@ -1,7 +1,7 @@
 package com.pu.carrent.dao;
 
 import com.pu.carrent.entity.Province;
-import com.pu.carrent.entity.ProvinceExample;
+import com.pu.carrent.entityExample.ProvinceExample;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;

@@ -66,7 +66,7 @@
   <sql id="Base_Column_List" >
     brandId, brandName
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entity.CarBrandExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entityExample.CarBrandExample" >
     select
     <if test="distinct" >
       distinct
@@ -90,7 +90,7 @@
     delete from t_carbrand
     where brandId = #{brandid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pu.carrent.entity.CarBrandExample" >
+  <delete id="deleteByExample" parameterType="com.pu.carrent.entityExample.CarBrandExample" >
     delete from t_carbrand
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -119,7 +119,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pu.carrent.entity.CarBrandExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pu.carrent.entityExample.CarBrandExample" resultType="java.lang.Integer" >
     select count(*) from t_carbrand
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

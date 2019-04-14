@@ -1,4 +1,4 @@
-package com.pu.carrent.entity;
+package com.pu.carrent.entityExample;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

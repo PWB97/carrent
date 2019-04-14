@@ -66,7 +66,7 @@
   <sql id="Base_Column_List" >
     uTypeId, uTypeName
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entity.UserTypeExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entityExample.UserTypeExample" >
     select
     <if test="distinct" >
       distinct
@@ -90,7 +90,7 @@
     delete from t_usertype
     where uTypeId = #{utypeid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pu.carrent.entity.UserTypeExample" >
+  <delete id="deleteByExample" parameterType="com.pu.carrent.entityExample.UserTypeExample" >
     delete from t_usertype
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -119,7 +119,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pu.carrent.entity.UserTypeExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pu.carrent.entityExample.UserTypeExample" resultType="java.lang.Integer" >
     select count(*) from t_usertype
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

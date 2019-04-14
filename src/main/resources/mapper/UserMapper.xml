@@ -73,7 +73,7 @@
   <sql id="Base_Column_List" >
     userId, userName, uTypeId, email, phone, password, info, icon, isDeleted
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entity.UserExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entityExample.UserExample" >
     select
     <if test="distinct" >
       distinct
@@ -97,7 +97,7 @@
     delete from t_user
     where userId = #{userid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pu.carrent.entity.UserExample" >
+  <delete id="deleteByExample" parameterType="com.pu.carrent.entityExample.UserExample" >
     delete from t_user
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -174,7 +174,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pu.carrent.entity.UserExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pu.carrent.entityExample.UserExample" resultType="java.lang.Integer" >
     select count(*) from t_user
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

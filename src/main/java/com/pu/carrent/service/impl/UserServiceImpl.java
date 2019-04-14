@@ -2,7 +2,7 @@ package com.pu.carrent.service.impl;
 
 import com.pu.carrent.dao.UserMapper;
 import com.pu.carrent.entity.User;
-import com.pu.carrent.entity.UserExample;
+import com.pu.carrent.entityExample.UserExample;
 import com.pu.carrent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

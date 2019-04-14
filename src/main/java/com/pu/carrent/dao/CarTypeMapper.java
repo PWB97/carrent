@@ -1,7 +1,7 @@
 package com.pu.carrent.dao;
 
 import com.pu.carrent.entity.CarType;
-import com.pu.carrent.entity.CarTypeExample;
+import com.pu.carrent.entityExample.CarTypeExample;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;

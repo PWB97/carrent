@@ -69,7 +69,7 @@
   <sql id="Base_Column_List" >
     newsId, title, content, creatTime, userId
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entity.NewsExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entityExample.NewsExample" >
     select
     <if test="distinct" >
       distinct
@@ -93,7 +93,7 @@
     delete from t_news
     where newsId = #{newsid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pu.carrent.entity.NewsExample" >
+  <delete id="deleteByExample" parameterType="com.pu.carrent.entityExample.NewsExample" >
     delete from t_news
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -142,7 +142,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pu.carrent.entity.NewsExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pu.carrent.entityExample.NewsExample" resultType="java.lang.Integer" >
     select count(*) from t_news
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

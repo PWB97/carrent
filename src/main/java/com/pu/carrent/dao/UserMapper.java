@@ -1,7 +1,7 @@
 package com.pu.carrent.dao;
 
 import com.pu.carrent.entity.User;
-import com.pu.carrent.entity.UserExample;
+import com.pu.carrent.entityExample.UserExample;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;

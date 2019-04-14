@@ -67,7 +67,7 @@
   <sql id="Base_Column_List" >
     lId, lName, cId
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entity.LocationExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entityExample.LocationExample" >
     select
     <if test="distinct" >
       distinct
@@ -91,7 +91,7 @@
     delete from t_location
     where lId = #{lid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pu.carrent.entity.LocationExample" >
+  <delete id="deleteByExample" parameterType="com.pu.carrent.entityExample.LocationExample" >
     delete from t_location
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -128,7 +128,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pu.carrent.entity.LocationExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pu.carrent.entityExample.LocationExample" resultType="java.lang.Integer" >
     select count(*) from t_location
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

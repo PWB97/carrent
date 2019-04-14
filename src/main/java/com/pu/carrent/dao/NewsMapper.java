@@ -1,7 +1,7 @@
 package com.pu.carrent.dao;
 
 import com.pu.carrent.entity.News;
-import com.pu.carrent.entity.NewsExample;
+import com.pu.carrent.entityExample.NewsExample;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;

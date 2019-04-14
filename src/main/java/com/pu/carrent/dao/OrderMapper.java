@@ -1,12 +1,11 @@
 package com.pu.carrent.dao;
 
 import com.pu.carrent.entity.Order;
-import com.pu.carrent.entity.OrderExample;
+import com.pu.carrent.entityExample.OrderExample;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Repository;
 
 @Mapper

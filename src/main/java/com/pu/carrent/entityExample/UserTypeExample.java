@@ -1,16 +1,16 @@
-package com.pu.carrent.entity;
+package com.pu.carrent.entityExample;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarTypeExample {
+public class UserTypeExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public CarTypeExample() {
+    public UserTypeExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -104,133 +104,133 @@ public class CarTypeExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andCtypeidIsNull() {
-            addCriterion("cTypeId is null");
+        public Criteria andUtypeidIsNull() {
+            addCriterion("uTypeId is null");
             return (Criteria) this;
         }
 
-        public Criteria andCtypeidIsNotNull() {
-            addCriterion("cTypeId is not null");
+        public Criteria andUtypeidIsNotNull() {
+            addCriterion("uTypeId is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCtypeidEqualTo(Integer value) {
-            addCriterion("cTypeId =", value, "ctypeid");
+        public Criteria andUtypeidEqualTo(Integer value) {
+            addCriterion("uTypeId =", value, "utypeid");
             return (Criteria) this;
         }
 
-        public Criteria andCtypeidNotEqualTo(Integer value) {
-            addCriterion("cTypeId <>", value, "ctypeid");
+        public Criteria andUtypeidNotEqualTo(Integer value) {
+            addCriterion("uTypeId <>", value, "utypeid");
             return (Criteria) this;
         }
 
-        public Criteria andCtypeidGreaterThan(Integer value) {
-            addCriterion("cTypeId >", value, "ctypeid");
+        public Criteria andUtypeidGreaterThan(Integer value) {
+            addCriterion("uTypeId >", value, "utypeid");
             return (Criteria) this;
         }
 
-        public Criteria andCtypeidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("cTypeId >=", value, "ctypeid");
+        public Criteria andUtypeidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("uTypeId >=", value, "utypeid");
             return (Criteria) this;
         }
 
-        public Criteria andCtypeidLessThan(Integer value) {
-            addCriterion("cTypeId <", value, "ctypeid");
+        public Criteria andUtypeidLessThan(Integer value) {
+            addCriterion("uTypeId <", value, "utypeid");
             return (Criteria) this;
         }
 
-        public Criteria andCtypeidLessThanOrEqualTo(Integer value) {
-            addCriterion("cTypeId <=", value, "ctypeid");
+        public Criteria andUtypeidLessThanOrEqualTo(Integer value) {
+            addCriterion("uTypeId <=", value, "utypeid");
             return (Criteria) this;
         }
 
-        public Criteria andCtypeidIn(List<Integer> values) {
-            addCriterion("cTypeId in", values, "ctypeid");
+        public Criteria andUtypeidIn(List<Integer> values) {
+            addCriterion("uTypeId in", values, "utypeid");
             return (Criteria) this;
         }
 
-        public Criteria andCtypeidNotIn(List<Integer> values) {
-            addCriterion("cTypeId not in", values, "ctypeid");
+        public Criteria andUtypeidNotIn(List<Integer> values) {
+            addCriterion("uTypeId not in", values, "utypeid");
             return (Criteria) this;
         }
 
-        public Criteria andCtypeidBetween(Integer value1, Integer value2) {
-            addCriterion("cTypeId between", value1, value2, "ctypeid");
+        public Criteria andUtypeidBetween(Integer value1, Integer value2) {
+            addCriterion("uTypeId between", value1, value2, "utypeid");
             return (Criteria) this;
         }
 
-        public Criteria andCtypeidNotBetween(Integer value1, Integer value2) {
-            addCriterion("cTypeId not between", value1, value2, "ctypeid");
+        public Criteria andUtypeidNotBetween(Integer value1, Integer value2) {
+            addCriterion("uTypeId not between", value1, value2, "utypeid");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameIsNull() {
-            addCriterion("cTypeName is null");
+        public Criteria andUtypenameIsNull() {
+            addCriterion("uTypeName is null");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameIsNotNull() {
-            addCriterion("cTypeName is not null");
+        public Criteria andUtypenameIsNotNull() {
+            addCriterion("uTypeName is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameEqualTo(String value) {
-            addCriterion("cTypeName =", value, "ctypename");
+        public Criteria andUtypenameEqualTo(String value) {
+            addCriterion("uTypeName =", value, "utypename");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameNotEqualTo(String value) {
-            addCriterion("cTypeName <>", value, "ctypename");
+        public Criteria andUtypenameNotEqualTo(String value) {
+            addCriterion("uTypeName <>", value, "utypename");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameGreaterThan(String value) {
-            addCriterion("cTypeName >", value, "ctypename");
+        public Criteria andUtypenameGreaterThan(String value) {
+            addCriterion("uTypeName >", value, "utypename");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameGreaterThanOrEqualTo(String value) {
-            addCriterion("cTypeName >=", value, "ctypename");
+        public Criteria andUtypenameGreaterThanOrEqualTo(String value) {
+            addCriterion("uTypeName >=", value, "utypename");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameLessThan(String value) {
-            addCriterion("cTypeName <", value, "ctypename");
+        public Criteria andUtypenameLessThan(String value) {
+            addCriterion("uTypeName <", value, "utypename");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameLessThanOrEqualTo(String value) {
-            addCriterion("cTypeName <=", value, "ctypename");
+        public Criteria andUtypenameLessThanOrEqualTo(String value) {
+            addCriterion("uTypeName <=", value, "utypename");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameLike(String value) {
-            addCriterion("cTypeName like", value, "ctypename");
+        public Criteria andUtypenameLike(String value) {
+            addCriterion("uTypeName like", value, "utypename");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameNotLike(String value) {
-            addCriterion("cTypeName not like", value, "ctypename");
+        public Criteria andUtypenameNotLike(String value) {
+            addCriterion("uTypeName not like", value, "utypename");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameIn(List<String> values) {
-            addCriterion("cTypeName in", values, "ctypename");
+        public Criteria andUtypenameIn(List<String> values) {
+            addCriterion("uTypeName in", values, "utypename");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameNotIn(List<String> values) {
-            addCriterion("cTypeName not in", values, "ctypename");
+        public Criteria andUtypenameNotIn(List<String> values) {
+            addCriterion("uTypeName not in", values, "utypename");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameBetween(String value1, String value2) {
-            addCriterion("cTypeName between", value1, value2, "ctypename");
+        public Criteria andUtypenameBetween(String value1, String value2) {
+            addCriterion("uTypeName between", value1, value2, "utypename");
             return (Criteria) this;
         }
 
-        public Criteria andCtypenameNotBetween(String value1, String value2) {
-            addCriterion("cTypeName not between", value1, value2, "ctypename");
+        public Criteria andUtypenameNotBetween(String value1, String value2) {
+            addCriterion("uTypeName not between", value1, value2, "utypename");
             return (Criteria) this;
         }
     }
