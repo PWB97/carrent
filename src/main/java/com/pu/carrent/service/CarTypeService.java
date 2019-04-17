@@ -11,4 +11,6 @@ public interface CarTypeService {
     int deleteCarTypeById(Integer cTypeId);
 
     int addCarType(CarType record);
+
+    Integer findTypeIdByWithName(String cTypeName);
 }

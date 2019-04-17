@@ -38,4 +38,6 @@ public interface OrderMapper {
     List<Order> selectOrdersWithDetail();
 
     Order selectOrderWithDetailById(Integer orderId);
+
+    List<Order> findOrdersByUserId(Integer userId);
 }

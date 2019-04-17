@@ -11,4 +11,6 @@ public interface UserTypeService {
     int addUserType(UserType record);
 
     int deleteUserTypeById(Integer uTypeId);
+
+    String finduTypeNameById(Integer uTypeId);
 }

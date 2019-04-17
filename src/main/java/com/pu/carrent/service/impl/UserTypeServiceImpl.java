@@ -28,4 +28,9 @@ public class UserTypeServiceImpl implements UserTypeService {
     public int deleteUserTypeById(Integer uTypeId) {
         return userTypeMapper.deleteByPrimaryKey(uTypeId);
     }
+
+    @Override
+    public String finduTypeNameById(Integer uTypeId) {
+        return userTypeMapper.selectByPrimaryKey(uTypeId).getUtypename();
+    }
 }

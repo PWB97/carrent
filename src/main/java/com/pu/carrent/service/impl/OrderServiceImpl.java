@@ -25,6 +25,11 @@ public class OrderServiceImpl implements OrderSerivce {
     }
 
     @Override
+    public List<Order> findOrdersByUserId(Integer userId) {
+        return orderMapper.findOrdersByUserId(userId);
+    }
+
+    @Override
     public Order findOrderById(Integer orderId) {
         return orderMapper.selectOrderWithDetailById(orderId);
     }

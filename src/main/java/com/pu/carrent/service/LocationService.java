@@ -15,4 +15,6 @@ public interface LocationService {
     int deleteCityById(Integer cId);
 
     int deleteProvinceById(Integer pId);
+
+    Integer findlIdBylName(String lName);
 }

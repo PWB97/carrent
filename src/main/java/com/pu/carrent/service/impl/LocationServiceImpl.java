@@ -6,6 +6,7 @@ import com.pu.carrent.dao.ProvinceMapper;
 import com.pu.carrent.entity.City;
 import com.pu.carrent.entity.Location;
 import com.pu.carrent.entity.Province;
+import com.pu.carrent.entityExample.LocationExample;
 import com.pu.carrent.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,5 +57,12 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public int deleteProvinceById(Integer pId) {
         return provinceMapper.deleteByPrimaryKey(pId);
+    }
+
+    @Override
+    public Integer findlIdBylName(String lName) {
+        LocationExample example = new LocationExample();
+        example.createCriteria().andLnameEqualTo(lName);
+        return locationMapper.selectByExample(example).get(0).getLid();
     }
 }

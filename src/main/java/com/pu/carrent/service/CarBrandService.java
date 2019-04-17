@@ -11,4 +11,6 @@ public interface CarBrandService {
     int deleteCarBrandeById(Integer brandId);
 
     int addCarBrand(CarBrand record);
+
+    Integer findBrandIdByName(String brandName);
 }
