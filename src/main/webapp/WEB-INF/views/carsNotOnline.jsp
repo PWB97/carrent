@@ -114,7 +114,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 <li><a href="javascript:;">个人信息</a></li>
-                                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i>注销</a></li>
+                                <li><a href="<%=request.getContextPath() %>/user/logout"><i class="fa fa-sign-out pull-right"></i>注销</a></li>
                             </ul>
                         </li>
                     </ul>

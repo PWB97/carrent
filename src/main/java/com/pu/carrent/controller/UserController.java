@@ -40,6 +40,12 @@ public class UserController {
             return "fail";
     }
 
+    @RequestMapping(value = "/user/logout", method = RequestMethod.GET)
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/user/login";
+    }
+
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     public String register(String userName, String password, String email) {
         User user = new User();
