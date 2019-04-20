@@ -215,7 +215,7 @@
     <id column="newsId" property="newsid"/>
     <result column="title" property="title"/>
     <result column="content" property="content"/>
-    <result column="creatTime" property="creatTime"/>
+    <result column="creatTime" property="creattime"/>
     <collection property="creator" ofType="com.pu.carrent.entity.User">
       <result column="userName" property="username"/>
     </collection>

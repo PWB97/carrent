@@ -6,7 +6,6 @@ import com.pu.carrent.entity.User;
 import com.pu.carrent.service.CarService;
 import com.pu.carrent.service.OrderSerivce;
 import com.pu.carrent.service.UserTypeService;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

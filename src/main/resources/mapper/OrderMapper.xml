@@ -266,18 +266,18 @@
   </resultMap>
   <select id="selectOrdersNotPaidWithDetail" resultMap="OrderDetail">
     select *
-    from t_order join t_user tu on t_order.userId = tu.userId join t_car tc on t_order.carId = tc.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
+    from t_order left join t_user tu on t_order.userId = tu.userId left join t_car tc on t_order.carId = tc.carId left join t_carbrand t on tc.brandId = t.brandId left join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
     where isPaid=0
   </select>
   <select id="selectOrderWithDetailById" resultMap="OrderDetail">
     select *
-    from t_order join t_user tu on t_order.userId = tu.userId join t_car tc on t_order.carId = tc.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
+    from t_order left join t_user tu on t_order.userId = tu.userId left join t_car tc on t_order.carId = tc.carId left join t_carbrand t on tc.brandId = t.brandId left join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
     where orderId=#{orderId,jdbcType=INTEGER}
   </select>
 
   <select id="findOrdersByUserId" resultMap="OrderDetail">
     select *
-    from t_order join t_user tu on t_order.userId = tu.userId join t_car tc on t_order.carId = tc.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
+    from t_order left join t_user tu on t_order.userId = tu.userId left join t_car tc on t_order.carId = tc.carId left join t_carbrand t on tc.brandId = t.brandId left join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
     where t_order.userId=#{userId,jdbcType=INTEGER} order by isPaid
   </select>
 </mapper>

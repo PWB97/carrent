@@ -163,7 +163,7 @@
   </update>
   <select id="selectLoactionsWithDetail" resultMap="LocationDetail">
     select *
-    from t_province join t_city tc on t_province.pId = tc.pId join t_location tl on tc.cId = tl.cId
+    from t_province left join t_city tc on t_province.pId = tc.pId left join t_location tl on tc.cId = tl.cId
   </select>
   <resultMap id="LocationDetail" type="com.pu.carrent.entity.Province">
     <id column="pId" property="pid"/>

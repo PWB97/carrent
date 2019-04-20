@@ -336,7 +336,7 @@
     where carId = #{carid,jdbcType=INTEGER}
   </update>
   <select id="selectCarsWithDetail" resultMap="CarDetail">
-    select
+    select *
     from t_car c join t_carbrand tc on c.brandId = tc.brandId join t_cartype t on c.cTypeId = t.cTypeId join t_user tu on c.userId = tu.userId
     where c.isDeleted=0 and c.isOnline=1
   </select>
@@ -357,12 +357,12 @@
     </collection>
   </resultMap>
   <select id="selectCarsNotOnlineWithDetail" resultMap="CarDetail">
-    select
+    select *
     from t_car c join t_carbrand tc on c.brandId = tc.brandId join t_cartype t on c.cTypeId = t.cTypeId join t_user tu on c.userId = tu.userId
     where c.isDeleted=0 and c.isOnline=1
   </select>
   <select id="selctCarWithDetailById" resultMap="CarDetail">
-    select
+    select *
     from t_car c join t_carbrand tc on c.brandId = tc.brandId join t_cartype t on c.cTypeId = t.cTypeId join t_user tu on c.userId = tu.userId
     where carId=#{carid,jdbcType=INTEGER}
   </select>

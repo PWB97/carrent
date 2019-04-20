@@ -31,17 +31,8 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public int addLocations(String province, String city, String location) {
-
-        Province recordP = new Province();
-        recordP.setPname(province);
-        provinceMapper.insertSelective(recordP);
-        City recordC = new City();
-        recordC.setCname(city);
-        cityMapper.insertSelective(recordC);
-        Location recordL = new Location();
-        recordL.setLname(location);
-        return locationMapper.insertSelective(recordL);
+    public int addLocation(Location location) {
+        return locationMapper.insertSelective(location);
     }
 
     @Override

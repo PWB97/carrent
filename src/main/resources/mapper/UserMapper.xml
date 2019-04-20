@@ -284,6 +284,10 @@
     <result column="password" property="password"/>
     <result column="info" property="info"/>
     <result column="icon" property="icon"/>
+    <collection property="userType" ofType="com.pu.carrent.entity.UserType">
+      <id column="uTypeId" property="utypeid"/>
+      <result column="uTypeName" property="utypename"/>
+    </collection>
     <collection property="orders" ofType="com.pu.carrent.entity.Order">
       <result property="creattime" column="creatTime"/>
       <result column="endTime" property="endtime"/>
@@ -301,6 +305,6 @@
     </collection>
   </resultMap>
   <select id="selectUsersWithDetail" resultMap="UserDetail">
-    select * from t_user u join t_usertype ut on u.uTypeId = ut.uTypeId join t_order o on u.userId = o.userId join t_car c on o.carId = c.carId join t_cartype tc on c.cTypeId = tc.cTypeId join t_carbrand t on c.brandId = t.brandId
+    select * from t_user u left join t_usertype ut on u.uTypeId = ut.uTypeId left join t_order o on u.userId = o.userId left join t_car c on o.carId = c.carId left join t_cartype tc on c.cTypeId = tc.cTypeId left join t_carbrand t on c.brandId = t.brandId
   </select>
 </mapper>

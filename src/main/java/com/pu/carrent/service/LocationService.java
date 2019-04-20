@@ -1,5 +1,6 @@
 package com.pu.carrent.service;
 
+import com.pu.carrent.entity.Location;
 import com.pu.carrent.entity.Province;
 
 import java.util.List;
@@ -8,7 +9,7 @@ public interface LocationService {
 
     List<Province> findLocations();
 
-    int addLocations(String province, String city, String location);
+    int addLocation(Location location);
 
     int deleteLocationById(Integer lId);
 

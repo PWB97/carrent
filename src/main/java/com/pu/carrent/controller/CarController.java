@@ -30,6 +30,12 @@ public class CarController {
     @Autowired
     private UserTypeService userTypeService;
 
+    @Autowired
+    private CityService cityService;
+
+    @Autowired
+    private ProvinceService provinceService;
+
     @RequestMapping(value = "/rentCar", method = RequestMethod.GET)
     public String showCarsWithConditions(String carBrand, String carType, String location, BigDecimal lowPrice, BigDecimal highPrice, Model model, HttpSession session){
         List<CarType> carTypes = carTypeService.findAllCarType();
@@ -78,7 +84,7 @@ public class CarController {
         } else return "fail";
     }
 
-    @RequestMapping(value = "/backManage/showCars", method = RequestMethod.POST)
+    @RequestMapping(value = "/backManage/showCars", method = RequestMethod.GET)
     public String showCars(Model model, HttpSession session) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
@@ -124,4 +130,66 @@ public class CarController {
             return "showCars";
         } else return "fail";
     }
+
+    @RequestMapping(value = "/backManage/addCarType", method = RequestMethod.POST)
+    public String addCarType(String carTypeName, HttpSession session) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
+            CarType carType = new CarType();
+            carType.setCtypename(carTypeName);
+            carTypeService.addCarType(carType);
+            return "redirect:/backManage/showCarConditions";
+        } else return "fail";
+    }
+
+    @RequestMapping(value = "/backManage/addCarBrand", method = RequestMethod.POST)
+    public String addCarBrand(String brandName, HttpSession session) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
+            CarBrand carBrand = new CarBrand();
+            carBrand.setBrandname(brandName);
+            carBrandService.addCarBrand(carBrand);
+            return "redirect:/backManage/showCarConditions";
+        } else return "fail";
+    }
+
+    @RequestMapping(value = "/backManage/addLocation", method = RequestMethod.POST)
+    public String addLocation(String pId, String cId, String name, HttpSession session) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
+            if ("请选择市".compareTo(cId) != 0  && "请选择省".compareTo(pId) != 0) {
+                Location location = new Location();
+                location.setCid(Integer.parseInt(cId));
+                location.setLname(name);
+                locationService.addLocation(location);
+            }
+            if ("请选择市".compareTo(cId) == 0  && "请选择省".compareTo(pId) != 0) {
+                City city = new City();
+                city.setCname(name);
+                city.setPid(Integer.parseInt(pId));
+                cityService.addCity(city);
+            }
+            if ("请选择市".compareTo(cId) == 0  && "请选择省".compareTo(pId) == 0) {
+                Province province = new Province();
+                province.setPname(name);
+                provinceService.addProvince(province);
+            }
+            return "redirect:/backManage/showCarConditions";
+        } else return "fail";
+    }
+
+    @RequestMapping(value = "/backManage/showCarConditions", method = RequestMethod.GET)
+    public String showCarConditions(HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
+            List<CarType> carTypes = carTypeService.findAllCarType();
+            List<CarBrand> carBrands = carBrandService.findAllCarBrand();
+            List<Province> locations = locationService.findLocations();
+            model.addAttribute("carTypes", carTypes);
+            model.addAttribute("carBrands", carBrands);
+            model.addAttribute("locations", locations);
+            return "showConditions";
+        } else return "fail";
+    }
+
 }

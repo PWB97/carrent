@@ -34,8 +34,8 @@ public class UserController {
             session.setAttribute("currentUser", user);
             String userType = userTypeService.finduTypeNameById(user.getUtypeid());
             if ("管理员".compareTo(userType) == 0) {
-                return "backManage";
-            } else return "index";
+                return "redirect:/backManage/showCars";
+            } else return "redirect:/user/index";
         } else
             return "fail";
     }
@@ -64,6 +64,13 @@ public class UserController {
             if (userService.addUser(user) != 0) return "addManager";
             else return "fail";
         }
+        else return "fail";
+    }
+
+    @RequestMapping(value = "/backManage/addManager", method = RequestMethod.GET)
+    public String addManager(HttpSession session) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) return "addManager";
         else return "fail";
     }
 
