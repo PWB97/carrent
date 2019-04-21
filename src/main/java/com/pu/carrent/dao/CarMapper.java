@@ -2,6 +2,8 @@ package com.pu.carrent.dao;
 
 import com.pu.carrent.entity.Car;
 import com.pu.carrent.entityExample.CarExample;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -38,4 +40,7 @@ public interface CarMapper {
     List<Car> selectCarsNotOnlineWithDetail();
 
     Car selectCarWithDetailById(Integer carId);
+
+    List<Car> selectCarsWithConditions(@Param("typeId") Integer typeId, @Param("brandId") Integer brandId, @Param("pId") Integer pId,
+                                       @Param("cId") Integer cId, @Param("lId") Integer lId, @Param("lowPrice") BigDecimal lowPrice, @Param("highPrice") BigDecimal highPrice);
 }

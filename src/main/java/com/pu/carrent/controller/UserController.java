@@ -35,7 +35,7 @@ public class UserController {
             String userType = userTypeService.finduTypeNameById(user.getUtypeid());
             if ("管理员".compareTo(userType) == 0) {
                 return "redirect:/backManage/showCars";
-            } else return "redirect:/user/index";
+            } else return "redirect:/rentCar";
         } else
             return "fail";
     }

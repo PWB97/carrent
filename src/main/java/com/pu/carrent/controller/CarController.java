@@ -37,20 +37,30 @@ public class CarController {
     private ProvinceService provinceService;
 
     @RequestMapping(value = "/rentCar", method = RequestMethod.GET)
-    public String showCarsWithConditions(String carBrand, String carType, String location, BigDecimal lowPrice, BigDecimal highPrice, Model model, HttpSession session){
+    public String showCarsWithConditions(String carBrand, String carType, String province, String city, String location, String lowPrice, String highPrice, Model model, HttpSession session){
+
         List<CarType> carTypes = carTypeService.findAllCarType();
         List<CarBrand> carBrands = carBrandService.findAllCarBrand();
         List<Province> locations = locationService.findLocations();
         session.setAttribute("carTypes", carTypes);
         session.setAttribute("carBrands", carBrands);
         session.setAttribute("locations", locations);
+
         Integer brandId = null;
         Integer typeId = null;
+        Integer pId = null;
+        Integer cId = null;
         Integer lId = null;
-        if (carBrand != null) brandId = carBrandService.findBrandIdByName(carBrand);
-        if (carType != null) typeId = carTypeService.findTypeIdByWithName(carType);
-        if (location != null) lId = locationService.findlIdBylName(location);
-        List<Car> cars = carService.findCarsWithConditions(typeId, brandId, lId, lowPrice, highPrice);
+        BigDecimal lp = null;
+        BigDecimal hp = null;
+        if (province != null && "请选择省".compareTo(province) != 0) pId = Integer.parseInt(province);
+        if (city != null && "请选择市".compareTo(city) != 0) cId = Integer.parseInt(city);
+        if (location != null && "请选择门店".compareTo(location) != 0) lId = Integer.parseInt(location);
+        if (carBrand != null && "请选择品牌".compareTo(carBrand) != 0) brandId = Integer.parseInt(carBrand);
+        if (carType != null && "请选择类型".compareTo(carType) != 0) typeId = Integer.parseInt(carType);
+        if (lowPrice != null && "".compareTo(lowPrice) != 0 ) lp = new BigDecimal(lowPrice);
+        if (highPrice != null && "".compareTo(highPrice) != 0) hp = new BigDecimal(highPrice);
+        List<Car> cars = carService.findCarsWithConditions(typeId, brandId, pId, cId, lId, lp, hp);
         if (cars != null) {
             model.addAttribute("cars", cars);
             return "rentCar";

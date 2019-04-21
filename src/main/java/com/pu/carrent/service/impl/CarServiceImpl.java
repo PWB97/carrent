@@ -42,15 +42,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> findCarsWithConditions(Integer typeId, Integer brandId, Integer lId, BigDecimal lowPrice, BigDecimal highPrice) {
-        CarExample example = new CarExample();
-        CarExample.Criteria c = example.createCriteria();
-        if (typeId != null) c.andCtypeidEqualTo(typeId);
-        if (brandId != null) c.andBrandidEqualTo(brandId);
-        if (lId != null) c.andLidEqualTo(lId);
-        if (lowPrice != null) c.andPriceGreaterThanOrEqualTo(lowPrice);
-        if (highPrice != null) c.andPriceLessThanOrEqualTo(highPrice);
-        return carMapper.selectByExample(example);
+    public List<Car> findCarsWithConditions(Integer typeId, Integer brandId, Integer pId, Integer cId, Integer lId, BigDecimal lowPrice, BigDecimal highPrice) {
+        return carMapper.selectCarsWithConditions(typeId, brandId, pId, cId, lId, lowPrice, highPrice);
     }
 
     @Override
