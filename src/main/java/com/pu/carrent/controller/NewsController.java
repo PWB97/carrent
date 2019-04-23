@@ -34,18 +34,24 @@ public class NewsController {
             List<News> newsList = newsService.findAllNews();
             model.addAttribute("newsList", newsList);
             return "frontNews";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "未知错误");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/addNews", method = RequestMethod.GET)
-    public String addNews(HttpSession session) {
+    public String addNews(HttpSession session, Model model) {
         User user = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(user.getUtypeid())) == 0) return "addNews";
-        else return "fail";
+        else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/addNews", method = RequestMethod.POST)
-    public String addNews(String title, String content, HttpSession session) {
+    public String addNews(String title, String content, HttpSession session, Model model) {
         User user = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(user.getUtypeid())) == 0) {
             News news = new News();
@@ -55,16 +61,22 @@ public class NewsController {
             news.setCreattime(new Date());
             newsService.addNews(news);
             return "addNews";
-        } else return "fail";
+        }  else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/deleteNews", method = RequestMethod.GET)
-    public String deleteNews(Integer newsId, HttpSession session) {
+    public String deleteNews(Integer newsId, HttpSession session, Model model) {
         User user = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(user.getUtypeid())) == 0) {
             newsService.deleteNewsById(newsId);
             return "redirect:/News";
-        } else return "fail";
+        }  else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
 }

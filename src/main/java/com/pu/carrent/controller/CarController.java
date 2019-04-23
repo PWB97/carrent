@@ -64,7 +64,10 @@ public class CarController {
         if (cars != null) {
             model.addAttribute("cars", cars);
             return "rentCar";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "查找失败");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/carDetail", method = RequestMethod.POST)
@@ -73,21 +76,28 @@ public class CarController {
         if (car != null) {
             model.addAttribute("carDetail", car);
             return "carDetail";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "查找失败");
+            return "fail";
+        }
     }
 
     // TODO: 2019/4/23
     @RequestMapping(value = "/uploadCar", method = RequestMethod.GET)
-    public String uploadCar(HttpSession session) {
+    public String uploadCar(HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             return "uploadCar";
-        } else return  "fail";
+        } else {
+            model.addAttribute("msg", "未登录");
+            return "fail";
+        }
     }
 
     // TODO: 2019/4/23
     @RequestMapping(value = "/uploadCar", method = RequestMethod.POST)
-    public String uploadCar(String carName, Integer brandId, Integer typeId, String plate, String detail, String pictures, String files, HttpSession session) {
+    public String uploadCar(String carName, Integer brandId, Integer typeId, String plate, String detail,
+                            String pictures, String files, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             Car car = new Car();
@@ -101,7 +111,10 @@ public class CarController {
             car.setUserid(currentUser.getUserid());
             carService.addCar(car);
             return "uploadCar";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "未登录");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/showCars", method = RequestMethod.GET)
@@ -112,12 +125,18 @@ public class CarController {
             if (cars != null) {
                 model.addAttribute("cars", cars);
                 return "showCars";
-            } else return "fail";
-        } else return "fail";
+            } else {
+                model.addAttribute("msg", "查找失败");
+                return "fail";
+            }
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/online", method = RequestMethod.POST)
-    public String online(Integer carId, Integer price, HttpSession session) {
+    public String online(Integer carId, Integer price, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             Car car = new Car();
@@ -126,7 +145,10 @@ public class CarController {
             car.setPrice(new BigDecimal(price.toString()));
             carService.changeCar(car);
             return "carsNotOnline";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/carsNotOnline", method = RequestMethod.GET)
@@ -136,11 +158,14 @@ public class CarController {
             List<Car> cars = carService.findCarsNotOnline();
             model.addAttribute("cars", cars);
             return "carsNotOnline";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/offline", method = RequestMethod.GET)
-    public String offline(Integer carId, HttpSession session) {
+    public String offline(Integer carId, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             Car car = new Car();
@@ -148,33 +173,42 @@ public class CarController {
             car.setIsonline(0);
             carService.changeCar(car);
             return "redirect:/backManage/carsNotOnline";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/addCarType", method = RequestMethod.POST)
-    public String addCarType(String carTypeName, HttpSession session) {
+    public String addCarType(String carTypeName, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             CarType carType = new CarType();
             carType.setCtypename(carTypeName);
             carTypeService.addCarType(carType);
             return "redirect:/backManage/showCarConditions";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/addCarBrand", method = RequestMethod.POST)
-    public String addCarBrand(String brandName, HttpSession session) {
+    public String addCarBrand(String brandName, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             CarBrand carBrand = new CarBrand();
             carBrand.setBrandname(brandName);
             carBrandService.addCarBrand(carBrand);
             return "redirect:/backManage/showCarConditions";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/addLocation", method = RequestMethod.POST)
-    public String addLocation(String pId, String cId, String name, HttpSession session) {
+    public String addLocation(String pId, String cId, String name, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             if ("请选择市".compareTo(cId) != 0  && "请选择省".compareTo(pId) != 0) {
@@ -195,7 +229,10 @@ public class CarController {
                 provinceService.addProvince(province);
             }
             return "redirect:/backManage/showCarConditions";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/showCarConditions", method = RequestMethod.GET)
@@ -209,7 +246,10 @@ public class CarController {
             model.addAttribute("carBrands", carBrands);
             model.addAttribute("locations", locations);
             return "showConditions";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
 }

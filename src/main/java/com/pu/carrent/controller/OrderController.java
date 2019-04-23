@@ -6,7 +6,6 @@ import com.pu.carrent.entity.User;
 import com.pu.carrent.service.CarService;
 import com.pu.carrent.service.OrderSerivce;
 import com.pu.carrent.service.UserTypeService;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,9 +33,8 @@ public class OrderController {
     @Autowired
     private UserTypeService userTypeService;
 
-    // TODO: 2019/4/23
     @RequestMapping(value = "/makeOrder", method = RequestMethod.POST)
-    public String makeOrder(Integer carId, String date, String price, HttpSession session) {
+    public String makeOrder(Integer carId, String date, String price, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             Order order = new Order();
@@ -67,7 +65,10 @@ public class OrderController {
                 e.printStackTrace();
             }
             return "redirect:/orders";
-        } else return "fail";
+        }  else {
+            model.addAttribute("msg", "未知错误");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
@@ -77,12 +78,15 @@ public class OrderController {
             List<Order> orders = orderSerivce.findOrdersByUserId(currentUser.getUserid());
             model.addAttribute("orders", orders);
             return "orders";
-        } else return "fail";
+        }  else {
+            model.addAttribute("msg", "未知错误");
+            return "fail";
+        }
     }
 
     // TODO: 2019/4/23
     @RequestMapping(value = "/pay", method = RequestMethod.GET)
-    public String pay(HttpSession session, Integer orderId) {
+    public String pay(HttpSession session, Integer orderId, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             Order order = new Order();
@@ -90,11 +94,14 @@ public class OrderController {
             order.setIspaid(1);
             orderSerivce.changeOrder(order);
             return "redirect:/orders";
-        } else return "fail";
+        }  else {
+            model.addAttribute("msg", "未知错误");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.GET)
-    public String cancelOrder(Integer orderId, HttpSession session) {
+    public String cancelOrder(Integer orderId, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             Order order = orderSerivce.findOrderById(orderId);
@@ -105,8 +112,14 @@ public class OrderController {
                 car.setIsdeleted(0);
                 carService.changeCar(car);
                 return "redirect:/orders";
-            } else return "fail";
-        } else return "fail";
+            }  else {
+                model.addAttribute("msg", "订单已支付");
+                return "fail";
+            }
+        }  else {
+            model.addAttribute("msg", "未知错误");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/showOrdersNotPaid", method = RequestMethod.GET)
@@ -116,7 +129,10 @@ public class OrderController {
             List<Order> orders = orderSerivce.findOrdersNotPaid();
             model.addAttribute("orders", orders);
             return "showOrdersNotPaid";
-        } else return "fail";
+        }  else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/showMyRefunds", method = RequestMethod.GET)
@@ -126,11 +142,14 @@ public class OrderController {
             List<Order> orders = orderSerivce.findRefundsByUserId(currentUser.getUserid());
             model.addAttribute("orders", orders);
             return "showMyRefunds";
-        } else return "fail";
+        }  else {
+            model.addAttribute("msg", "未知错误");
+            return "fail";
+        }
     }
     
     @RequestMapping(value = "/refund", method = RequestMethod.GET)
-    public String refund(Integer orderId ,HttpSession session) {
+    public String refund(Integer orderId ,HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             Order order = new Order();
@@ -138,7 +157,10 @@ public class OrderController {
             order.setIspaid(-1);
             orderSerivce.changeOrder(order);
             return "redirect:/showMyRefunds";
-        } else return "fail";
+        }  else {
+            model.addAttribute("msg", "未知错误");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/showRefund", method = RequestMethod.GET)
@@ -148,16 +170,22 @@ public class OrderController {
             List<Order> orders = orderSerivce.findRefunds();
             model.addAttribute("orders", orders);
             return "refund";
-        } else return "fail";
+        }  else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/refund", method = RequestMethod.GET)
-    public String backRefund(Integer orderId ,HttpSession session) {
+    public String backRefund(Integer orderId ,HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             // TODO: 2019/4/23 refund
             return "redirect:/backManage/showRefund";
-        } else return "fail";
+        }  else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
 }

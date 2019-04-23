@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public String login(String userName, String password, HttpSession session) {
+    public String login(String userName, String password, HttpSession session, Model model) {
         User user = userService.login(userName, password);
         if (user != null) {
             session.setAttribute("currentUser", user);
@@ -36,8 +36,10 @@ public class UserController {
             if ("管理员".compareTo(userType) == 0) {
                 return "redirect:/backManage/showCars";
             } else return "redirect:/rentCar";
-        } else
+        } else {
+            model.addAttribute("msg", "用户名或密码错误");
             return "fail";
+        }
     }
 
     @RequestMapping(value = "/user/logout", method = RequestMethod.GET)
@@ -47,18 +49,21 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
-    public String register(String userName, String password, String email) {
+    public String register(String userName, String password, String email, Model model) {
         User user = new User();
         user.setUsername(userName);
         user.setPassword(password);
         user.setEmail(email);
         user.setUtypeid(2);
         if (userService.addUser(user) != 0) return "redirect:/user/login";
-        else return "fail";
+        else {
+            model.addAttribute("msg", "注册失败");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/addManager", method = RequestMethod.POST)
-    public String addManager(String userName, String password, String email, String phone, HttpSession session) {
+    public String addManager(String userName, String password, String email, String phone, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             User user = new User();
@@ -68,16 +73,22 @@ public class UserController {
             user.setPhone(phone);
             user.setUtypeid(1);
             if (userService.addUser(user) != 0) return "addManager";
-            else return "fail";
+            else {
+                model.addAttribute("msg", "添加失败");
+                return "fail";
+            }
         }
         else return "fail";
     }
 
     @RequestMapping(value = "/backManage/addManager", method = RequestMethod.GET)
-    public String addManager(HttpSession session) {
+    public String addManager(HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) return "addManager";
-        else return "fail";
+        else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/showUsers", method = RequestMethod.GET)
@@ -90,11 +101,14 @@ public class UserController {
            model.addAttribute("userTypes", userTypes);
            return "showUsers";
         }
-        else return "fail";
+        else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/changeUserType", method = RequestMethod.GET)
-    public String changeUserType(Integer userId, Integer userTypeId, HttpSession session) {
+    public String changeUserType(Integer userId, Integer userTypeId, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             User user = new User();
@@ -104,16 +118,22 @@ public class UserController {
             userService.changeUser(user);
             return "redirect:/backManage/showUsers";
         }
-        else return "fail";
+        else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/backManage/deleteUser", method = RequestMethod.GET)
-    public String deleteUser(Integer userId, HttpSession session) {
+    public String deleteUser(Integer userId, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             userService.deleteUserById(userId);
             return "redirect:/backManage/showUsers";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/userDetail", method = RequestMethod.GET)
@@ -123,11 +143,15 @@ public class UserController {
             User detail = userService.findUserById(currentUser.getUserid());
             model.addAttribute("userDetail", detail);
             return "userDetail";
-        } else return "fail";
+        } else {
+            model.addAttribute("msg", "您未登录");
+            return "fail";
+        }
     }
 
     @RequestMapping(value = "/changeUser", method = RequestMethod.POST)
-    public String changeUser(String userName, String email, String phone, String password, String info, String icon, HttpSession session) {
+    public String changeUser(String userName, String email, String phone, String password,
+                             String info, String icon, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             User user = new User();
@@ -140,6 +164,9 @@ public class UserController {
             user.setUserid(currentUser.getUserid());
             userService.changeUser(user);
             return "redirect:/userDetail";
-        } else return "fail";
+        }  else {
+            model.addAttribute("msg", "未知错误");
+            return "fail";
+        }
     }
 }
