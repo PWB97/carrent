@@ -1,8 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: PWB
-  Date: 2019/4/21
-  Time: 15:47
+  Date: 2019/4/23
+  Time: 9:56
+  To change this template use File | Settings | File Templates.
+--%>
+<%--
+  Created by IntelliJ IDEA.
+  User: PWB
+  Date: 2019/4/20
+  Time: 9:56
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  pageEncoding="UTF-8"%>
@@ -43,7 +50,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title"><span>汽车租赁</span></a>
+                    <a href="index.html" class="site_title"><span>后台管理</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -67,26 +74,29 @@
                     <div class="menu_section">
                         <h3>General</h3>
                         <ul class="nav side-menu">
-                            <li><a><i class="fa fa-car"></i> 汽车服务 <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-car"></i> 汽车管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="<%=request.getContextPath() %>/rentCar">租车</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/uploadCar">出租</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showCars">所有汽车</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-dollar"></i> 我的订单 <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-newspaper-o"></i> 新闻管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="<%=request.getContextPath() %>/orders">所有订单</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/showMyRefunds">退款中</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/News">所有新闻</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/addNews">添加新闻</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-newspaper-o"></i> 新闻 <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-user"></i> 用户管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="<%=request.getContextPath() %>/News">新闻资讯</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showUsers">所有用户</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/addManager">添加管理员</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-user"></i> 我的 <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-dollar"></i> 订单管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="<%=request.getContextPath() %>/userDetail">个人信息</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showOrdersNotPaid">未支付订单</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showRefund">退款订单</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -130,7 +140,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>我的订单</h2>
+                                <h2>退款中</h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -147,6 +157,7 @@
                                     <thead>
                                     <tr>
                                         <th>编号</th>
+                                        <th>用户</th>
                                         <th>汽车名称</th>
                                         <th>价格</th>
                                         <th>生成时间</th>
@@ -158,6 +169,7 @@
                                     <c:forEach var="order" items="${orders}" varStatus="s">
                                         <tr>
                                             <td>${order.orderid}</td>
+                                            <td>${order.user.username}</td>
                                             <td>${order.car.carname}</td>
                                             <td>${order.totalprice}</td>
                                             <td>${order.creattime}</td>
@@ -189,13 +201,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="<%=request.getContextPath() %>/pay?orderId=${order.orderid}" class="btn btn-primary btn-xs"><i class="fa fa-trash-o"></i> 支付 </a>
-                                                <c:if test="${order.ispaid == 0}">
-                                                 <a href="<%=request.getContextPath() %>/cancelOrder?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 取消订单 </a>
-                                                </c:if>
-                                                <c:if test="${order.ispaid != 0}">
-                                                    <a href="<%=request.getContextPath() %>/refund?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 退款 </a>
-                                                </c:if>
+                                                <a href="<%=request.getContextPath() %>/backManage/refund?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 退款 </a>
                                             </td>
                                         </tr>
                                     </c:forEach>

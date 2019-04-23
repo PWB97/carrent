@@ -1,8 +1,22 @@
 <%--
   Created by IntelliJ IDEA.
   User: PWB
-  Date: 2019/4/21
-  Time: 15:47
+  Date: 2019/4/23
+  Time: 10:58
+  To change this template use File | Settings | File Templates.
+--%>
+<%--
+  Created by IntelliJ IDEA.
+  User: PWB
+  Date: 2019/4/23
+  Time: 9:56
+  To change this template use File | Settings | File Templates.
+--%>
+<%--
+  Created by IntelliJ IDEA.
+  User: PWB
+  Date: 2019/4/20
+  Time: 9:56
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  pageEncoding="UTF-8"%>
@@ -130,7 +144,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>我的订单</h2>
+                                <h2>汽车管理</h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -147,6 +161,7 @@
                                     <thead>
                                     <tr>
                                         <th>编号</th>
+                                        <th>用户</th>
                                         <th>汽车名称</th>
                                         <th>价格</th>
                                         <th>生成时间</th>
@@ -158,6 +173,7 @@
                                     <c:forEach var="order" items="${orders}" varStatus="s">
                                         <tr>
                                             <td>${order.orderid}</td>
+                                            <td>${order.user.username}</td>
                                             <td>${order.car.carname}</td>
                                             <td>${order.totalprice}</td>
                                             <td>${order.creattime}</td>
@@ -189,13 +205,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="<%=request.getContextPath() %>/pay?orderId=${order.orderid}" class="btn btn-primary btn-xs"><i class="fa fa-trash-o"></i> 支付 </a>
-                                                <c:if test="${order.ispaid == 0}">
-                                                 <a href="<%=request.getContextPath() %>/cancelOrder?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 取消订单 </a>
-                                                </c:if>
-                                                <c:if test="${order.ispaid != 0}">
-                                                    <a href="<%=request.getContextPath() %>/refund?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 退款 </a>
-                                                </c:if>
                                             </td>
                                         </tr>
                                     </c:forEach>

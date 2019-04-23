@@ -86,9 +86,10 @@
                                     <li><a href="<%=request.getContextPath() %>/backManage/addManager">添加管理员</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-user"></i> 订单管理 <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-dollar"></i> 订单管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="<%=request.getContextPath() %>/backManage/showOrdersNotPaid">未支付订单</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showRefund">退款订单</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -113,7 +114,7 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;">个人信息</a></li>
+                                <li><a href="<%=request.getContextPath() %>/userDetail">个人信息</a></li>
                                 <li><a href="<%=request.getContextPath() %>/user/logout"><i class="fa fa-sign-out pull-right"></i>注销</a></li>
                             </ul>
                         </li>
@@ -165,6 +166,28 @@
                                             <td>${news.creattime}</td>
                                             <td>${news.creator.username}</td>
                                             <td>
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModel${news.newsid}"><i class="fa fa-folder"></i> 查看</button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="myModel${news.newsid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLongTitle">查看新闻</h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>${news.title}</p>
+                                                                <p>${news.creator.username}</p>
+                                                                <p>${news.creattime}</p>
+                                                                <p>${news.content}</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <a href="<%=request.getContextPath() %>/backManage/deleteNews?newsId=${news.newsid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
 
                                             </td>
                                         </tr>

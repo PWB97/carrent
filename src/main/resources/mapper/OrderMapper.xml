@@ -246,9 +246,12 @@
   </select>
   <resultMap id="OrderDetail" type="com.pu.carrent.entity.Order">
     <id property="orderid" column="orderId"/>
+    <result column="userId" property="userid"/>
+    <result column="isPaid" property="ispaid"/>
     <result column="creatTime" property="creattime"/>
     <result column="endTime" property="endtime"/>
     <result column="totalPrice" property="totalprice"/>
+    <result column="carId" property="carid"/>
     <collection property="user" ofType="com.pu.carrent.entity.User">
       <result column="userName" property="username"/>
     </collection>
@@ -279,5 +282,17 @@
     select *
     from t_order left join t_user tu on t_order.userId = tu.userId left join t_car tc on t_order.carId = tc.carId left join t_carbrand t on tc.brandId = t.brandId left join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
     where t_order.userId=#{userId,jdbcType=INTEGER} order by isPaid
+  </select>
+
+  <select id="findRefunds" resultMap="OrderDetail">
+    select *
+    from t_order left join t_user tu on t_order.userId = tu.userId left join t_car tc on t_order.carId = tc.carId left join t_carbrand t on tc.brandId = t.brandId left join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
+    where isPaid=-1
+  </select>
+
+  <select id="findRefundsByUserId" resultMap="OrderDetail">
+    select *
+    from t_order left join t_user tu on t_order.userId = tu.userId left join t_car tc on t_order.carId = tc.carId left join t_carbrand t on tc.brandId = t.brandId left join t_cartype tc2 on tc.cTypeId = tc2.cTypeId
+    where isPaid=-1 and t_order.userId=#{userId,jdbcType=INTEGER}
   </select>
 </mapper>

@@ -92,9 +92,10 @@
                                     <li><a href="<%=request.getContextPath() %>/backManage/addManager">添加管理员</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-user"></i> 订单管理 <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-dollar"></i> 订单管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="<%=request.getContextPath() %>/backManage/showOrdersNotPaid">未支付订单</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showRefund">退款订单</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -120,7 +121,7 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;">个人信息</a></li>
+                                <li><a href="<%=request.getContextPath() %>/userDetail">个人信息</a></li>
                                 <li><a href="<%=request.getContextPath() %>/user/logout"><i class="fa fa-sign-out pull-right"></i>注销</a></li>
                             </ul>
                         </li>
@@ -186,7 +187,7 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">密码 <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="password" name="passowrd" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                            <input id="password" name="password" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
                                         </div>
                                     </div>
                                     <div class="ln_solid"></div>

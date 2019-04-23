@@ -76,6 +76,16 @@ public class CarController {
         } else return "fail";
     }
 
+    // TODO: 2019/4/23
+    @RequestMapping(value = "/uploadCar", method = RequestMethod.GET)
+    public String uploadCar(HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if (currentUser != null) {
+            return "uploadCar";
+        } else return  "fail";
+    }
+
+    // TODO: 2019/4/23
     @RequestMapping(value = "/uploadCar", method = RequestMethod.POST)
     public String uploadCar(String carName, Integer brandId, Integer typeId, String plate, String detail, String pictures, String files, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
@@ -129,7 +139,7 @@ public class CarController {
         } else return "fail";
     }
 
-    @RequestMapping(value = "/backManage/offline", method = RequestMethod.POST)
+    @RequestMapping(value = "/backManage/offline", method = RequestMethod.GET)
     public String offline(Integer carId, HttpSession session) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
@@ -137,7 +147,7 @@ public class CarController {
             car.setCarid(carId);
             car.setIsonline(0);
             carService.changeCar(car);
-            return "showCars";
+            return "redirect:/backManage/carsNotOnline";
         } else return "fail";
     }
 

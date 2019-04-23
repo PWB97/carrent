@@ -19,4 +19,8 @@ public interface OrderSerivce {
     int deleteOrderById(Integer orderId);
 
     List<Order> findOrdersByUserId(Integer userId);
+
+    List<Order> findRefunds();
+
+    List<Order> findRefundsByUserId(Integer userId);
 }

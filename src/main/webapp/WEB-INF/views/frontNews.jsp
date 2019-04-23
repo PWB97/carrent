@@ -70,23 +70,23 @@
                             <li><a><i class="fa fa-car"></i> 汽车服务 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="<%=request.getContextPath() %>/rentCar">租车</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">出租</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/uploadCar">出租</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-newspaper-o"></i> 我的订单 <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-dollar"></i> 我的订单 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="<%=request.getContextPath() %>/orders">所有订单</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/backManage/addNews">退款中</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/showMyRefunds">退款中</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-user"></i> 新闻 <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-newspaper-o"></i> 新闻 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="<%=request.getContextPath() %>/News">新闻资讯</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-user"></i> 我的 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="<%=request.getContextPath() %>/backManage/showOrdersNotPaid">个人信息</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/userDetail">个人信息</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -111,7 +111,7 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;">个人信息</a></li>
+                                <li><a href="<%=request.getContextPath() %>/userDetail">个人信息</a></li>
                                 <li><a href="<%=request.getContextPath() %>/user/logout"><i class="fa fa-sign-out pull-right"></i>注销</a></li>
                             </ul>
                         </li>
@@ -163,7 +163,27 @@
                                             <td>${news.creattime}</td>
                                             <td>${news.creator.username}</td>
                                             <td>
-
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModel${news.newsid}"><i class="fa fa-folder"></i> 查看</button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="myModel${news.newsid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLongTitle">查看新闻</h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>${news.title}</p>
+                                                                <p>${news.creator.username}</p>
+                                                                <p>${news.creattime}</p>
+                                                                <p>${news.content}</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     </c:forEach>

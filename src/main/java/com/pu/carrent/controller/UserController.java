@@ -53,7 +53,7 @@ public class UserController {
         user.setPassword(password);
         user.setEmail(email);
         user.setUtypeid(2);
-        if (userService.addUser(user) != 0) return "login";
+        if (userService.addUser(user) != 0) return "redirect:/user/login";
         else return "fail";
     }
 
@@ -93,17 +93,27 @@ public class UserController {
         else return "fail";
     }
 
-    @RequestMapping(value = "/backManage/changeUserType", method = RequestMethod.POST)
+    @RequestMapping(value = "/backManage/changeUserType", method = RequestMethod.GET)
     public String changeUserType(Integer userId, Integer userTypeId, HttpSession session) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             User user = new User();
             user.setUserid(userId);
-            user.setUtypeid(userTypeId);
+            if (userTypeId.equals(1)) user.setUtypeid(2);
+            if (userTypeId.equals(2)) user.setUtypeid(1);
             userService.changeUser(user);
-            return "showUsers";
+            return "redirect:/backManage/showUsers";
         }
         else return "fail";
+    }
+
+    @RequestMapping(value = "/backManage/deleteUser", method = RequestMethod.GET)
+    public String deleteUser(Integer userId, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if (currentUser != null) {
+            userService.deleteUserById(userId);
+            return "redirect:/backManage/showUsers";
+        } else return "fail";
     }
 
     @RequestMapping(value = "/userDetail", method = RequestMethod.GET)
@@ -121,15 +131,15 @@ public class UserController {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             User user = new User();
-            if (userName != null ) user.setUsername(userName);
-            if (email != null) user.setEmail(email);
-            if (phone != null) user.setPhone(phone);
-            if (password != null) user.setPassword(password);
-            if (info != null) user.setInfo(info);
-            if (icon != null) user.setIcon(icon);
+            if (userName != null && "".compareTo(userName) != 0) user.setUsername(userName);
+            if (email != null && "".compareTo(email) != 0) user.setEmail(email);
+            if (phone != null && "".compareTo(phone) != 0) user.setPhone(phone);
+            if (password != null && "".compareTo(password) != 0) user.setPassword(password);
+            if (info != null && "".compareTo(info) != 0) user.setInfo(info);
+            if (icon != null && "".compareTo(icon) != 0) user.setIcon(icon);
             user.setUserid(currentUser.getUserid());
             userService.changeUser(user);
-            return "changeUser";
+            return "redirect:/userDetail";
         } else return "fail";
     }
 }

@@ -58,4 +58,13 @@ public class NewsController {
         } else return "fail";
     }
 
+    @RequestMapping(value = "/backManage/deleteNews", method = RequestMethod.GET)
+    public String deleteNews(Integer newsId, HttpSession session) {
+        User user = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(user.getUtypeid())) == 0) {
+            newsService.deleteNewsById(newsId);
+            return "redirect:/News";
+        } else return "fail";
+    }
+
 }
