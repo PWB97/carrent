@@ -17,4 +17,8 @@ public interface UserService {
     int changeUser(User record);
 
     int deleteUserById(Integer userId);
+
+    List<User> findUserByName(String userName);
+
+    List<User> findUserByPhone(String phone);
 }

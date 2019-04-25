@@ -233,20 +233,20 @@
                                                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="userName">用户名
                                                                     </label>
                                                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                            <input type="text" id="userName" name="userName" class="form-control col-md-7 col-xs-12">
+                                                                            <input type="text" id="userName" name="userName" class="form-control col-md-7 col-xs-12" placeholder="${userDetail.username}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">邮箱
+                                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email" >邮箱
                                                                         </label>
                                                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                            <input type="text" id="email" name="email" class="form-control col-md-7 col-xs-12">
+                                                                            <input type="text" id="email" name="email" class="form-control col-md-7 col-xs-12" placeholder="${userDetail.email}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="phone" class="control-label col-md-3 col-sm-3 col-xs-12">电话</label>
                                                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                            <input id="phone" class="form-control col-md-7 col-xs-12" type="text" name="phone">
+                                                                            <input id="phone" class="form-control col-md-7 col-xs-12" type="text" name="phone" placeholder="${userDetail.phone}">
                                                                         </div>
                                                                     </div>
 

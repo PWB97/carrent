@@ -78,5 +78,4 @@ public class NewsController {
             return "fail";
         }
     }
-
 }

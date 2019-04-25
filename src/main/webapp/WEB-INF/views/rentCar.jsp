@@ -405,6 +405,8 @@
     var cTag = document.getElementById("city");
     var lTag = document.getElementById("location");
     function chooseProvice() {
+        $("#city").empty();
+        cTag.add(new Option("请选择市"));
         <c:forEach var="province" items="${locations}">
         if (pTag.options[pTag.selectedIndex].text === "${province.pname}") {
             <c:forEach var="city" items="${province.cities}">
@@ -415,6 +417,8 @@
     }
 
     function chooseCity() {
+        $("#location").empty();
+        lTag.add(new Option("请选择门店"));
         <c:forEach var="province" items="${locations}">
         if (pTag.options[pTag.selectedIndex].text === "${province.pname}") {
             <c:forEach var="city" items="${province.cities}">

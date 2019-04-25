@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -49,17 +50,31 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
-    public String register(String userName, String password, String email, Model model) {
+    public String register(String userName, String password, String phone, Model model) {
+        if ("".compareTo(userName) == 0 || "".compareTo(password) == 0 || "".compareTo(phone) == 0) {
+            model.addAttribute("msg", "字段不能为空");
+            return "fail";
+        }
         User user = new User();
         user.setUsername(userName);
         user.setPassword(password);
-        user.setEmail(email);
+        user.setPhone(phone);
         user.setUtypeid(2);
         if (userService.addUser(user) != 0) return "redirect:/user/login";
         else {
             model.addAttribute("msg", "注册失败");
             return "fail";
         }
+    }
+
+    @RequestMapping(value = "/user/isValidName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public @ResponseBody int isValidName(String userName) {
+        return userService.findUserByName(userName).size();
+    }
+
+    @RequestMapping(value = "/user/isValidPhone", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public @ResponseBody int isValidPhone(String phone) {
+        return userService.findUserByPhone(phone).size();
     }
 
     @RequestMapping(value = "/backManage/addManager", method = RequestMethod.POST)

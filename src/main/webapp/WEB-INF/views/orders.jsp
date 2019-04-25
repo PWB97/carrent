@@ -189,9 +189,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="<%=request.getContextPath() %>/pay?orderId=${order.orderid}" class="btn btn-primary btn-xs"><i class="fa fa-trash-o"></i> 支付 </a>
-                                                <c:if test="${order.ispaid == 0}">
-                                                 <a href="<%=request.getContextPath() %>/cancelOrder?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 取消订单 </a>
+                                               <c:if test="${order.ispaid == 0}">
+                                                   <a href="<%=request.getContextPath() %>/pay?orderId=${order.orderid}" class="btn btn-primary btn-xs"><i class="fa fa-paypal"></i> 支付 </a>
+                                                   <a href="<%=request.getContextPath() %>/cancelOrder?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 取消订单 </a>
                                                 </c:if>
                                                 <c:if test="${order.ispaid != 0}">
                                                     <a href="<%=request.getContextPath() %>/refund?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 退款 </a>

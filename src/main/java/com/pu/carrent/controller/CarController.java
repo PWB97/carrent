@@ -252,4 +252,39 @@ public class CarController {
         }
     }
 
+    @RequestMapping(value = "/backManage/deleteCarType", method = RequestMethod.POST)
+    public  String deleteCarType(Integer cTypeId, HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
+            carTypeService.deleteCarTypeById(cTypeId);
+            return "redirect:/backManage/showCarConditions";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
+    }
+
+    @RequestMapping(value = "/backManage/deleteCarBrand", method = RequestMethod.POST)
+    public  String deleteCarBrand(Integer brandId, HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
+            carBrandService.deleteCarBrandeById(brandId);
+            return "redirect:/backManage/showCarConditions";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
+    }
+
+    @RequestMapping(value = "/backManage/deleteLocation", method = RequestMethod.POST)
+    public  String deleteLocation(Integer lId, HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
+            locationService.deleteLocationById(lId);
+            return "redirect:/backManage/showCarConditions";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
+    }
 }

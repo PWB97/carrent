@@ -154,6 +154,8 @@
                                         </li>
                                         <li role="presentation" class=""><a href="#tab_content33" role="tab" id="profile-tabb3" data-toggle="tab" aria-controls="profile" aria-expanded="false">门店</a>
                                         </li>
+                                        <li role="presentation" class=""><a href="#tab_content44" role="tab" id="profile-tabb4" data-toggle="tab" aria-controls="profile" aria-expanded="false">添加汽车</a>
+                                        </li>
                                     </ul>
                                     <div id="myTabContent2" class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content11" aria-labelledby="home-tab">
@@ -196,7 +198,7 @@
                                                         <td>${carType.ctypeid}</td>
                                                         <td>${carType.ctypename}</td>
                                                         <td>
-
+                                                            <a href="<%=request.getContextPath() %>/backManage/deleteCarType?cTypeId=${carType.ctypeid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -243,7 +245,43 @@
                                                         <td>${carBrand.brandid}</td>
                                                         <td>${carBrand.brandname}</td>
                                                         <td>
-
+                                                            <!-- Button trigger modal -->
+                                                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModel${carBrand.brandid}"><i class="fa fa-folder"></i> 查看</button>
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="myModel${carBrand.brandid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLongTitle">品牌图片</h5>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <div>
+                                                                                    <div class="col-md-55">
+                                                                                        <div class="thumbnail">
+                                                                                            <div class="image view view-first">
+                                                                                                <img style="width: 100%; display: block;" src="../../images/logo/${carBrand.brandid}.JPG" alt="image" />
+                                                                                                <div class="mask">
+                                                                                                    <p>${carBrand.brandname}</p>
+                                                                                                    <div class="tools tools-bottom">
+                                                                                                        <a href="#"><i class="fa fa-link"></i></a>
+                                                                                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                                                                                        <a href="#"><i class="fa fa-times"></i></a>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <a href="<%=request.getContextPath() %>/backManage/deleteCarBrand?brandId=${carBrand.brandid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -277,13 +315,14 @@
                                                     <tr>
                                                         <td>${location.pid}</td>
                                                         <td>${location.pname}</td>
-                                                        <td>
-
-                                                        </td>
+                                                        <td>无</td>
                                                     </tr>
                                                 </c:forEach>
                                                 </tbody>
                                             </table>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane fade" id="tab_content44" aria-labelledby="profile-tab">
+
                                         </div>
                                     </div>
                                 </div>
@@ -346,6 +385,8 @@
         for (var r = 0; r < l; r++) {
             table.deleteRow(0);
         }
+        $("#city").empty();
+        cTag.add(new Option("请选择市"));
         <c:forEach var="province" items="${locations}">
            if (pTag.options[pTag.selectedIndex].text === "${province.pname}") {
                <c:forEach var="city" items="${province.cities}">
@@ -359,6 +400,7 @@
                     table.append(tr);
                     td1.innerHTML = ${city.cid};
                     td2.innerHTML = "${city.cname}";
+                    td3.innerHTML = "无";
                     cTag.add(new Option("${city.cname}", ${city.cid}));
                </c:forEach>
            }
@@ -386,6 +428,7 @@
                         table.append(tr);
                         td1.innerHTML = ${location.lid};
                         td2.innerHTML = "${location.lname}";
+                        td3.innerHTML = "<td> <a href='<%=request.getContextPath() %>/backManage/deleteLocation?lId=${location.lid}' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i> 删除 </a> </td>";
                     </c:forEach>
                 }
             </c:forEach>

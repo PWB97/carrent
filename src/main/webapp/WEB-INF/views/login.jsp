@@ -41,10 +41,10 @@
                 <form action="<%=request.getContextPath() %>/user/login" id ="login" method="post">
                     <h1>登陆</h1>
                     <div>
-                        <input type="text" class="form-control" placeholder="用户名" id="userName" name="userName"/>
+                        <input type="text" class="form-control" placeholder="用户名" name="userName"/>
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="密码" id="password" name="password"/>
+                        <input type="password" class="form-control" placeholder="密码" name="password"/>
                     </div>
                     <div>
                         <a class="btn btn-default submit" onclick="document:login.submit()">登陆</a>
@@ -71,13 +71,13 @@
                 <form action="<%=request.getContextPath() %>/user/register" method="post" id = "registerForm">
                     <h1>注册</h1>
                     <div>
-                        <input type="text" class="form-control" placeholder="用户名" name="userName" required="" />
+                        <input type="text" class="form-control" placeholder="用户名" id="userName" name="userName" required="required" />
                     </div>
                     <div>
-                        <input type="email" class="form-control" placeholder="邮件" name="email" required="" />
+                        <input type="email" class="form-control" placeholder="手机号" id="phone" name="phone" required="required" />
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="密码" name="password" required="" />
+                        <input type="password" class="form-control" placeholder="密码" id="password" name="password" required="required" />
                     </div>
                     <div>
                         <a class="btn btn-default submit" onclick="document:registerForm.submit()">提交</a>
@@ -98,5 +98,20 @@
         </div>
     </div>
 </div>
+<script src="../../vendors/jquery/dist/jquery.min.js"></script>
+<script src="../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+    $("#userName").blur(
+        function () {
+            $.post("<%=request.getContextPath() %>/user/isValidName",{
+                userName : $(this).val()
+            } , function (data) {
+                if (data > 0) {
+                    alert("用户名重复");
+                }
+            })
+        }
+    );
+</script>
 </body>
 </html>
