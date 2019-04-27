@@ -4,11 +4,17 @@ import com.pu.carrent.entity.*;
 import com.pu.carrent.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -193,14 +199,29 @@ public class CarController {
         }
     }
 
+    @Transactional
     @RequestMapping(value = "/backManage/addCarBrand", method = RequestMethod.POST)
-    public String addCarBrand(String brandName, HttpSession session, Model model) {
+    public String addCarBrand(String brandName, @RequestParam("file") MultipartFile file, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
-            CarBrand carBrand = new CarBrand();
-            carBrand.setBrandname(brandName);
-            carBrandService.addCarBrand(carBrand);
-            return "redirect:/backManage/showCarConditions";
+            if (file.isEmpty()) {
+                model.addAttribute("msg", "上传失败，请选择文件");
+                return "fail";
+            }
+            try {
+                CarBrand carBrand = new CarBrand();
+                carBrand.setBrandname(brandName);
+                carBrandService.addCarBrand(carBrand);
+                String fileName = "" + carBrandService.findBrandIdByName(brandName) + ".JPG";
+                String filePath = "/Users/pu/Desktop/carrent/src/main/webapp/images/log/";
+                File dest = new File(filePath + fileName);
+                file.transferTo(dest);
+                return "redirect:/backManage/showCarConditions";
+            } catch (Exception e) {
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                model.addAttribute("msg", "上传失败");
+                return "fail";
+            }
         } else {
             model.addAttribute("msg", "无权限访问");
             return "fail";
@@ -264,7 +285,7 @@ public class CarController {
         }
     }
 
-    @RequestMapping(value = "/backManage/deleteCarBrand", method = RequestMethod.POST)
+    @RequestMapping(value = "/backManage/deleteCarBrand", method = RequestMethod.GET)
     public  String deleteCarBrand(Integer brandId, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {

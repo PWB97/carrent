@@ -15,6 +15,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
 
     <title>后台管理</title>
 
@@ -160,9 +161,9 @@
                                     <div id="myTabContent2" class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content11" aria-labelledby="home-tab">
                                             <!-- Small modal -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">添加汽车类型</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addCarType">添加汽车类型</button>
 
-                                            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal fade addCarType" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog modal-sm">
                                                     <div class="modal-content">
 
@@ -207,9 +208,9 @@
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="tab_content22" aria-labelledby="profile-tab">
                                             <!-- Small modal -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">添加汽车品牌</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addCarBrand">添加汽车品牌</button>
 
-                                            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal fade addCarBrand" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog modal-sm">
                                                     <div class="modal-content">
 
@@ -218,9 +219,11 @@
                                                             </button>
                                                             <h4 class="modal-title" id="myModalLabel1">输入新的汽车品牌</h4>
                                                         </div>
-                                                        <form action="<%=request.getContextPath() %>/backManage/addCarBrand" method="post">
+                                                        <form action="<%=request.getContextPath() %>/backManage/addCarBrand" method="post" enctype="multipart/form-data">
                                                             <div class="modal-body">
+                                                                <label>品牌名</label>
                                                                 <input id="brandName" name="brandName" >
+                                                                <input type="file" name="file">
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
