@@ -71,7 +71,8 @@
                                 <ul class="nav child_menu">
                                     <li><a href="<%=request.getContextPath() %>/backManage/showCars">所有汽车</a></li>
                                     <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/uploadCar">添加汽车</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-newspaper-o"></i> 新闻管理 <span class="fa fa-chevron-down"></span></a>
@@ -164,7 +165,8 @@
                                             <td>${car.plate}</td>
                                             <td>${car.price}</td>
                                             <td>
-
+                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}"><i class="fa fa-folder"></i> 查看</a>
+                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/backManage/deleteCar?carId=${car.carid}"><i class="fa fa-folder"></i> 删除</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

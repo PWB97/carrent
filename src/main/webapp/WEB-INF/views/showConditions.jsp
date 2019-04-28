@@ -72,7 +72,8 @@
                                 <ul class="nav child_menu">
                                     <li><a href="<%=request.getContextPath() %>/backManage/showCars">所有汽车</a></li>
                                     <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/uploadCar">添加汽车</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-newspaper-o"></i> 新闻管理 <span class="fa fa-chevron-down"></span></a>
@@ -154,8 +155,6 @@
                                         <li role="presentation" class=""><a href="#tab_content22" role="tab" id="profile-tabb" data-toggle="tab" aria-controls="profile" aria-expanded="false">汽车品牌</a>
                                         </li>
                                         <li role="presentation" class=""><a href="#tab_content33" role="tab" id="profile-tabb3" data-toggle="tab" aria-controls="profile" aria-expanded="false">门店</a>
-                                        </li>
-                                        <li role="presentation" class=""><a href="#tab_content44" role="tab" id="profile-tabb4" data-toggle="tab" aria-controls="profile" aria-expanded="false">添加汽车</a>
                                         </li>
                                     </ul>
                                     <div id="myTabContent2" class="tab-content">
@@ -323,9 +322,6 @@
                                                 </c:forEach>
                                                 </tbody>
                                             </table>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="tab_content44" aria-labelledby="profile-tab">
-
                                         </div>
                                     </div>
                                 </div>

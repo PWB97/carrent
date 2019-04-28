@@ -76,7 +76,7 @@ public class CarController {
         }
     }
 
-    @RequestMapping(value = "/carDetail", method = RequestMethod.POST)
+    @RequestMapping(value = "/carDetail", method = RequestMethod.GET)
     public String showCarDetail(Integer carId, Model model) {
         Car car = carService.findCarById(carId);
         if (car != null) {
@@ -88,11 +88,16 @@ public class CarController {
         }
     }
 
-    // TODO: 2019/4/23
     @RequestMapping(value = "/uploadCar", method = RequestMethod.GET)
     public String uploadCar(HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
+            List<CarBrand> carBrands = carBrandService.findAllCarBrand();
+            List<CarType> carTypes = carTypeService.findAllCarType();
+            List<Province> locations = locationService.findLocations();
+            model.addAttribute("carTypes", carTypes);
+            model.addAttribute("carBrands", carBrands);
+            model.addAttribute("locations", locations);
             return "uploadCar";
         } else {
             model.addAttribute("msg", "未登录");
@@ -100,10 +105,9 @@ public class CarController {
         }
     }
 
-    // TODO: 2019/4/23
     @RequestMapping(value = "/uploadCar", method = RequestMethod.POST)
     public String uploadCar(String carName, Integer brandId, Integer typeId, String plate, String detail,
-                            String pictures, String files, HttpSession session, Model model) {
+                            Integer lId, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             Car car = new Car();
@@ -112,14 +116,29 @@ public class CarController {
             if (typeId != null) car.setCtypeid(typeId);
             if (plate != null) car.setPlate(plate);
             if (detail != null) car.setDetail(detail);
-            if (pictures != null) car.setPictures(pictures);
-            if (files != null) car.setFiles(files);
+            if (lId != null) car.setLid(lId);
             car.setUserid(currentUser.getUserid());
+            car.setIsdeleted(0);
+            car.setIsonline(0);
             carService.addCar(car);
-            return "uploadCar";
+            return "redirect:/uploadCar";
         } else {
             model.addAttribute("msg", "未登录");
             return "fail";
+        }
+    }
+
+    // TODO: 2019-04-28  
+    @RequestMapping(value = "/uploadCarFiles", method = RequestMethod.POST)
+    public String uploadCarFiles(Integer carId, @RequestParam("files[]") MultipartFile[] files, HttpSession session, Model model) {
+
+        try {
+            if (files != null && files.length > 0) {
+
+            }
+            return "";
+        } catch (Exception e) {
+            return "";
         }
     }
 
@@ -308,4 +327,18 @@ public class CarController {
             return "fail";
         }
     }
+
+    @RequestMapping(value = "/backManage/deleteCar", method = RequestMethod.GET)
+    public String deleteCar(Integer carId, HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
+            carService.deleteCarByCarId(carId);
+            return "redirect:/backManage/carsNotOnline";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
+    }
+
+    // TODO: 2019-04-28 showMyUploadCars
 }

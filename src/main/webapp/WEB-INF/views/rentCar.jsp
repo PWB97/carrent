@@ -20,22 +20,12 @@
 
     <!-- Bootstrap -->
     <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- bootstrap-daterangepicker -->
-    <link href="../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <!-- bootstrap-datetimepicker -->
-    <link href="../../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="../../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
     <link href="../../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-    <!-- Datatables -->
-    <link href="../../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="../../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-    <link href="../../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-    <link href="../../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-    <link href="../../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="../../build/css/custom.min.css" rel="stylesheet">
@@ -74,7 +64,7 @@
                             <li><a><i class="fa fa-car"></i> 汽车服务 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="<%=request.getContextPath() %>/rentCar">租车</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/uploadCar">出租</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/uploadCar">提交出租信息</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-dollar"></i> 我的订单 <span class="fa fa-chevron-down"></span></a>
@@ -90,7 +80,8 @@
                             </li>
                             <li><a><i class="fa fa-user"></i> 我的 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="<%=request.getContextPath() %>/userDetail">个人信息</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/test">我的出租</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/userDetail">其他信息</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -277,70 +268,7 @@
                                             <td>${car.plate}</td>
                                             <td>${car.price}</td>
                                             <td>
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModel${car.carid}"><i class="fa fa-folder"></i> 查看</button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="myModel${car.carid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" >查看汽车信息</h5>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>${car.carname}</p>
-                                                                <p>${car.carType.ctypename}</p>
-                                                                <p>${car.carBrand.brandname}</p>
-                                                                <p>${car.owner.username}</p>
-                                                                <p>${car.plate}</p>
-                                                                <p>${car.price}</p>
-                                                                <p>${car.location.city.province.pname} ${car.location.city.cname} ${car.location.lname}</p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#makeOrder${car.carid}"><i class="fa fa-check-circle"></i> 下单</button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="makeOrder${car.carid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" >选择日期</h5>
-                                                            </div>
-                                                            <form action="<%=request.getContextPath() %>/makeOrder" method="post">
-                                                            <div class="modal-body">
-                                                                <div class="panel-body">
-                                                                    <div class="row calendar-exibit">
-                                                                        <div class="col-md-3">
-                                                                            <fieldset>
-                                                                                <div class="control-group">
-                                                                                    <div class="controls">
-                                                                                        <div class="col-md-11 xdisplay_inputx form-group has-feedback">
-                                                                                            <input type="text" name="carId" hidden="hidden" value="${car.carid}">
-                                                                                            <input type="text" name="price" hidden="hidden" value="${car.price}">
-                                                                                            <input type="text" class="form-control has-feedback-left" id="single_cal4" aria-describedby="inputSuccess2Status4" name="date">
-                                                                                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                                                                            <span id="inputSuccess2Status4" class="sr-only">(success)</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </fieldset>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                                                <button type="submit" class="btn btn-primary">下单</button>
-                                                            </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
+                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}"><i class="fa fa-folder"></i> 查看</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -375,27 +303,6 @@
 <script src="../../vendors/nprogress/nprogress.js"></script>
 <!-- iCheck -->
 <script src="../../vendors/iCheck/icheck.min.js"></script>
-<!-- Datatables -->
-<script src="../../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="../../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="../../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-<script src="../../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="../../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="../../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-<script src="../../vendors/jszip/dist/jszip.min.js"></script>
-<script src="../../vendors/pdfmake/build/pdfmake.min.js"></script>
-<script src="../../vendors/pdfmake/build/vfs_fonts.js"></script>
-<!-- bootstrap-daterangepicker -->
-<script src="../../vendors/moment/min/moment.min.js"></script>
-<script src="../../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- bootstrap-datetimepicker -->
-<script src="../../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="../../build/js/custom.min.js"></script>
@@ -431,37 +338,6 @@
         }
         </c:forEach>
     }
-</script>
-<!-- Initialize datetimepicker -->
-<script>
-    $('#myDatepicker').datetimepicker();
-
-    $('#myDatepicker2').datetimepicker({
-        format: 'DD.MM.YYYY'
-    });
-
-    $('#myDatepicker3').datetimepicker({
-        format: 'hh:mm A'
-    });
-
-    $('#myDatepicker4').datetimepicker({
-        ignoreReadonly: true,
-        allowInputToggle: true
-    });
-
-    $('#datetimepicker6').datetimepicker();
-
-    $('#datetimepicker7').datetimepicker({
-        useCurrent: false
-    });
-
-    $("#datetimepicker6").on("dp.change", function(e) {
-        $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-    });
-
-    $("#datetimepicker7").on("dp.change", function(e) {
-        $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-    });
 </script>
 </body>
 </html>

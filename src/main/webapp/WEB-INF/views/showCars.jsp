@@ -72,7 +72,8 @@
                                 <ul class="nav child_menu">
                                     <li><a href="<%=request.getContextPath() %>/backManage/showCars">所有汽车</a></li>
                                     <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/uploadCar">添加汽车</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-newspaper-o"></i> 新闻管理 <span class="fa fa-chevron-down"></span></a>
@@ -165,30 +166,7 @@
                                             <td>${car.plate}</td>
                                             <td>${car.price}</td>
                                             <td>
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModel${car.carid}"><i class="fa fa-folder"></i> 查看</button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="myModel${car.carid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLongTitle">查看汽车信息</h5>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>${car.carname}</p>
-                                                                <p>${car.carType.ctypename}</p>
-                                                                <p>${car.carBrand.brandname}</p>
-                                                                <p>${car.owner.username}</p>
-                                                                <p>${car.plate}</p>
-                                                                <p>${car.price}</p>
-                                                                <p>${car.location.city.province.pname} ${car.location.city.cname} ${car.location.lname}</p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}"><i class="fa fa-folder"></i> 查看</a>
                                                 <a href="<%=request.getContextPath() %>/backManage/offline?carId=${car.carid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 下线 </a>
                                             </td>
                                         </tr>

@@ -76,8 +76,9 @@
                                     <li><a href="<%=request.getContextPath() %>/backManage/showCars">所有汽车</a></li>
                                     <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a>
                                     </li>
-                                    <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加</a>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a>
                                     </li>
+                                    <li><a href="<%=request.getContextPath() %>/uploadCar">添加汽车</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-newspaper-o"></i> 新闻管理 <span class="fa fa-chevron-down"></span></a>

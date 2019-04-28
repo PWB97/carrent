@@ -343,10 +343,14 @@
   <resultMap id="CarDetail" type="com.pu.carrent.entity.Car">
     <id column="carId" property="carid"/>
     <result column="carName" property="carname"/>
+    <result column="brandId" property="brandid"/>
+    <result column="cTypeId" property="ctypeid"/>
     <result column="plate" property="plate"/>
     <result column="pictures" property="pictures"/>
     <result column="detail" property="detail"/>
     <result column="price" property="price"/>
+    <result column="isOnline" property="isonline"/>
+    <result column="isDeleted" property="isdeleted"/>
     <collection property="carBrand" ofType="com.pu.carrent.entity.CarBrand">
       <result column="brandName" property="brandname"/>
     </collection>

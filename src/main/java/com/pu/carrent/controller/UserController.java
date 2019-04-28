@@ -31,8 +31,10 @@ public class UserController {
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public String login(String userName, String password, HttpSession session, Model model) {
         User user = userService.login(userName, password);
+        User detail = userService.findUserById(user.getUserid());
         if (user != null) {
             session.setAttribute("currentUser", user);
+            session.setAttribute("userDetail", detail);
             String userType = userTypeService.finduTypeNameById(user.getUtypeid());
             if ("管理员".compareTo(userType) == 0) {
                 return "redirect:/backManage/showCars";
@@ -154,11 +156,8 @@ public class UserController {
     @RequestMapping(value = "/userDetail", method = RequestMethod.GET)
     public String showUserDetail(HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
-        if (currentUser != null) {
-            User detail = userService.findUserById(currentUser.getUserid());
-            model.addAttribute("userDetail", detail);
-            return "userDetail";
-        } else {
+        if (currentUser != null) return "userDetail";
+        else {
             model.addAttribute("msg", "您未登录");
             return "fail";
         }

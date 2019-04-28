@@ -38,7 +38,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car findCarById(Integer carId) {
-        return carMapper.selectCarWithDetailById(carId);
+        return carMapper.selctCarWithDetailById(carId);
     }
 
     @Override
