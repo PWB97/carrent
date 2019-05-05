@@ -1,11 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
-  User: PWB
-  Date: 2019/4/18
-  Time: 16:05
+  User: pu
+  Date: 2019-05-04
+  Time: 21:26
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"  pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
 
     <title>
         <c:if test="${userDetail.userType.utypename == '管理员'}">后台管理</c:if>
@@ -28,16 +27,8 @@
     <link href="../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="../../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="../../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-    <!-- Datatables -->
-    <link href="../../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="../../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-    <link href="../../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-    <link href="../../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-    <link href="../../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom Theme Style -->
+    <!-- Custom styling plus plugins -->
     <link href="../../build/css/custom.min.css" rel="stylesheet">
 </head>
 
@@ -60,7 +51,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="../../images/img.jpg" alt="..." class="img-circle profile_img">
+                        <img src="images/img.jpg" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>欢迎,</span>
@@ -139,6 +130,8 @@
                     </div>
                 </div>
                 <!-- /sidebar menu -->
+
+
             </div>
         </div>
 
@@ -170,18 +163,22 @@
         <!-- page content -->
         <div class="right_col" role="main">
             <div class="">
-                <div class="clearfix"></div>
-
                 <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>添加汽车</h2>
+                                <h2>订单详细</h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Settings 1</a>
+                                            </li>
+                                            <li><a href="#">Settings 2</a>
+                                            </li>
+                                        </ul>
                                     </li>
                                     <li><a class="close-link"><i class="fa fa-close"></i></a>
                                     </li>
@@ -189,85 +186,91 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <form action="<%=request.getContextPath() %>/uploadCar" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="carName">汽车名称 <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="carName" name="carName" required="required" class="form-control col-md-7 col-xs-12">
+                                <section class="content invoice">
+                                    <!-- title row -->
+                                    <div class="row">
+                                        <div class="col-xs-12 invoice-header">
+                                            <h1>
+                                                <i class="fa fa-user"></i> ${orderDetail.user.username}
+                                                <small class="pull-right">到期时间: ${orderDetail.endtime}</small>
+                                            </h1>
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
+                                    <!-- info row -->
+                                    <div class="row invoice-info">
+                                        <div class="col-sm-4 invoice-col">
+                                            提车地址
+                                            <address>
+                                                <strong>${orderDetail.car.location.lname}</strong>
+                                                <br>${orderDetail.car.location.city.province.pname} ${orderDetail.car.location.city.cname}
+                                                <br>手机: ${orderDetail.user.phone}
+                                                <br>邮箱: ${orderDetail.user.email}
+                                            </address>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="plate">车牌号 <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="plate" name="plate" required="required" class="form-control col-md-7 col-xs-12">
+                                    <!-- /.row -->
+
+                                    <!-- Table row -->
+                                    <div class="row">
+                                        <div class="col-xs-12 table">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>汽车品牌</th>
+                                                    <th>汽车名称</th>
+                                                    <th>车牌</th>
+                                                    <th>类型</th>
+                                                    <th>单价</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td><img src="../../images/logo/${orderDetail.car.brandid}.JPG"></td>
+                                                    <td style="vertical-align: middle">${orderDetail.car.carname}</td>
+                                                    <td style="vertical-align: middle">${orderDetail.car.plate}</td>
+                                                    <td style="vertical-align: middle">${orderDetail.car.carType.ctypename}</td>
+                                                    <td style="vertical-align: middle">¥${orderDetail.car.price}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
+                                        <!-- /.col -->
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">类型 <span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div id="gender" class="btn-group" data-toggle="buttons">
-                                                <c:forEach items="${carTypes}" var="carType">
-                                                    <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                        <input type="radio" name="typeId" value="${carType.ctypeid}"> ${carType.ctypename}&nbsp;
-                                                    </label>
-                                                </c:forEach>
+                                    <!-- /.row -->
+
+                                    <div class="row">
+                                        <!-- accepted payments column -->
+                                        <div class="col-xs-6">
+                                            <p class="lead">支付方式:</p>
+                                            <img src="../../images/visa.png" alt="Visa">
+                                            <img src="../../images/mastercard.png" alt="Mastercard">
+                                            <img src="../../images/american-express.png" alt="American Express">
+                                            <img src="../../images/paypal.png" alt="Paypal">
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-xs-6">
+                                            <p class="lead">下单时间${orderDetail.creattime}</p>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th style="width:50%">总计:</th>
+                                                        <td>¥${orderDetail.totalprice}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>天数</th>
+                                                        <td>${orderDetail.car.isdeleted}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
+                                        <!-- /.col -->
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">单价 <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="price" name="price" required="required" class="form-control col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">汽车品牌 <span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="brandId">
-                                                <c:forEach var="carBrand" items="${carBrands}">
-                                                    <option value="${carBrand.brandid}">${carBrand.brandname}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">门店 <span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select id="province"  onchange="chooseProvice(this)" class="form-control">
-                                                <option>请选择省</option>
-                                                <c:forEach var="province" items="${locations}">
-                                                    <option value="${province.pid}">${province.pname}</option>
-                                                </c:forEach>
-                                            </select>
-                                            <br>
-                                            <select id="city"  onchange="chooseCity(this)" class="form-control">
-                                                <option>请选择市</option>
-                                            </select>
-                                            <br>
-                                            <select id="location" name="location" class="form-control">
-                                                <option>请选择门店</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="detail">详细 </label>
-                                        <textarea id="detail" required="required" class="form-control" name="detail" data-parsley-trigger="keyup"></textarea>
-                                    </div>
-                                    <div class="ln_solid"></div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button class="btn btn-primary" type="button">Cancel</button>
-                                            <button class="btn btn-primary" type="reset">Reset</button>
-                                            <button type="submit" class="btn btn-success">Submit</button>
-                                        </div>
-                                    </div>
-
-                                </form>
+                                    <!-- /.row -->
+                                </section>
                             </div>
                         </div>
                     </div>
@@ -279,7 +282,7 @@
         <!-- footer content -->
         <footer>
             <div class="pull-right">
-                基于J2EE的汽车租赁 PWB
+                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
             </div>
             <div class="clearfix"></div>
         </footer>
@@ -295,60 +298,8 @@
 <script src="../../vendors/fastclick/lib/fastclick.js"></script>
 <!-- NProgress -->
 <script src="../../vendors/nprogress/nprogress.js"></script>
-<!-- iCheck -->
-<script src="../../vendors/iCheck/icheck.min.js"></script>
-<!-- Datatables -->
-<script src="../../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="../../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="../../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-<script src="../../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="../../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="../../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-<script src="../../vendors/jszip/dist/jszip.min.js"></script>
-<script src="../../vendors/pdfmake/build/pdfmake.min.js"></script>
-<script src="../../vendors/pdfmake/build/vfs_fonts.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="../../build/js/custom.min.js"></script>
-
-<script>
-    var pTag = document.getElementById("province");
-    var cTag = document.getElementById("city");
-    var lTag = document.getElementById("location");
-    function chooseProvice() {
-        $("#city").empty();
-        cTag.add(new Option("请选择市"));
-        <c:forEach var="province" items="${locations}">
-        if (pTag.options[pTag.selectedIndex].text === "${province.pname}") {
-            <c:forEach var="city" items="${province.cities}">
-            cTag.add(new Option("${city.cname}", ${city.cid}));
-            </c:forEach>
-        }
-        </c:forEach>
-    }
-
-    function chooseCity() {
-        $("#location").empty();
-        lTag.add(new Option("请选择门店"));
-        <c:forEach var="province" items="${locations}">
-        if (pTag.options[pTag.selectedIndex].text === "${province.pname}") {
-            <c:forEach var="city" items="${province.cities}">
-            if (cTag.options[cTag.selectedIndex].text === "${city.cname}") {
-                <c:forEach var="location" items="${city.locations}">
-                lTag.add(new Option("${location.lname}", ${location.lid}));
-                </c:forEach>
-            }
-            </c:forEach>
-        }
-        </c:forEach>
-    }
-</script>
-
 </body>
 </html>

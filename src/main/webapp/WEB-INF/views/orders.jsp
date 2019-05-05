@@ -164,32 +164,7 @@
                                             <td>${order.creattime}</td>
                                             <td>${order.endtime}</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModel${order.orderid}"><i class="fa fa-folder"></i> 查看</button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="myModel${order.orderid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLongTitle">查看订单信息</h5>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>${order.user.username}</p>
-                                                                <p>${order.user.email}</p>
-                                                                <p>${order.user.phone}</p>
-                                                                <p>${order.user.username}</p>
-                                                                <p>${order.car.carname}</p>
-                                                                <p>${order.car.carBrand.brandname}</p>
-                                                                <p>${order.car.carType.ctypename}</p>
-                                                                <p>${order.totalprice}</p>
-                                                                <p>${order.creattime}</p>
-                                                                <p>${order.endtime}</p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/showOrderDetail?orderId=${order.orderid}"><i class="fa fa-folder"></i> 查看</a>
                                                <c:if test="${order.ispaid == 0}">
                                                    <a href="<%=request.getContextPath() %>/pay?orderId=${order.orderid}" class="btn btn-primary btn-xs"><i class="fa fa-paypal"></i> 支付 </a>
                                                    <a href="<%=request.getContextPath() %>/cancelOrder?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 取消订单 </a>

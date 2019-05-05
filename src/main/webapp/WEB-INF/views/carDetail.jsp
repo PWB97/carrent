@@ -16,7 +16,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>后台管理</title>
+    <title>
+        <c:if test="${userDetail.userType.utypename == '管理员'}">后台管理</c:if>
+        <c:if test="${userDetail.userType.utypename == '用户'}">汽车租赁</c:if>
+    </title>
 
     <!-- Bootstrap -->
     <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -48,7 +51,12 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title"> <span>后台管理</span></a>
+                    <a href="index.html" class="site_title">
+                        <span>
+                            <c:if test="${userDetail.userType.utypename == '管理员'}">后台管理</c:if>
+                            <c:if test="${userDetail.userType.utypename == '用户'}">汽车租赁</c:if>
+                        </span>
+                    </a>
                 </div>
 
                 <div class="clearfix"></div>

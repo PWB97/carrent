@@ -160,7 +160,7 @@
                                     <div id="myTabContent2" class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content11" aria-labelledby="home-tab">
                                             <!-- Small modal -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addCarType">添加汽车类型</button>
+                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".addCarType">添加汽车类型</button>
 
                                             <div class="modal fade addCarType" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog modal-sm">
@@ -207,7 +207,7 @@
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="tab_content22" aria-labelledby="profile-tab">
                                             <!-- Small modal -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".addCarBrand">添加汽车品牌</button>
+                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".addCarBrand">添加汽车品牌</button>
 
                                             <div class="modal fade addCarBrand" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog modal-sm">
@@ -238,6 +238,7 @@
                                                 <tr>
                                                     <th>编号</th>
                                                     <th>汽车品牌</th>
+                                                    <th>品牌商标</th>
                                                     <th>操作</th>
                                                 </tr>
                                                 </thead>
@@ -246,43 +247,8 @@
                                                     <tr>
                                                         <td>${carBrand.brandid}</td>
                                                         <td>${carBrand.brandname}</td>
+                                                        <td><img src="../../images/logo/${carBrand.brandid}.JPG"></td>
                                                         <td>
-                                                            <!-- Button trigger modal -->
-                                                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModel${carBrand.brandid}"><i class="fa fa-folder"></i> 查看</button>
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="myModel${carBrand.brandid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalLongTitle">品牌图片</h5>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="row">
-                                                                                <div>
-                                                                                    <div class="col-md-55">
-                                                                                        <div class="thumbnail">
-                                                                                            <div class="image view view-first">
-                                                                                                <img style="width: 100%; display: block;" src="../../images/logo/${carBrand.brandid}.JPG" alt="image" />
-                                                                                                <div class="mask">
-                                                                                                    <p>${carBrand.brandname}</p>
-                                                                                                    <div class="tools tools-bottom">
-                                                                                                        <a href="#"><i class="fa fa-link"></i></a>
-                                                                                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                                                                                        <a href="#"><i class="fa fa-times"></i></a>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                             <a href="<%=request.getContextPath() %>/backManage/deleteCarBrand?brandId=${carBrand.brandid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
                                                         </td>
                                                     </tr>
@@ -301,8 +267,8 @@
                                                 <select id="city" name="cId" onchange="chooseCity(this)">
                                                     <option>请选择市</option>
                                                 </select>
-                                                <input id="name" name="name">
-                                                <button type="submit" class="btn met1" id="button-show" >添加</button>
+                                                <input id="name" name="name" placeholder="在这输入门店名">
+                                                <button type="submit" class="btn btn-default btn-sm" id="button-show" >添加</button>
                                             </form>
                                             <table id="datatable-responsive" class="table table-striped table-bordered">
                                                 <thead>

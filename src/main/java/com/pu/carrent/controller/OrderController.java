@@ -5,6 +5,7 @@ import com.pu.carrent.entity.Order;
 import com.pu.carrent.entity.User;
 import com.pu.carrent.service.CarService;
 import com.pu.carrent.service.OrderSerivce;
+import com.pu.carrent.service.UserService;
 import com.pu.carrent.service.UserTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -177,12 +178,26 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/backManage/refund", method = RequestMethod.GET)
-    public String backRefund(Integer orderId ,HttpSession session, Model model) {
+    public String backRefund(Integer orderId,  HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             // TODO: 2019/4/23 refund
             return "redirect:/backManage/showRefund";
         }  else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
+    }
+
+    @RequestMapping(value = "/showOrderDetail", method = RequestMethod.GET)
+    public String showOrderDetail(Integer orderId, HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0
+            || orderSerivce.findOrderById(orderId).getUserid().equals(currentUser.getUserid())) {
+            Order order = orderSerivce.findOrderById(orderId);
+            model.addAttribute("orderDetail", order);
+            return "orderDetail";
+        } else {
             model.addAttribute("msg", "无权限访问");
             return "fail";
         }
