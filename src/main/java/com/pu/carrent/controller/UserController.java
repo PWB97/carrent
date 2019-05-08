@@ -10,9 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -188,6 +192,34 @@ public class UserController {
             return "redirect:/userDetail";
         }  else {
             model.addAttribute("msg", "未知错误");
+            return "fail";
+        }
+    }
+
+    @RequestMapping(value = "/uploadUserImg", method = RequestMethod.POST)
+    public String uploadUserImg(@RequestParam("file") MultipartFile file, HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if (currentUser != null) {
+            if (file.isEmpty()) {
+                model.addAttribute("msg", "上传失败，请选择文件");
+                return "fail";
+            } else {
+                String fileName = "" + currentUser.getUserid() + ".JPG";
+                String filePath = "/Users/pu/Desktop/carrent/src/main/webapp/images/user/";
+                File dest = new File(filePath + fileName);
+                try {
+                    file.transferTo(dest);
+                    currentUser.setIcon("true");
+                    userService.changeUser(currentUser);
+                    return "redirect:/userDetail";
+                } catch (IOException e) {
+                    model.addAttribute("msg", "创建文件失败");
+                    e.printStackTrace();
+                    return "fail";
+                }
+            }
+        } else {
+            model.addAttribute("msg", "无权限访问");
             return "fail";
         }
     }

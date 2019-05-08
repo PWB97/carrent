@@ -176,7 +176,7 @@
                                             <td>${order.creattime}</td>
                                             <td>${order.endtime}</td>
                                             <td>
-                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/showOrderDetail?orderId=${order.orderid}""><i class="fa fa-folder"></i> 查看</a>
+                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/showOrderDetail?orderId=${order.orderid}"><i class="fa fa-folder"></i> 查看</a>
                                                 <a href="<%=request.getContextPath() %>/backManage/refund?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 退款 </a>
                                             </td>
                                         </tr>

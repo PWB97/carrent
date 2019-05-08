@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>后台管理</title>
+    <title>汽车租赁</title>
 
     <!-- Bootstrap -->
     <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -37,7 +37,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title"><span>后台管理</span></a>
+                    <a href="index.html" class="site_title"><span>汽车租赁</span></a>
                 </div>
 
                 <div class="clearfix"></div>

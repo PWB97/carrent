@@ -17,7 +17,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>用户信息</title>
 
     <!-- Bootstrap -->
     <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,7 +27,6 @@
     <link href="../../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- bootstrap-daterangepicker -->
     <link href="../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="../../build/css/custom.min.css" rel="stylesheet">
 </head>
@@ -38,7 +37,12 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title"><span>后台管理</span></a>
+                    <a href="index.html" class="site_title">
+                        <span>
+                            <c:if test="${userDetail.userType.utypename == '管理员'}">后台管理</c:if>
+                            <c:if test="${userDetail.userType.utypename == '用户'}">汽车租赁</c:if>
+                        </span>
+                    </a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -190,8 +194,28 @@
                                     <div class="profile_img">
                                         <div id="crop-avatar">
                                             <!-- Current avatar -->
-                                            <img class="img-responsive avatar-view" src="images/picture.jpg"
-                                                 alt="Avatar" title="Change the avatar">
+                                            <img class="img-responsive avatar-view" src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
+                                                                                                   <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>"
+                                                 alt="Avatar" title="修改用户头像" onclick="imgClick(this)">
+                                        </div>
+                                        <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h4 class="modal-title">修改头像</h4>
+                                                    </div>
+                                                    <form action="<%=request.getContextPath() %>/uploadUserImg" method="post" enctype="multipart/form-data">
+                                                    <div class="modal-body">
+                                                        <input type="file" name="file">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                        <button type="submit" class="btn btn-primary">保存</button>
+                                                    </div>
+                                                    </form>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal -->
                                         </div>
                                     </div>
                                     <h3>${userDetail.username}</h3>
@@ -347,6 +371,12 @@
         <!-- /footer content -->
     </div>
 </div>
+<script>
+    function imgClick() {
+        $('#userModal').modal('toggle');
+    }
+</script>
+
 
 <!-- jQuery -->
 <script src="../../vendors/jquery/dist/jquery.min.js"></script>
