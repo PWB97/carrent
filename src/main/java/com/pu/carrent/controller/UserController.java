@@ -1,5 +1,6 @@
 package com.pu.carrent.controller;
 
+import com.pu.carrent.dao.UserDao;
 import com.pu.carrent.entity.User;
 import com.pu.carrent.entity.UserType;
 import com.pu.carrent.service.UserService;
@@ -22,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserTypeService userTypeService;
+
+    @Autowired
+    private UserDao userDao;
 
     @RequestMapping(value = "/user/login", method = RequestMethod.GET)
     public String login() {
@@ -156,7 +160,11 @@ public class UserController {
     @RequestMapping(value = "/userDetail", method = RequestMethod.GET)
     public String showUserDetail(HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
-        if (currentUser != null) return "userDetail";
+        if (currentUser != null) {
+            List<User> userBrowse = userDao.findUserByUserId(currentUser.getUserid());
+            model.addAttribute("userBrowse", userBrowse);
+            return "userDetail";
+        }
         else {
             model.addAttribute("msg", "您未登录");
             return "fail";

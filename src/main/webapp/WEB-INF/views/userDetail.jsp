@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -279,11 +280,7 @@
                                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                                             <li role="presentation" class="active"><a href="#tab_content1" id="home-tab"
                                                                                       role="tab" data-toggle="tab"
-                                                                                      aria-expanded="true">订单</a>
-                                            </li>
-                                            <li role="presentation" class=""><a href="#tab_content2" role="tab"
-                                                                                id="profile-tab" data-toggle="tab"
-                                                                                aria-expanded="false">出租</a>
+                                                                                      aria-expanded="true">浏览历史</a>
                                             </li>
                                             <li role="presentation" class=""><a href="#tab_content3" role="tab"
                                                                                 id="profile-tab2" data-toggle="tab"
@@ -296,163 +293,27 @@
 
                                                 <!-- start recent activity -->
                                                 <ul class="messages">
-                                                    <li>
-                                                        <img src="images/img.jpg" class="avatar" alt="Avatar">
-                                                        <div class="message_date">
-                                                            <h3 class="date text-info">24</h3>
-                                                            <p class="month">May</p>
-                                                        </div>
-                                                        <div class="message_wrapper">
-                                                            <h4 class="heading">Desmond Davison</h4>
-                                                            <blockquote class="message">Raw denim you probably haven't
-                                                                heard of them jean shorts Austin. Nesciunt tofu
-                                                                stumptown aliqua butcher retro keffiyeh dreamcatcher
-                                                                synth.
-                                                            </blockquote>
-                                                            <br/>
-                                                            <p class="url">
-                                                                <span class="fs1 text-info" aria-hidden="true"
-                                                                      data-icon=""></span>
-                                                                <a href="#"><i class="fa fa-paperclip"></i> User
-                                                                    Acceptance Test.doc </a>
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <img src="images/img.jpg" class="avatar" alt="Avatar">
-                                                        <div class="message_date">
-                                                            <h3 class="date text-error">21</h3>
-                                                            <p class="month">May</p>
-                                                        </div>
-                                                        <div class="message_wrapper">
-                                                            <h4 class="heading">Brian Michaels</h4>
-                                                            <blockquote class="message">Raw denim you probably haven't
-                                                                heard of them jean shorts Austin. Nesciunt tofu
-                                                                stumptown aliqua butcher retro keffiyeh dreamcatcher
-                                                                synth.
-                                                            </blockquote>
-                                                            <br/>
-                                                            <p class="url">
-                                                                <span class="fs1" aria-hidden="true"
-                                                                      data-icon=""></span>
-                                                                <a href="#" data-original-title="">Download</a>
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <img src="images/img.jpg" class="avatar" alt="Avatar">
-                                                        <div class="message_date">
-                                                            <h3 class="date text-info">24</h3>
-                                                            <p class="month">May</p>
-                                                        </div>
-                                                        <div class="message_wrapper">
-                                                            <h4 class="heading">Desmond Davison</h4>
-                                                            <blockquote class="message">Raw denim you probably haven't
-                                                                heard of them jean shorts Austin. Nesciunt tofu
-                                                                stumptown aliqua butcher retro keffiyeh dreamcatcher
-                                                                synth.
-                                                            </blockquote>
-                                                            <br/>
-                                                            <p class="url">
-                                                                <span class="fs1 text-info" aria-hidden="true"
-                                                                      data-icon=""></span>
-                                                                <a href="#"><i class="fa fa-paperclip"></i> User
-                                                                    Acceptance Test.doc </a>
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <img src="images/img.jpg" class="avatar" alt="Avatar">
-                                                        <div class="message_date">
-                                                            <h3 class="date text-error">21</h3>
-                                                            <p class="month">May</p>
-                                                        </div>
-                                                        <div class="message_wrapper">
-                                                            <h4 class="heading">Brian Michaels</h4>
-                                                            <blockquote class="message">Raw denim you probably haven't
-                                                                heard of them jean shorts Austin. Nesciunt tofu
-                                                                stumptown aliqua butcher retro keffiyeh dreamcatcher
-                                                                synth.
-                                                            </blockquote>
-                                                            <br/>
-                                                            <p class="url">
-                                                                <span class="fs1" aria-hidden="true"
-                                                                      data-icon=""></span>
-                                                                <a href="#" data-original-title="">Download</a>
-                                                            </p>
-                                                        </div>
-                                                    </li>
-
+                                                    <c:forEach items="${userBrowse}" var="item">
+                                                        <li>
+                                                            <img src="../../images/logo/${item.carRecord.brandid}.JPG" class="avatar" alt="Avatar">
+                                                            <div class="message_date">
+                                                                <h3 class="date text-info"><fmt:formatDate value="${item.browseDate}" pattern="dd" /></h3>
+                                                                <p class="month"><fmt:formatDate value="${item.browseDate}" pattern="MM" /></p>
+                                                            </div>
+                                                            <div class="message_wrapper">
+                                                                <h4 class="heading">${item.carRecord.carname}</h4>
+                                                                <p>品牌名： ${item.carRecord.carBrand.brandname}</p>
+                                                                <p>类型： ${item.carRecord.carType.ctypename}</p>
+                                                                <p>地点： ${item.carRecord.location.city.province.pname} ${item.carRecord.location.city.cname} ${item.carRecord.location.lname}</p>
+                                                                <p class="url">
+                                                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                                                                    <a href="<%=request.getContextPath() %>/carDetail?carId=${item.carRecord.carid}"><i class="fa fa-paperclip"></i> 查看详情 </a>
+                                                                </p>
+                                                            </div>
+                                                        </li>
+                                                    </c:forEach>
                                                 </ul>
                                                 <!-- end recent activity -->
-
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane fade" id="tab_content2"
-                                                 aria-labelledby="profile-tab">
-
-                                                <!-- start user projects -->
-                                                <table class="data table table-striped no-margin">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Project Name</th>
-                                                        <th>Client Company</th>
-                                                        <th class="hidden-phone">Hours Spent</th>
-                                                        <th>Contribution</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>New Company Takeover Review</td>
-                                                        <td>Deveint Inc</td>
-                                                        <td class="hidden-phone">18</td>
-                                                        <td class="vertical-align-mid">
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-success"
-                                                                     data-transitiongoal="35"></div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>New Partner Contracts Consultanci</td>
-                                                        <td>Deveint Inc</td>
-                                                        <td class="hidden-phone">13</td>
-                                                        <td class="vertical-align-mid">
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-danger"
-                                                                     data-transitiongoal="15"></div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>Partners and Inverstors report</td>
-                                                        <td>Deveint Inc</td>
-                                                        <td class="hidden-phone">30</td>
-                                                        <td class="vertical-align-mid">
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-success"
-                                                                     data-transitiongoal="45"></div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>New Company Takeover Review</td>
-                                                        <td>Deveint Inc</td>
-                                                        <td class="hidden-phone">28</td>
-                                                        <td class="vertical-align-mid">
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-success"
-                                                                     data-transitiongoal="75"></div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                                <!-- end user projects -->
 
                                             </div>
                                             <div role="tabpanel" class="tab-pane fade" id="tab_content3"
@@ -461,7 +322,7 @@
                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">修改简介 <span class="required">*</span>
                                                     </label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        <textarea id="textarea" required="required" name="textarea" class="form-control col-md-7 col-xs-12"></textarea>
+                                                        <textarea id="textarea" required="required" name="textarea" class="form-control col-md-7 col-xs-12" placeholder="${userDetail.info}"></textarea>
                                                     </div>
                                                 </div>
                                             </div>

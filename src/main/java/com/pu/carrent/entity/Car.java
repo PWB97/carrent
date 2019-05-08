@@ -1,8 +1,18 @@
 package com.pu.carrent.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.math.BigDecimal;
 
+@Document(collection = "car")
 public class Car {
+
+    @Id
+    private String id;
+
     private Integer carid;
 
     private String carname;
@@ -29,13 +39,25 @@ public class Car {
 
     private String files;
 
+    @DBRef
     private CarBrand carBrand;
 
+    @DBRef
     private CarType carType;
 
+    @Transient
     private User owner;
 
+    @DBRef
     private Location location;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Location getLocation() {
         return location;

@@ -1,8 +1,19 @@
 package com.pu.carrent.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
 import java.util.List;
 
+@Document(collection = "user")
 public class User {
+
+    @Id
+    private String id;
+
     private Integer userid;
 
     private String username;
@@ -21,9 +32,40 @@ public class User {
 
     private Integer isdeleted;
 
+    @Transient
     private List<Order> orders;
 
+    @DBRef
     private UserType userType;
+
+    @DBRef
+    private Car carRecord;
+
+    private Date browseDate;
+
+    public Date getBrowseDate() {
+        return browseDate;
+    }
+
+    public void setBrowseDate(Date browseDate) {
+        this.browseDate = browseDate;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Car getCarRecord() {
+        return carRecord;
+    }
+
+    public void setCarRecord(Car carRecord) {
+        this.carRecord = carRecord;
+    }
 
     public UserType getUserType() {
         return userType;

@@ -1,5 +1,6 @@
 package com.pu.carrent.controller;
 
+import com.pu.carrent.dao.UserDao;
 import com.pu.carrent.entity.*;
 import com.pu.carrent.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class CarController {
     @Autowired
     private ProvinceService provinceService;
 
+    @Autowired
+    private UserDao userDao;
+
     @RequestMapping(value = "/rentCar", method = RequestMethod.GET)
     public String showCarsWithConditions(String carBrand, String carType, String province, String city, String location, String lowPrice, String highPrice, Model model, HttpSession session){
 
@@ -77,10 +81,15 @@ public class CarController {
     }
 
     @RequestMapping(value = "/carDetail", method = RequestMethod.GET)
-    public String showCarDetail(Integer carId, Model model) {
+    public String showCarDetail(Integer carId, HttpSession session, Model model) {
         Car car = carService.findCarById(carId);
         if (car != null) {
             model.addAttribute("carDetail", car);
+            User currentUser = (User) session.getAttribute("userDetail");
+            if (currentUser != null) {
+                currentUser.setCarRecord(car);
+                userDao.insertUserRecord(currentUser);
+            }
             return "carDetail";
         } else {
             model.addAttribute("msg", "查找失败");
