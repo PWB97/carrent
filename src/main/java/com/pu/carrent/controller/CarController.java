@@ -86,7 +86,7 @@ public class CarController {
         if (car != null) {
             model.addAttribute("carDetail", car);
             User currentUser = (User) session.getAttribute("userDetail");
-            if (currentUser != null) {
+            if (currentUser != null && car.getIsonline() == 1) {
                 currentUser.setCarRecord(car);
                 userDao.insertUserRecord(currentUser);
             }
@@ -128,7 +128,7 @@ public class CarController {
             if (lId != null) car.setLid(lId);
             car.setUserid(currentUser.getUserid());
             car.setIsdeleted(0);
-            car.setIsonline(0);
+            car.setIsonline(-1);
             carService.addCar(car);
             return "redirect:/uploadCar";
         } else {
@@ -178,7 +178,7 @@ public class CarController {
             car.setIsonline(1);
             car.setPrice(new BigDecimal(price.toString()));
             carService.changeCar(car);
-            return "carsNotOnline";
+            return "redirect:/backManage/carsNotOnline";
         } else {
             model.addAttribute("msg", "无权限访问");
             return "fail";
@@ -349,5 +349,16 @@ public class CarController {
         }
     }
 
-    // TODO: 2019-04-28 showMyUploadCars
+    @RequestMapping(value = "/showMyUploadCars", method = RequestMethod.GET)
+    public String showMyUploadCars(HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if (currentUser != null) {
+            List<Car> userCars = carService.findCarsByUserId(currentUser.getUserid());
+            model.addAttribute("userCars", userCars);
+            return "showMyUploadCars";
+        } else {
+            model.addAttribute("msg", "未登录");
+            return "fail";
+        }
+    }
 }

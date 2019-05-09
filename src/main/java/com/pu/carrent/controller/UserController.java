@@ -39,8 +39,8 @@ public class UserController {
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public String login(String userName, String password, HttpSession session, Model model) {
         User user = userService.login(userName, password);
-        User detail = userService.findUserById(user.getUserid());
         if (user != null) {
+            User detail = userService.findUserById(user.getUserid());
             session.setAttribute("currentUser", user);
             session.setAttribute("userDetail", detail);
             String userType = userTypeService.finduTypeNameById(user.getUtypeid());

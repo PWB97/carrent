@@ -43,7 +43,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title"><span>汽车租赁</span></a>
+                    <a class="site_title"><span>汽车租赁</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -51,7 +51,8 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="../../images/img.jpg" alt="..." class="img-circle profile_img">
+                        <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
+                                  <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>欢迎,</span>
@@ -86,7 +87,7 @@
                             </li>
                             <li><a><i class="fa fa-user"></i> 我的 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="<%=request.getContextPath() %>/test">我的出租</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/showMyUploadCars">我的出租</a></li>
                                     <li><a href="<%=request.getContextPath() %>/userDetail">其他信息</a></li>
                                 </ul>
                             </li>
@@ -108,7 +109,8 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="../../images/img.jpg" alt="">${currentUser.username}
+                                <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
+                                          <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="">${currentUser.username}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -131,7 +133,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>新闻资讯</h2>
+                                <h2>我上传的汽车</h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -148,43 +150,24 @@
                                     <thead>
                                     <tr>
                                         <th>编号</th>
-                                        <th>标题</th>
-                                        <th>内容</th>
-                                        <th>时间</th>
-                                        <th>创建者</th>
+                                        <th>汽车名称</th>
+                                        <th>车牌</th>
+                                        <th>状态</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="news" items="${newsList}" varStatus="s">
+                                    <c:forEach var="car" items="${userCars}" varStatus="s">
                                         <tr>
-                                            <td>${news.newsid}</td>
-                                            <td>${news.title}</td>
-                                            <td>${news.content}</td>
-                                            <td>${news.creattime}</td>
-                                            <td>${news.creator.username}</td>
+                                            <td>${car.carid}</td>
+                                            <td>${car.carname}</td>
+                                            <td>${car.plate}</td>
                                             <td>
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModel${news.newsid}"><i class="fa fa-folder"></i> 查看</button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="myModel${news.newsid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLongTitle">查看新闻</h5>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>${news.title}</p>
-                                                                <p>${news.creator.username}</p>
-                                                                <p>${news.creattime}</p>
-                                                                <p>${news.content}</p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <c:if test="${car.isonline==-1}">等待审核</c:if>
+                                                <c:if test="${car.isonline==0}">审核通过，请到店办理</c:if>
+                                            </td>
+                                            <td>
+                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}"><i class="fa fa-folder"></i> 查看</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

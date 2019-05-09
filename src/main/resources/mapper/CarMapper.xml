@@ -373,7 +373,7 @@
   <select id="selectCarsNotOnlineWithDetail" resultMap="CarDetail">
     select *
     from t_car c left join t_carbrand tc on c.brandId = tc.brandId left join t_cartype t on c.cTypeId = t.cTypeId left join t_user tu on c.userId = tu.userId left join t_location tl on c.lId = tl.lId left join t_city tc2 on tl.cId = tc2.cId left join t_province tp on tc2.pId = tp.pId
-    where c.isDeleted=0 and c.isOnline=0
+    where c.isDeleted=0 and c.isOnline &lt;&gt; 1
   </select>
   <select id="selctCarWithDetailById" resultMap="CarDetail">
     select *

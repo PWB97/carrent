@@ -50,4 +50,11 @@ public class CarServiceImpl implements CarService {
     public int changeCar(Car car) {
         return carMapper.updateByPrimaryKeySelective(car);
     }
+
+    @Override
+    public List<Car> findCarsByUserId(Integer userId) {
+        CarExample example = new CarExample();
+        example.createCriteria().andUseridEqualTo(userId);
+        return carMapper.selectByExample(example);
+    }
 }

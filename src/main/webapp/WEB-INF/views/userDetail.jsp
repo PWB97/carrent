@@ -37,7 +37,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title">
+                    <a class="site_title">
                         <span>
                             <c:if test="${userDetail.userType.utypename == '管理员'}">后台管理</c:if>
                             <c:if test="${userDetail.userType.utypename == '用户'}">汽车租赁</c:if>
@@ -50,7 +50,8 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="../../images/img.jpg" alt="..." class="img-circle profile_img">
+                        <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
+                                                                                                   <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>欢迎,</span>
@@ -120,7 +121,7 @@
                                 </li>
                                 <li><a><i class="fa fa-user"></i> 我的 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="<%=request.getContextPath() %>/test">我的出租</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/showMyUploadCars">我的出租</a></li>
                                         <li><a href="<%=request.getContextPath() %>/userDetail">其他信息</a></li>
                                     </ul>
                                 </li>
@@ -144,7 +145,8 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../images/img.jpg" alt="">${currentUser.username}
+                                <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
+                                                                                                   <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="">${currentUser.username}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">

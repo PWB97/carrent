@@ -20,4 +20,6 @@ public interface CarService {
     List<Car> findCarsWithConditions(Integer typeId, Integer brandId, Integer pId, Integer cId, Integer lId, BigDecimal lowPrice, BigDecimal highPrice);
 
     int changeCar(Car car);
+
+    List<Car> findCarsByUserId(Integer userId);
 }

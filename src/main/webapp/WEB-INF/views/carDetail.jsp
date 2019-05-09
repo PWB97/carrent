@@ -51,7 +51,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title">
+                    <a class="site_title">
                         <span>
                             <c:if test="${userDetail.userType.utypename == '管理员'}">后台管理</c:if>
                             <c:if test="${userDetail.userType.utypename == '用户'}">汽车租赁</c:if>
@@ -64,7 +64,8 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="../../images/img.jpg" alt="..." class="img-circle profile_img">
+                        <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
+                                  <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>欢迎,</span>
@@ -134,7 +135,7 @@
                                 </li>
                                 <li><a><i class="fa fa-user"></i> 我的 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="<%=request.getContextPath() %>/test">我的出租</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/showMyUploadCars">我的出租</a></li>
                                         <li><a href="<%=request.getContextPath() %>/userDetail">其他信息</a></li>
                                     </ul>
                                 </li>
@@ -158,7 +159,8 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../images/img.jpg" alt="">${currentUser.username}
+                                <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
+                                          <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="">${currentUser.username}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -245,23 +247,33 @@
                                         <p>${carDetail.location.city.province.pname}-${carDetail.location.city.cname}-${carDetail.location.lname}</p>
                                     </div>
                                     <br />
-
+                                    <c:if test="${carDetail.isonline==1}">
                                     <div class="col-md-12">
                                         <div class="product_price">
                                             <h2>价格 </h2>
                                             <h1 class="price">${carDetail.price}</h1>
                                         </div>
                                     </div>
+                                    </c:if>
+                                    <c:if test="${carDetail.isonline==0 && userDetail.userType.utypename == '管理员'}">
+                                        <div class="col-md-12">
+                                            <form action="<%=request.getContextPath() %>/backManage/online" method="post">
+                                                <input name="carId" hidden="hidden" value="${carDetail.carid}">
+                                                <input name="price">
+                                                <input type="submit">
+                                            </form>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
-                            <c:if test="${carDetail.isonline == 0}">
+                            <c:if test="${carDetail.isonline == -1}">
                                 <div class="">
                                     <form action="<%=request.getContextPath() %>/" method="post">
                                         <a>上传图片和审核文件</a>
                                     </form>
                                 </div>
                             </c:if>
-                            <c:if test="${carDetail.isonline == 1 && userDetail.userType.utypename == '用户'}">
+                            <c:if test="${carDetail.isonline == 1 && userDetail.userType.utypename eq '用户'}">
                                 <div class="">
                                     <form action="<%=request.getContextPath() %>/makeOrder" method="post">
                                         <div class="col-md-4">
