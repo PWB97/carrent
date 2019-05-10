@@ -361,4 +361,22 @@ public class CarController {
             return "fail";
         }
     }
+
+    @RequestMapping(value = "/DeleteMyUploadCar", method = RequestMethod.GET)
+    public String DeleteMyUploadCar(Integer carId, HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if (currentUser != null) {
+            Car record = carService.findCarById(carId);
+            if (currentUser.getUserid().compareTo(record.getUserid()) == 0) {
+                carService.deleteCarByCarId(carId);
+                return "redirect:/showMyUploadCars";
+            } else {
+                model.addAttribute("msg", "无权限访问");
+                return "fail";
+            }
+        } else {
+            model.addAttribute("msg", "未登录");
+            return "fail";
+        }
+    }
 }

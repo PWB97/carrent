@@ -99,6 +99,7 @@
                                             <a href="<%=request.getContextPath() %>/backManage/showOrdersNotPaid">未支付订单</a>
                                         </li>
                                         <li><a href="<%=request.getContextPath() %>/backManage/showRefund">退款订单</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/showOrderDetail">订单详情</a></li>
                                     </ul>
                                 </li>
                             </c:if>
@@ -112,6 +113,7 @@
                                 <li><a><i class="fa fa-dollar"></i> 我的订单 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="<%=request.getContextPath() %>/orders">所有订单</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/showOrderDetail">订单详情</a></li>
                                         <li><a href="<%=request.getContextPath() %>/showMyRefunds">退款中</a></li>
                                     </ul>
                                 </li>

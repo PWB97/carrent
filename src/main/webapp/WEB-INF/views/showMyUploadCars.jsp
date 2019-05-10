@@ -168,6 +168,7 @@
                                             </td>
                                             <td>
                                                 <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}"><i class="fa fa-folder"></i> 查看</a>
+                                                <a type="button" class="btn btn-danger btn-xs" href="<%=request.getContextPath() %>/DeleteMyUploadCar?carId=${car.carid}"><i class="fa fa-trash-o"></i> 删除</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

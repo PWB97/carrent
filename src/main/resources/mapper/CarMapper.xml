@@ -351,6 +351,7 @@
     <result column="price" property="price"/>
     <result column="isOnline" property="isonline"/>
     <result column="isDeleted" property="isdeleted"/>
+    <result column="userId" property="userid"/>
     <collection property="carBrand" ofType="com.pu.carrent.entity.CarBrand">
       <result column="brandName" property="brandname"/>
     </collection>
@@ -405,7 +406,7 @@
       <if test="highPrice != null">
        and c.price <![CDATA[  >=  ]]> #{highPrice,jdbcType=DECIMAL}
       </if>
-      and c.isDeleted = 0
+      and c.isDeleted = 0 and c.isOnline = 1
     </where>
   </select>
 </mapper>
