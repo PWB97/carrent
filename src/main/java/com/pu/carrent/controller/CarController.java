@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -116,7 +118,7 @@ public class CarController {
 
     @RequestMapping(value = "/uploadCar", method = RequestMethod.POST)
     public String uploadCar(String carName, Integer brandId, Integer typeId, String plate, String detail,
-                            Integer lId, HttpSession session, Model model) {
+                            Integer location, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             Car car = new Car();
@@ -125,7 +127,7 @@ public class CarController {
             if (typeId != null) car.setCtypeid(typeId);
             if (plate != null) car.setPlate(plate);
             if (detail != null) car.setDetail(detail);
-            if (lId != null) car.setLid(lId);
+            if (location != null) car.setLid(location);
             car.setUserid(currentUser.getUserid());
             car.setIsdeleted(0);
             car.setIsonline(-1);
@@ -137,17 +139,40 @@ public class CarController {
         }
     }
 
-    // TODO: 2019-04-28  
     @RequestMapping(value = "/uploadCarFiles", method = RequestMethod.POST)
-    public String uploadCarFiles(Integer carId, @RequestParam("files[]") MultipartFile[] files, HttpSession session, Model model) {
-
-        try {
-            if (files != null && files.length > 0) {
-
+    public String uploadCarFiles(Integer carId, MultipartFile file, HttpSession session, Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        Integer times = (Integer) session.getAttribute("times");
+        System.out.println(file.toString());
+        if (currentUser != null) {
+            Car record = carService.findCarById(carId);
+            if (currentUser.getUserid().compareTo(record.getUserid()) == 0) {
+                if (file.isEmpty()) {
+                    model.addAttribute("msg", "上传失败，请选择文件");
+                    return "fail";
+                }
+                try {
+                    if (times == null) times = 1;
+                    else times += 1;
+                    session.setAttribute("times", times);
+                    String fileName = "" + times + ".jpg";
+                    String filePath = "/Users/pu/Desktop/carrent/src/main/webapp/images/car/"+carId+"/";
+                    File path = new File(filePath);
+                    if (!path.exists()) path.mkdirs();
+                    File dest = new File(filePath + fileName);
+                    file.transferTo(dest);
+                    return "redirect:/carDetail";
+                } catch (Exception e) {
+                    model.addAttribute("msg", "上传失败");
+                    return "fail";
+                }
+            } else {
+                model.addAttribute("msg", "无权限访问");
+                return "fail";
             }
-            return "";
-        } catch (Exception e) {
-            return "";
+        } else {
+            model.addAttribute("msg", "未登录");
+            return "fail";
         }
     }
 
@@ -241,7 +266,7 @@ public class CarController {
                 carBrand.setBrandname(brandName);
                 carBrandService.addCarBrand(carBrand);
                 String fileName = "" + carBrandService.findBrandIdByName(brandName) + ".JPG";
-                String filePath = "/Users/pu/Desktop/carrent/src/main/webapp/images/log/";
+                String filePath = "/Users/pu/Desktop/carrent/src/main/webapp/images/logo/";
                 File dest = new File(filePath + fileName);
                 file.transferTo(dest);
                 return "redirect:/backManage/showCarConditions";

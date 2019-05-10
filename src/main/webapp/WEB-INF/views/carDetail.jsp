@@ -43,6 +43,7 @@
     <link href="../../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="../../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
+    <link href="../../vendors/dropzone/dist/dropzone.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../../build/css/custom.min.css" rel="stylesheet">
 </head>
@@ -210,17 +211,17 @@
                                 <div class="col-md-7 col-sm-7 col-xs-12">
                                     <div class="sp-loading"><img src="../../images/sp-loading.gif" alt=""><br>LOADING IMAGES</div>
                                     <div class="sp-wrap">
-                                        <a href="../../images/1.jpg"><img src="../../images/1.jpg" alt=""></a>
-                                        <a href="../../images/2.jpg"><img src="../../images/2.jpg" alt=""></a>
-                                        <a href="../../images/3.jpg"><img src="../../images/3.jpg" alt=""></a>
-                                        <a href="../../images/4.jpg"><img src="../../images/4.jpg" alt=""></a>
-                                        <a href="../../images/5.jpg"><img src="../../images/5.jpg" alt=""></a>
-                                        <a href="../../images/6.jpg"><img src="../../images/6.jpg" alt=""></a>
+                                        <a href="../../images/car/${carDetail.carid}/1.jpg"><img src="../../images/car/${carDetail.carid}/1.jpg" alt=""></a>
+                                        <a href="../../images/car/${carDetail.carid}/2.jpg"><img src="../../images/car/${carDetail.carid}/2.jpg" alt=""></a>
+                                        <a href="../../images/car/${carDetail.carid}/3.jpg"><img src="../../images/car/${carDetail.carid}/3.jpg" alt=""></a>
+                                        <a href="../../images/car/${carDetail.carid}/4.jpg"><img src="../../images/car/${carDetail.carid}/4.jpg" alt=""></a>
+                                        <a href="../../images/car/${carDetail.carid}/5.jpg"><img src="../../images/car/${carDetail.carid}/5.jpg" alt=""></a>
+                                        <a href="../../images/car/${carDetail.carid}/6.jpg"><img src="../../images/car/${carDetail.carid}/6.jpg" alt=""></a>
                                     </div>
                                     <c:if test="${carDetail.isonline == -1}">
                                         <div class="">
-                                            <form action="<%=request.getContextPath() %>/" method="post">
-                                                <a>上传图片和审核文件</a>
+                                            <form id ="myAwesomeDropzone" action="<%=request.getContextPath() %>/uploadCarFiles" class="dropzone" method="POST" enctype="multipart/form-data">
+                                                <input hidden="hidden" name="carId" value="${carDetail.carid}">
                                             </form>
                                         </div>
                                     </c:if>
@@ -379,6 +380,21 @@
     $(window).load(function() {
         $('.sp-wrap').smoothproducts();
     });
+</script>
+<script type="text/javascript" src="../../vendors/dropzone/dist/dropzone.js"></script>
+<script type="text/javascript">
+    //两种配置方式，第一种，表单上传时的配置方式，可以打开form表单的注释，myAwesomeDropzone是表单的id
+    Dropzone.options.myAwesomeDropzone = {
+        paramName: "file", // The name that will be used to transfer the file
+        maxFilesize: 100, // MB
+        maxFiles: 6,
+        parallelUploads:1,
+        complete: function() {
+            setTimeout(function(){
+                location.reload();
+            },1000);
+        }
+    };
 </script>
 </body>
 </html>
