@@ -59,4 +59,8 @@ public class UserDao {
     public List<User> findUserByUserId(Integer userId) {
         return mongoTemplate.find(new Query(Criteria.where("userid").is(userId)), User.class);
     }
+
+    public void deleteRecords(Integer userId) {
+        mongoTemplate.remove(new Query(Criteria.where("userid").is(userId)), User.class);
+    }
 }

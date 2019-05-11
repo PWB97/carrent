@@ -139,7 +139,7 @@ public class CarController {
         }
     }
 
-    @RequestMapping(value = "/uploadCarFiles", method = RequestMethod.POST)
+    @RequestMapping(value = "/uploadCarPictures", method = RequestMethod.POST)
     public String uploadCarFiles(Integer carId, MultipartFile file, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         Integer times = (Integer) session.getAttribute("times");
@@ -395,6 +395,40 @@ public class CarController {
             if (currentUser.getUserid().compareTo(record.getUserid()) == 0) {
                 carService.deleteCarByCarId(carId);
                 return "redirect:/showMyUploadCars";
+            } else {
+                model.addAttribute("msg", "无权限访问");
+                return "fail";
+            }
+        } else {
+            model.addAttribute("msg", "未登录");
+            return "fail";
+        }
+    }
+
+    @Transactional
+    @RequestMapping(value = "/uploadCarFile", method = RequestMethod.POST)
+    public String uploadCarFile(Integer carId, MultipartFile file, HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if (currentUser != null) {
+            Car record = carService.findCarById(carId);
+            if (currentUser.getUserid().compareTo(record.getUserid()) == 0) {
+                if (file.isEmpty()) {
+                    model.addAttribute("msg", "上传失败，请选择文件");
+                    return "fail";
+                }
+                try {
+                    String fileName = "" + carId + ".docx";
+                    String filePath = "/Users/pu/Desktop/carrent/src/main/webapp/files/";
+                    File dest = new File(filePath + fileName);
+                    file.transferTo(dest);
+                    record.setFiles("true");
+                    carService.changeCar(record);
+                    return "redirect:/carDetail";
+                } catch (Exception e) {
+                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                    model.addAttribute("msg", "上传失败");
+                    return "fail";
+                }
             } else {
                 model.addAttribute("msg", "无权限访问");
                 return "fail";

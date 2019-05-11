@@ -220,8 +220,11 @@
                                     </div>
                                     <c:if test="${carDetail.isonline == -1}">
                                         <div class="">
-                                            <form id ="myAwesomeDropzone" action="<%=request.getContextPath() %>/uploadCarFiles" class="dropzone" method="POST" enctype="multipart/form-data">
+                                            <form id ="myAwesomeDropzone" action="<%=request.getContextPath() %>/uploadCarPictures" class="dropzone" method="POST" enctype="multipart/form-data">
                                                 <input hidden="hidden" name="carId" value="${carDetail.carid}">
+                                                <div class="dz-message">
+                                                    <span>拖入图片以更改预览图</span>
+                                                </div>
                                             </form>
                                         </div>
                                     </c:if>
@@ -238,7 +241,6 @@
                                                                     <input type="text" class="form-control has-feedback-left" id="single_cal4" placeholder="First Name" aria-describedby="inputSuccess2Status4">
                                                                     <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                                                     <span id="inputSuccess2Status4" class="sr-only">(success)</span>
-
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -251,29 +253,30 @@
                                 </div>
 
                                 <div class="col-md-5 col-sm-5 col-xs-12" style="border:0px solid #e5e5e5;">
-
                                     <h3 class="prod_title">${carDetail.carname}</h3>
-
-                                    <p>${carDetail.detail}</p>
-                                    <br />
-
                                     <div class="col-md-12">
-                                        <h2>类型 </h2>
-                                        <p>${carDetail.carType.ctypename}</p>
+                                        <div class="col-md-6">
+                                            <h2>品牌 </h2>
+                                            <img src="../../images/logo/${carDetail.brandid}.JPG" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-12">
+                                                <h2>类型 </h2>
+                                                <p>${carDetail.carType.ctypename}</p>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <h2>门店 </h2>
+                                                <p>${carDetail.location.city.province.pname}-${carDetail.location.city.cname}-${carDetail.location.lname}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <br />
-
+                                    <br>
                                     <div class="col-md-12">
-                                        <h2>品牌 </h2>
-                                        <img src="../../images/logo/${carDetail.brandid}.JPG" />
+                                        <div class="col-md-12">
+                                            <h2>描述 </h2>
+                                            <p>${carDetail.detail}</p>
+                                        </div>
                                     </div>
-                                    <br />
-
-                                    <div class="col-md-12">
-                                        <h2>门店 </h2>
-                                        <p>${carDetail.location.city.province.pname}-${carDetail.location.city.cname}-${carDetail.location.lname}</p>
-                                    </div>
-                                    <br />
                                     <c:if test="${carDetail.isonline==1}">
                                     <div class="col-md-12">
                                         <div class="product_price">
@@ -290,6 +293,22 @@
                                                 <input type="submit">
                                             </form>
                                         </div>
+                                    </c:if>
+                                    <c:if test="${carDetail.isonline == -1}">
+                                        <di>
+                                            <form action="<%=request.getContextPath() %>/uploadCarFile" method="post" enctype="multipart/form-data">
+                                                <label for="carId">上传审核文件(将需上传类容放入Word中上传)</label>
+                                                <input hidden="hidden" value="${carDetail.carid}" name="carId" id="carId">
+                                                <input type="file" name="file">
+                                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> 点击上传</button>
+                                            </form>
+                                        </di>
+                                        <c:if test="${carDetail.files eq 'true'}">
+                                            <p class="url">
+                                                <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                                                <a href="../../files/${carDetail.carid}.docx"><i class="fa fa-paperclip"></i> 审核文件.docx </a>
+                                            </p>
+                                        </c:if>
                                     </c:if>
                                 </div>
                             </div>

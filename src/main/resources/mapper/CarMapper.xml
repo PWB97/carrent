@@ -352,6 +352,7 @@
     <result column="isOnline" property="isonline"/>
     <result column="isDeleted" property="isdeleted"/>
     <result column="userId" property="userid"/>
+    <result column="files" property="files"/>
     <collection property="carBrand" ofType="com.pu.carrent.entity.CarBrand">
       <result column="brandName" property="brandname"/>
     </collection>

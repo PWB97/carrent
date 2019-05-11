@@ -223,4 +223,17 @@ public class UserController {
             return "fail";
         }
     }
+
+
+    @RequestMapping(value = "deleteBrowseRecords", method = RequestMethod.GET)
+    public String deleteBrowseRecords(HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if (currentUser != null) {
+            userDao.deleteRecords(currentUser.getUserid());
+            return "redirect:/userDetail";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
+    }
 }

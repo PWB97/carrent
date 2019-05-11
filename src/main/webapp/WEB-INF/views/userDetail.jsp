@@ -245,25 +245,21 @@
                                                     </button>
                                                     <h4 class="modal-title" id="myModalLabel">填写你需要修改的任意项</h4>
                                                 </div>
-
+                                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="<%=request.getContextPath() %>/changeUser" method="post">
                                                 <div class="clearfix"></div>
                                                 <div class="row">
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <div class="x_panel">
                                                             <div class="x_content">
                                                                 <br />
-                                                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="<%=request.getContextPath() %>/changeUser" method="post">
-
                                                                     <div class="form-group">
-                                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="userName">用户名
-                                                                    </label>
+                                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="userName">用户名</label>
                                                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                                                             <input type="text" id="userName" name="userName" class="form-control col-md-7 col-xs-12" placeholder="${userDetail.username}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email" >邮箱
-                                                                        </label>
+                                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email" >邮箱</label>
                                                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                                                             <input type="text" id="email" name="email" class="form-control col-md-7 col-xs-12" placeholder="${userDetail.email}">
                                                                         </div>
@@ -274,16 +270,12 @@
                                                                             <input id="phone" class="form-control col-md-7 col-xs-12" type="text" name="phone" placeholder="${userDetail.phone}">
                                                                         </div>
                                                                     </div>
-
                                                                     <div class="form-group">
-                                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">密码
-                                                                        </label>
+                                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">密码</label>
                                                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                                                             <input id="password" name="passoword" class="date-picker form-control col-md-7 col-xs-12" type="text">
                                                                         </div>
                                                                     </div>
-
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -297,6 +289,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <a class="btn btn-danger" href="<%=request.getContextPath() %>/deleteBrowseRecords">删除浏览记录</a>
                                     <br/>
 
                                 </div>
@@ -323,8 +316,8 @@
                                                         <li>
                                                             <img src="../../images/logo/${item.carRecord.brandid}.JPG" class="avatar" alt="Avatar">
                                                             <div class="message_date">
-                                                                <h3 class="date text-info"><fmt:formatDate value="${item.browseDate}" pattern="dd" /></h3>
-                                                                <p class="month"><fmt:formatDate value="${item.browseDate}" pattern="MM" /></p>
+                                                                <h3 class="date text-info"><fmt:formatDate value="${item.browseDate}" pattern="MM月dd" /></h3>
+                                                                <p class="month"><fmt:formatDate value="${item.browseDate}" pattern="hh:mm" /></p>
                                                             </div>
                                                             <div class="message_wrapper">
                                                                 <h4 class="heading">${item.carRecord.carname}</h4>
