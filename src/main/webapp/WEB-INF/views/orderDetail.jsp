@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -197,7 +198,7 @@
                                         <div class="col-xs-12 invoice-header">
                                             <h1>
                                                 <i class="fa fa-user"></i> ${orderDetail.user.username}
-                                                <small class="pull-right">到期时间: ${orderDetail.endtime}</small>
+                                                <small class="pull-right">到期时间: <fmt:formatDate value="${orderDetail.endtime}" pattern="yyyy-MM-dd" /></small>
                                             </h1>
                                         </div>
                                         <!-- /.col -->
@@ -245,17 +246,21 @@
                                     <!-- /.row -->
 
                                     <div class="row">
+                                        <c:if test="${orderDetail.ispaid==0}">
                                         <!-- accepted payments column -->
                                         <div class="col-xs-6">
                                             <p class="lead">支付方式:</p>
-                                            <img src="../../images/visa.png" alt="Visa">
-                                            <img src="../../images/mastercard.png" alt="Mastercard">
-                                            <img src="../../images/american-express.png" alt="American Express">
-                                            <img src="../../images/paypal.png" alt="Paypal">
+                                            <a class="btn btn-primary" href="<%=request.getContextPath() %>/alipay?orderId=${orderDetail.orderid}&price=${orderDetail.totalprice}">支付宝</a>
                                         </div>
+                                        </c:if>
+                                        <c:if test="${orderDetail.ispaid!=0}">
+                                            <div class="col-xs-6">
+                                                <p class="lead">已支付</p>
+                                            </div>
+                                        </c:if>
                                         <!-- /.col -->
                                         <div class="col-xs-6">
-                                            <p class="lead">下单时间${orderDetail.creattime}</p>
+                                            <p class="lead">下单时间<fmt:formatDate value="${orderDetail.creattime}" pattern="yyyy-MM-dd" /></p>
                                             <div class="table-responsive">
                                                 <table class="table">
                                                     <tbody>
@@ -286,7 +291,7 @@
         <!-- footer content -->
         <footer>
             <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                基于J2EE的汽车租赁 PWB
             </div>
             <div class="clearfix"></div>
         </footer>

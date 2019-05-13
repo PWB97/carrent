@@ -1,5 +1,10 @@
 package com.pu.carrent.controller;
 
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.pu.carrent.AlipayConfig;
 import com.pu.carrent.entity.Car;
 import com.pu.carrent.entity.Order;
 import com.pu.carrent.entity.User;
@@ -13,7 +18,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -85,20 +94,60 @@ public class OrderController {
         }
     }
 
-    // TODO: 2019/4/23
-    @RequestMapping(value = "/pay", method = RequestMethod.GET)
-    public String pay(HttpSession session, Integer orderId, Model model) {
+    @RequestMapping(value = "/alipay", method = RequestMethod.GET)
+    public String ali(Integer orderId, BigDecimal price, HttpServletResponse response, HttpSession session, Model model) throws IOException, AlipayApiException {
+
         User currentUser = (User) session.getAttribute("currentUser");
-        if (currentUser != null) {
-            Order order = new Order();
-            order.setOrderid(orderId);
-            order.setIspaid(1);
-            orderSerivce.changeOrder(order);
-            return "redirect:/orders";
-        }  else {
-            model.addAttribute("msg", "未知错误");
+        if (currentUser != null && orderSerivce.findOrderById(orderId).getUserid().compareTo(currentUser.getUserid()) == 0) {
+            // 获得初始化的AlipayClient
+            AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id,
+                    AlipayConfig.merchant_private_key, "json", AlipayConfig.charset,
+                    AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+            // 设置请求参数
+            AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
+            alipayRequest.setReturnUrl(AlipayConfig.return_url);
+            alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
+
+            Order order = orderSerivce.findOrderById(orderId);
+            String out_trade_no = String.valueOf(orderId);
+            // 付款金额，必填
+            String total_amount = String.valueOf(price);
+            alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no
+                    + "\"," + "\"total_amount\":\"" + total_amount
+                    + "\"," + "\"subject\":\"" + order.getCar().getCarname() + "\","
+                    + "\"body\":\"" + order.getCar().getPlate() + "\","
+                    + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+            // 请求
+            String result = alipayClient.pageExecute(alipayRequest).getBody();
+            // System.out.println(result);
+            AlipayConfig.logResult(result);// 记录支付日志
+            response.setContentType("text/html; charset=gbk");
+            PrintWriter out = response.getWriter();
+            out.print(result);
+            return null;
+        } else {
+            model.addAttribute("msg", "无权限访问");
             return "fail";
         }
+    }
+
+    @RequestMapping("notify_url")
+    public void Notify(HttpServletResponse response, HttpServletRequest request) throws Exception {
+        System.out.println("----------------------------notify_url------------------------");
+        // 商户订单号
+        String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"), "GBK");
+        String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"), "GBK");
+        if (trade_status.equals("TRADE_SUCCESS")) {//支付成功商家操作
+            Order order = new Order();
+            order.setOrderid(Integer.parseInt(out_trade_no));
+            order.setIspaid(1);
+            orderSerivce.changeOrder(order);
+        }
+    }
+
+    @RequestMapping("return_url")
+    public String Return_url() throws InterruptedException {
+        return "redirect:/orders";
     }
 
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.GET)

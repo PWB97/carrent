@@ -21,6 +21,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -179,8 +180,8 @@
                                             <td>${order.user.username}</td>
                                             <td>${order.car.carname}</td>
                                             <td>${order.totalprice}</td>
-                                            <td>${order.creattime}</td>
-                                            <td>${order.endtime}</td>
+                                            <td><fmt:formatDate value="${order.creattime}" pattern="yyyy-MM-dd" /></td>
+                                            <td><fmt:formatDate value="${order.endtime}" pattern="yyyy-MM-dd" /></td>
                                             <td>
                                                 <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/showOrderDetail?orderId=${order.orderid}"><i class="fa fa-folder"></i> 查看</a>
                                             </td>

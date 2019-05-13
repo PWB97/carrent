@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -163,7 +164,7 @@
                                             <td>${news.newsid}</td>
                                             <td>${news.title}</td>
                                             <td>${news.content}</td>
-                                            <td>${news.creattime}</td>
+                                            <td><fmt:formatDate value="${news.creattime}" pattern="yyyy-MM-dd hh:mm" /></td>
                                             <td>${news.creator.username}</td>
                                             <td>
                                                 <!-- Button trigger modal -->
@@ -178,7 +179,7 @@
                                                             <div class="modal-body">
                                                                 <p>${news.title}</p>
                                                                 <p>${news.creator.username}</p>
-                                                                <p>${news.creattime}</p>
+                                                                <p><fmt:formatDate value="${news.creattime}" pattern="yyyy-MM-dd hh:mm" /></p>
                                                                 <p>${news.content}</p>
                                                             </div>
                                                             <div class="modal-footer">

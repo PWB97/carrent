@@ -359,7 +359,7 @@
         <!-- footer content -->
         <footer>
             <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                基于J2EE的汽车租赁 PWB
             </div>
             <div class="clearfix"></div>
         </footer>
