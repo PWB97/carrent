@@ -169,11 +169,15 @@
                                             <td>
                                                 <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/showOrderDetail?orderId=${order.orderid}"><i class="fa fa-folder"></i> 查看</a>
                                                <c:if test="${order.ispaid == 0}">
-                                                   <a href="<%=request.getContextPath() %>/pay?orderId=${order.orderid}" class="btn btn-primary btn-xs"><i class="fa fa-paypal"></i> 支付 </a>
+                                                   <a href="<%=request.getContextPath() %>/alipay?orderId=${order.orderid}&price=${order.totalprice}" class="btn btn-primary btn-xs"><i class="fa fa-paypal"></i> 支付 </a>
                                                    <a href="<%=request.getContextPath() %>/cancelOrder?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 取消订单 </a>
                                                 </c:if>
-                                                <c:if test="${order.ispaid != 0}">
+                                                <c:if test="${order.ispaid == 1}">
                                                     <a href="<%=request.getContextPath() %>/refund?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 退款 </a>
+                                                </c:if>
+                                                <c:if test="${order.ispaid == 2}">
+                                                    退款成功
+                                                    <a href="<%=request.getContextPath() %>/cancelOrder?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
                                                 </c:if>
                                             </td>
                                         </tr>

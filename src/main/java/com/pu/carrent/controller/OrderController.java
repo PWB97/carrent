@@ -1,9 +1,14 @@
 package com.pu.carrent.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradeRefundRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.pu.carrent.AlipayConfig;
 import com.pu.carrent.entity.Car;
 import com.pu.carrent.entity.Order;
@@ -24,12 +29,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class OrderController {
@@ -89,7 +96,7 @@ public class OrderController {
             model.addAttribute("orders", orders);
             return "orders";
         }  else {
-            model.addAttribute("msg", "未知错误");
+            model.addAttribute("msg", "请登录");
             return "fail";
         }
     }
@@ -120,7 +127,7 @@ public class OrderController {
             // 请求
             String result = alipayClient.pageExecute(alipayRequest).getBody();
             // System.out.println(result);
-            AlipayConfig.logResult(result);// 记录支付日志
+//            AlipayConfig.logResult(result);// 记录支付日志
             response.setContentType("text/html; charset=gbk");
             PrintWriter out = response.getWriter();
             out.print(result);
@@ -133,10 +140,8 @@ public class OrderController {
 
     @RequestMapping("notify_url")
     public void Notify(HttpServletResponse response, HttpServletRequest request) throws Exception {
-        System.out.println("----------------------------notify_url------------------------");
-        // 商户订单号
-        String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"), "GBK");
-        String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"), "GBK");
+        String out_trade_no = new String(request.getParameter("out_trade_no").getBytes(StandardCharsets.ISO_8859_1), "GBK");
+        String trade_status = new String(request.getParameter("trade_status").getBytes(StandardCharsets.ISO_8859_1), "GBK");
         if (trade_status.equals("TRADE_SUCCESS")) {//支付成功商家操作
             Order order = new Order();
             order.setOrderid(Integer.parseInt(out_trade_no));
@@ -155,7 +160,7 @@ public class OrderController {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             Order order = orderSerivce.findOrderById(orderId);
-            if (order.getIspaid() == 0) {
+            if (order.getIspaid() == 0 || order.getIspaid() == 2) {
                 orderSerivce.deleteOrderById(orderId);
                 Car car = new Car();
                 car.setCarid(order.getCarid());
@@ -227,12 +232,44 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/backManage/refund", method = RequestMethod.GET)
-    public String backRefund(Integer orderId,  HttpSession session, Model model) {
+    public String refund(Integer orderId, HttpServletResponse response, HttpSession session, Model model) throws IOException, AlipayApiException {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
-            // TODO: 2019/4/23 refund
-            return "redirect:/backManage/showRefund";
-        }  else {
+            response.setContentType("text/html;charset=utf-8");
+            PrintWriter out = response.getWriter();
+            //获得初始化的AlipayClient
+            AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+            //设置请求参数
+            AlipayTradeRefundRequest alipayRequest = new AlipayTradeRefundRequest();
+            //商户订单号，必填
+            String out_trade_no = String.valueOf(orderId);
+            //需要退款的金额，该金额不能大于订单金额，必填
+            Order order = orderSerivce.findOrderById(orderId);
+            String refund_amount = String.valueOf(order.getTotalprice());
+            //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传
+            String out_request_no = UUID.randomUUID().toString();
+
+            alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\","
+                    + "\"refund_amount\":\"" + refund_amount + "\","
+                    + "\"out_request_no\":\"" + out_request_no + "\"}");
+            //请求
+            String result = alipayClient.execute(alipayRequest).getBody();
+            //输出
+            JSONObject object = (JSONObject) JSONObject.parse(result);
+            object = (JSONObject)object.get("alipay_trade_refund_response");
+            String msg = object.getString("msg");
+            if ("Success".compareTo(msg) == 0) {
+                Order record = new Order();
+                order.setOrderid(orderId);
+                order.setIspaid(2);
+                orderSerivce.changeOrder(order);
+                model.addAttribute("msg", "完成");
+                return "fail";
+            } else {
+                model.addAttribute("msg", msg);
+                return "fail";
+            }
+        } else {
             model.addAttribute("msg", "无权限访问");
             return "fail";
         }
