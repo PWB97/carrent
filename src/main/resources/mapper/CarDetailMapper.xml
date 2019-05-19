@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pu.carrent.dao.CarDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.pu.carrent.entity.CarDetail" >
+    <id column="cdId" property="cdid" jdbcType="INTEGER" />
+    <result column="productYear" property="productyear" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="seats" property="seats" jdbcType="INTEGER" />
+    <result column="doors" property="doors" jdbcType="INTEGER" />
+    <result column="energyId" property="energyid" jdbcType="INTEGER" />
+    <result column="gearId" property="gearid" jdbcType="INTEGER" />
+    <result column="displacement" property="displacement" jdbcType="VARCHAR" />
+    <result column="drive" property="drive" jdbcType="INTEGER" />
+    <result column="upwindow" property="upwindow" jdbcType="INTEGER" />
+    <result column="radar" property="radar" jdbcType="INTEGER" />
+    <result column="gps" property="gps" jdbcType="INTEGER" />
+    <result column="carId" property="carid" jdbcType="INTEGER" />
+    <result column="lisence" property="lisence" jdbcType="INTEGER" />
+    <result column="fsfile" property="fsfile" jdbcType="INTEGER" />
+    <result column="isDeleted" property="isdeleted" jdbcType="INTEGER" />
+    <result column="isOnline" property="isonline" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="plate" property="plate" jdbcType="VARCHAR" />
+    <result column="photos" property="photos" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cdId, productYear, level, seats, doors, energyId, gearId, displacement, drive, upwindow, 
+    radar, gps, carId, lisence, fsfile, isDeleted, isOnline, userId, plate, photos
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entityExample.CarDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_cardetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_cardetail
+    where cdId = #{cdid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_cardetail
+    where cdId = #{cdid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pu.carrent.entityExample.CarDetailExample" >
+    delete from t_cardetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pu.carrent.entity.CarDetail" >
+    insert into t_cardetail (cdId, productYear, level, 
+      seats, doors, energyId, 
+      gearId, displacement, drive, 
+      upwindow, radar, gps, 
+      carId, lisence, fsfile, 
+      isDeleted, isOnline, userId, 
+      plate, photos)
+    values (#{cdid,jdbcType=INTEGER}, #{productyear,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, 
+      #{seats,jdbcType=INTEGER}, #{doors,jdbcType=INTEGER}, #{energyid,jdbcType=INTEGER}, 
+      #{gearid,jdbcType=INTEGER}, #{displacement,jdbcType=VARCHAR}, #{drive,jdbcType=INTEGER}, 
+      #{upwindow,jdbcType=INTEGER}, #{radar,jdbcType=INTEGER}, #{gps,jdbcType=INTEGER}, 
+      #{carid,jdbcType=INTEGER}, #{lisence,jdbcType=INTEGER}, #{fsfile,jdbcType=INTEGER}, 
+      #{isdeleted,jdbcType=INTEGER}, #{isonline,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{plate,jdbcType=VARCHAR}, #{photos,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pu.carrent.entity.CarDetail" >
+    insert into t_cardetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cdid != null" >
+        cdId,
+      </if>
+      <if test="productyear != null" >
+        productYear,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="seats != null" >
+        seats,
+      </if>
+      <if test="doors != null" >
+        doors,
+      </if>
+      <if test="energyid != null" >
+        energyId,
+      </if>
+      <if test="gearid != null" >
+        gearId,
+      </if>
+      <if test="displacement != null" >
+        displacement,
+      </if>
+      <if test="drive != null" >
+        drive,
+      </if>
+      <if test="upwindow != null" >
+        upwindow,
+      </if>
+      <if test="radar != null" >
+        radar,
+      </if>
+      <if test="gps != null" >
+        gps,
+      </if>
+      <if test="carid != null" >
+        carId,
+      </if>
+      <if test="lisence != null" >
+        lisence,
+      </if>
+      <if test="fsfile != null" >
+        fsfile,
+      </if>
+      <if test="isdeleted != null" >
+        isDeleted,
+      </if>
+      <if test="isonline != null" >
+        isOnline,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="plate != null" >
+        plate,
+      </if>
+      <if test="photos != null" >
+        photos,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cdid != null" >
+        #{cdid,jdbcType=INTEGER},
+      </if>
+      <if test="productyear != null" >
+        #{productyear,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="seats != null" >
+        #{seats,jdbcType=INTEGER},
+      </if>
+      <if test="doors != null" >
+        #{doors,jdbcType=INTEGER},
+      </if>
+      <if test="energyid != null" >
+        #{energyid,jdbcType=INTEGER},
+      </if>
+      <if test="gearid != null" >
+        #{gearid,jdbcType=INTEGER},
+      </if>
+      <if test="displacement != null" >
+        #{displacement,jdbcType=VARCHAR},
+      </if>
+      <if test="drive != null" >
+        #{drive,jdbcType=INTEGER},
+      </if>
+      <if test="upwindow != null" >
+        #{upwindow,jdbcType=INTEGER},
+      </if>
+      <if test="radar != null" >
+        #{radar,jdbcType=INTEGER},
+      </if>
+      <if test="gps != null" >
+        #{gps,jdbcType=INTEGER},
+      </if>
+      <if test="carid != null" >
+        #{carid,jdbcType=INTEGER},
+      </if>
+      <if test="lisence != null" >
+        #{lisence,jdbcType=INTEGER},
+      </if>
+      <if test="fsfile != null" >
+        #{fsfile,jdbcType=INTEGER},
+      </if>
+      <if test="isdeleted != null" >
+        #{isdeleted,jdbcType=INTEGER},
+      </if>
+      <if test="isonline != null" >
+        #{isonline,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="plate != null" >
+        #{plate,jdbcType=VARCHAR},
+      </if>
+      <if test="photos != null" >
+        #{photos,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pu.carrent.entityExample.CarDetailExample" resultType="java.lang.Integer" >
+    select count(*) from t_cardetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_cardetail
+    <set >
+      <if test="record.cdid != null" >
+        cdId = #{record.cdid,jdbcType=INTEGER},
+      </if>
+      <if test="record.productyear != null" >
+        productYear = #{record.productyear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seats != null" >
+        seats = #{record.seats,jdbcType=INTEGER},
+      </if>
+      <if test="record.doors != null" >
+        doors = #{record.doors,jdbcType=INTEGER},
+      </if>
+      <if test="record.energyid != null" >
+        energyId = #{record.energyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gearid != null" >
+        gearId = #{record.gearid,jdbcType=INTEGER},
+      </if>
+      <if test="record.displacement != null" >
+        displacement = #{record.displacement,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drive != null" >
+        drive = #{record.drive,jdbcType=INTEGER},
+      </if>
+      <if test="record.upwindow != null" >
+        upwindow = #{record.upwindow,jdbcType=INTEGER},
+      </if>
+      <if test="record.radar != null" >
+        radar = #{record.radar,jdbcType=INTEGER},
+      </if>
+      <if test="record.gps != null" >
+        gps = #{record.gps,jdbcType=INTEGER},
+      </if>
+      <if test="record.carid != null" >
+        carId = #{record.carid,jdbcType=INTEGER},
+      </if>
+      <if test="record.lisence != null" >
+        lisence = #{record.lisence,jdbcType=INTEGER},
+      </if>
+      <if test="record.fsfile != null" >
+        fsfile = #{record.fsfile,jdbcType=INTEGER},
+      </if>
+      <if test="record.isdeleted != null" >
+        isDeleted = #{record.isdeleted,jdbcType=INTEGER},
+      </if>
+      <if test="record.isonline != null" >
+        isOnline = #{record.isonline,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.plate != null" >
+        plate = #{record.plate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photos != null" >
+        photos = #{record.photos,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_cardetail
+    set cdId = #{record.cdid,jdbcType=INTEGER},
+      productYear = #{record.productyear,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=VARCHAR},
+      seats = #{record.seats,jdbcType=INTEGER},
+      doors = #{record.doors,jdbcType=INTEGER},
+      energyId = #{record.energyid,jdbcType=INTEGER},
+      gearId = #{record.gearid,jdbcType=INTEGER},
+      displacement = #{record.displacement,jdbcType=VARCHAR},
+      drive = #{record.drive,jdbcType=INTEGER},
+      upwindow = #{record.upwindow,jdbcType=INTEGER},
+      radar = #{record.radar,jdbcType=INTEGER},
+      gps = #{record.gps,jdbcType=INTEGER},
+      carId = #{record.carid,jdbcType=INTEGER},
+      lisence = #{record.lisence,jdbcType=INTEGER},
+      fsfile = #{record.fsfile,jdbcType=INTEGER},
+      isDeleted = #{record.isdeleted,jdbcType=INTEGER},
+      isOnline = #{record.isonline,jdbcType=INTEGER},
+      userId = #{record.userid,jdbcType=INTEGER},
+      plate = #{record.plate,jdbcType=VARCHAR},
+      photos = #{record.photos,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pu.carrent.entity.CarDetail" >
+    update t_cardetail
+    <set >
+      <if test="productyear != null" >
+        productYear = #{productyear,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="seats != null" >
+        seats = #{seats,jdbcType=INTEGER},
+      </if>
+      <if test="doors != null" >
+        doors = #{doors,jdbcType=INTEGER},
+      </if>
+      <if test="energyid != null" >
+        energyId = #{energyid,jdbcType=INTEGER},
+      </if>
+      <if test="gearid != null" >
+        gearId = #{gearid,jdbcType=INTEGER},
+      </if>
+      <if test="displacement != null" >
+        displacement = #{displacement,jdbcType=VARCHAR},
+      </if>
+      <if test="drive != null" >
+        drive = #{drive,jdbcType=INTEGER},
+      </if>
+      <if test="upwindow != null" >
+        upwindow = #{upwindow,jdbcType=INTEGER},
+      </if>
+      <if test="radar != null" >
+        radar = #{radar,jdbcType=INTEGER},
+      </if>
+      <if test="gps != null" >
+        gps = #{gps,jdbcType=INTEGER},
+      </if>
+      <if test="carid != null" >
+        carId = #{carid,jdbcType=INTEGER},
+      </if>
+      <if test="lisence != null" >
+        lisence = #{lisence,jdbcType=INTEGER},
+      </if>
+      <if test="fsfile != null" >
+        fsfile = #{fsfile,jdbcType=INTEGER},
+      </if>
+      <if test="isdeleted != null" >
+        isDeleted = #{isdeleted,jdbcType=INTEGER},
+      </if>
+      <if test="isonline != null" >
+        isOnline = #{isonline,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="plate != null" >
+        plate = #{plate,jdbcType=VARCHAR},
+      </if>
+      <if test="photos != null" >
+        photos = #{photos,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cdId = #{cdid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pu.carrent.entity.CarDetail" >
+    update t_cardetail
+    set productYear = #{productyear,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      seats = #{seats,jdbcType=INTEGER},
+      doors = #{doors,jdbcType=INTEGER},
+      energyId = #{energyid,jdbcType=INTEGER},
+      gearId = #{gearid,jdbcType=INTEGER},
+      displacement = #{displacement,jdbcType=VARCHAR},
+      drive = #{drive,jdbcType=INTEGER},
+      upwindow = #{upwindow,jdbcType=INTEGER},
+      radar = #{radar,jdbcType=INTEGER},
+      gps = #{gps,jdbcType=INTEGER},
+      carId = #{carid,jdbcType=INTEGER},
+      lisence = #{lisence,jdbcType=INTEGER},
+      fsfile = #{fsfile,jdbcType=INTEGER},
+      isDeleted = #{isdeleted,jdbcType=INTEGER},
+      isOnline = #{isonline,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      plate = #{plate,jdbcType=VARCHAR},
+      photos = #{photos,jdbcType=INTEGER}
+    where cdId = #{cdid,jdbcType=INTEGER}
+  </update>
+  <select id="selectCarDetailByCarId" resultMap="carDetail">
+        select * from t_cardetail left join t_energe te on t_cardetail.energyId = te.energeId left join t_gear tg on t_cardetail.gearId = tg.gearId left join t_user tu on t_cardetail.userId = tu.userId
+        where t_cardetail.carId=#{carId,jdbcType=INTEGER} and t_cardetail.isDeleted = 0 and t_cardetail.isOnline = 1
+    </select>
+  <resultMap id="carDetail" type="com.pu.carrent.entity.CarDetail">
+    <id column="cdId" property="cdid" />
+    <result column="productYear" property="productyear" />
+    <result column="level" property="level" />
+    <result column="seats" property="seats" />
+    <result column="doors" property="doors" />
+    <result column="displacement" property="displacement" />
+    <result column="drive" property="drive" />
+    <result column="upwindow" property="upwindow" />
+    <result column="radar" property="radar" />
+    <result column="gps" property="gps" />
+    <result column="lisence" property="lisence" />
+    <result column="fsfile" property="fsfile" />
+    <result column="plate" property="plate" />
+    <result column="isDeleted" property="isdeleted" />
+    <result column="isOnline" property="isonline" />
+    <collection ofType="com.pu.carrent.entity.Energy" property="energy">
+      <result column="energeName" property="energename" />
+    </collection>
+    <collection ofType="com.pu.carrent.entity.Gear" property="gear">
+      <result column="gearName" property="gearname" />
+    </collection>
+    <collection ofType="com.pu.carrent.entity.User" property="owner">
+      <result column="userName" property="username" />
+    </collection>
+  </resultMap>
+  <select id="selectCarDetailById" resultMap="carDetail">
+        select * from t_cardetail left join t_energe te on t_cardetail.energyId = te.energeId left join t_gear tg on t_cardetail.gearId = tg.gearId left join t_user tu on t_cardetail.userId = tu.userId
+        where t_cardetail.cdId=#{cdId,jdbcType=INTEGER}
+    </select>
+  <select id="selectCarDetailNotOnline" resultMap="carDetail">
+    select * from  t_cardetail left join t_energe te on t_cardetail.energyId = te.energeId left join t_gear tg on t_cardetail.gearId = tg.gearId left join t_user tu on t_cardetail.userId = tu.userId
+    where t_cardetail.isOnline &lt;&gt; 1 and t_cardetail.isDeleted=0
+  </select>
+  <select id="selectCarDetailByUserId" resultMap="carDetail">
+    select * from  t_cardetail left join t_energe te on t_cardetail.energyId = te.energeId left join t_gear tg on t_cardetail.gearId = tg.gearId left join t_user tu on t_cardetail.userId = tu.userId
+    where t_cardetail.userId=#{userId,jdbcType=INTEGER}
+  </select>
+</mapper>

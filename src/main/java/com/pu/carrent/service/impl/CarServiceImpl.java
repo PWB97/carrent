@@ -22,11 +22,6 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> findCarsNotOnline() {
-        return carMapper.selectCarsNotOnlineWithDetail();
-    }
-
-    @Override
     public int addCar(Car record) {
         return carMapper.insert(record);
     }
@@ -42,6 +37,13 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public int findCarId(Car car) {
+        CarExample example = new CarExample();
+        example.createCriteria().andCarnameEqualTo(car.getCarname());
+        return carMapper.selectByExample(example).get(0).getCarid();
+    }
+
+    @Override
     public List<Car> findCarsWithConditions(Integer typeId, Integer brandId, Integer pId, Integer cId, Integer lId, BigDecimal lowPrice, BigDecimal highPrice) {
         return carMapper.selectCarsWithConditions(typeId, brandId, pId, cId, lId, lowPrice, highPrice);
     }
@@ -51,10 +53,4 @@ public class CarServiceImpl implements CarService {
         return carMapper.updateByPrimaryKeySelective(car);
     }
 
-    @Override
-    public List<Car> findCarsByUserId(Integer userId) {
-        CarExample example = new CarExample();
-        example.createCriteria().andUseridEqualTo(userId);
-        return carMapper.selectByExample(example);
-    }
 }

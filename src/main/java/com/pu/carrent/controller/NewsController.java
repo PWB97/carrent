@@ -30,13 +30,10 @@ public class NewsController {
             List<News> newsList = newsService.findAllNews();
             model.addAttribute("newsList", newsList);
             return "backNews";
-        } else if ("用户".compareTo(userTypeService.finduTypeNameById(user.getUtypeid())) == 0) {
+        } else {
             List<News> newsList = newsService.findAllNews();
             model.addAttribute("newsList", newsList);
             return "frontNews";
-        } else {
-            model.addAttribute("msg", "未知错误");
-            return "fail";
         }
     }
 

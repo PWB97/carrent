@@ -88,13 +88,12 @@
                             <c:if test="${userDetail.userType.utypename == '管理员'}">
                                 <li><a><i class="fa fa-car"></i> 汽车管理 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="<%=request.getContextPath() %>/backManage/showCars">所有汽车</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/rentCar">所有汽车</a></li>
                                         <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a>
                                         </li>
                                         <li>
                                             <a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a>
                                         </li>
-                                        <li><a href="<%=request.getContextPath() %>/uploadCar">添加汽车</a></li>
                                         <li><a href="<%=request.getContextPath() %>/carDetail">汽车详情</a></li>
                                     </ul>
                                 </li>
@@ -191,7 +190,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>汽车详情</h2>
+                                <h2>${car.carBrand.brandname}/${car.carname}</h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -208,401 +207,591 @@
                                     <li><a class="close-link"><i class="fa fa-close"></i></a>
                                     </li>
                                 </ul>
+                                <c:if test="${carDetail.isonline == 1}">
+                                <div class="col-md-4 col-md-offset-3">
+                                    <form action="<%=request.getContextPath() %>/carDetail" method="get">
+                                        <label for="carId">选择其他同款</label>
+                                        <input hidden="hidden" value="${car.carid}" name="carId" id="carId">
+                                        <select name="cdId">
+                                            <c:forEach items="${carDetails}" var="carDetail">
+                                                <option value="${carDetail.cdid}">${carDetail.level}</option>
+                                            </c:forEach>
+                                        </select>
+                                        <button type="submit" class="btn-primary btn-xs">确定</button>
+                                    </form>
+                                </div>
+                                </c:if>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
 
-                                <div class="col-md-7 col-sm-7 col-xs-12">
-                                    <div class="sp-loading"><img src="../../images/sp-loading.gif" alt=""><br>LOADING
-                                        IMAGES
-                                    </div>
-                                    <div class="sp-wrap">
-                                        <a href="../../images/car/${carDetail.carid}/1.jpg"><img
-                                                src="../../images/car/${carDetail.carid}/1.jpg" alt=""></a>
-                                        <a href="../../images/car/${carDetail.carid}/2.jpg"><img
-                                                src="../../images/car/${carDetail.carid}/2.jpg" alt=""></a>
-                                        <a href="../../images/car/${carDetail.carid}/3.jpg"><img
-                                                src="../../images/car/${carDetail.carid}/3.jpg" alt=""></a>
-                                        <a href="../../images/car/${carDetail.carid}/4.jpg"><img
-                                                src="../../images/car/${carDetail.carid}/4.jpg" alt=""></a>
-                                        <a href="../../images/car/${carDetail.carid}/5.jpg"><img
-                                                src="../../images/car/${carDetail.carid}/5.jpg" alt=""></a>
-                                        <a href="../../images/car/${carDetail.carid}/6.jpg"><img
-                                                src="../../images/car/${carDetail.carid}/6.jpg" alt=""></a>
-                                    </div>
-                                    <c:if test="${carDetail.isonline == -1}">
-                                        <div class="">
-                                            <form id="myAwesomeDropzone"
-                                                  action="<%=request.getContextPath() %>/uploadCarPictures"
-                                                  class="dropzone" method="POST" enctype="multipart/form-data">
-                                                <input hidden="hidden" name="carId" value="${carDetail.carid}">
-                                                <div class="dz-message">
-                                                    <span>拖入图片以更改预览图</span>
-                                                </div>
-                                            </form>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <div class="sp-loading"><img src="../../images/sp-loading.gif"
+                                                                     alt=""><br>LOADING
+                                            IMAGES
                                         </div>
-                                    </c:if>
-                                    <c:if test="${carDetail.isonline == 1 && userDetail.userType.utypename eq '用户'}">
-                                        <div class="">
-                                            <form action="<%=request.getContextPath() %>/makeOrder" method="post">
-                                                <div class="col-md-10">
-                                                    <div class="daterangepicker dropdown-menu ltr single opensright show-calendar picker_4 xdisplay">
-                                                        <div class="calendar left single" style="display: block;">
-                                                            <div class="daterangepicker_input">
-                                                                <input class="input-mini form-control active"
-                                                                       type="text" name="daterangepicker_start" value=""
-                                                                       style="display: none;">
-                                                                <i class="fa fa-calendar glyphicon glyphicon-calendar"
-                                                                   style="display: none;"></i>
-                                                                <div class="calendar-time" style="display: none;">
-                                                                    <div>
-
-                                                                    </div>
-                                                                    <i class="fa fa-clock-o glyphicon glyphicon-time"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="calendar-table">
-                                                                <table class="table-condensed">
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th class="prev available"><i
-                                                                                class="fa fa-chevron-left glyphicon glyphicon-chevron-left"></i>
-                                                                        </th>
-                                                                        <th colspan="5" class="month">Oct 2016</th>
-                                                                        <th class="next available"><i
-                                                                                class="fa fa-chevron-right glyphicon glyphicon-chevron-right"></i>
-                                                                        </th>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Su</th>
-                                                                        <th>Mo</th>
-                                                                        <th>Tu</th>
-                                                                        <th>We</th>
-                                                                        <th>Th</th>
-                                                                        <th>Fr</th>
-                                                                        <th>Sa</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td class="weekend off available"
-                                                                            data-title="r0c0">25
-                                                                        </td>
-                                                                        <td class="off available" data-title="r0c1">26
-                                                                        </td>
-                                                                        <td class="off available" data-title="r0c2">27
-                                                                        </td>
-                                                                        <td class="off available" data-title="r0c3">28
-                                                                        </td>
-                                                                        <td class="off available" data-title="r0c4">29
-                                                                        </td>
-                                                                        <td class="off available" data-title="r0c5">30
-                                                                        </td>
-                                                                        <td class="weekend available" data-title="r0c6">
-                                                                            1
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="weekend available" data-title="r1c0">
-                                                                            2
-                                                                        </td>
-                                                                        <td class="available" data-title="r1c1">3</td>
-                                                                        <td class="available" data-title="r1c2">4</td>
-                                                                        <td class="available" data-title="r1c3">5</td>
-                                                                        <td class="available" data-title="r1c4">6</td>
-                                                                        <td class="available" data-title="r1c5">7</td>
-                                                                        <td class="weekend available" data-title="r1c6">
-                                                                            8
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="weekend available" data-title="r2c0">
-                                                                            9
-                                                                        </td>
-                                                                        <td class="available" data-title="r2c1">10</td>
-                                                                        <td class="available" data-title="r2c2">11</td>
-                                                                        <td class="available" data-title="r2c3">12</td>
-                                                                        <td class="available" data-title="r2c4">13</td>
-                                                                        <td class="available" data-title="r2c5">14</td>
-                                                                        <td class="weekend available" data-title="r2c6">
-                                                                            15
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="weekend available" data-title="r3c0">
-                                                                            16
-                                                                        </td>
-                                                                        <td class="available" data-title="r3c1">17</td>
-                                                                        <td class="today active start-date active end-date available"
-                                                                            data-title="r3c2">18
-                                                                        </td>
-                                                                        <td class="available" data-title="r3c3">19</td>
-                                                                        <td class="available" data-title="r3c4">20</td>
-                                                                        <td class="available" data-title="r3c5">21</td>
-                                                                        <td class="weekend available" data-title="r3c6">
-                                                                            22
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="weekend available" data-title="r4c0">
-                                                                            23
-                                                                        </td>
-                                                                        <td class="available" data-title="r4c1">24</td>
-                                                                        <td class="available" data-title="r4c2">25</td>
-                                                                        <td class="available" data-title="r4c3">26</td>
-                                                                        <td class="available" data-title="r4c4">27</td>
-                                                                        <td class="available" data-title="r4c5">28</td>
-                                                                        <td class="weekend available" data-title="r4c6">
-                                                                            29
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="weekend available" data-title="r5c0">
-                                                                            30
-                                                                        </td>
-                                                                        <td class="available" data-title="r5c1">31</td>
-                                                                        <td class="off available" data-title="r5c2">1
-                                                                        </td>
-                                                                        <td class="off available" data-title="r5c3">2
-                                                                        </td>
-                                                                        <td class="off available" data-title="r5c4">3
-                                                                        </td>
-                                                                        <td class="off available" data-title="r5c5">4
-                                                                        </td>
-                                                                        <td class="weekend off available"
-                                                                            data-title="r5c6">5
-                                                                        </td>
-                                                                    </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                        <div class="calendar right" style="display: none;">
-                                                            <div class="daterangepicker_input"><input
-                                                                    class="input-mini form-control" type="text"
-                                                                    name="daterangepicker_end" value=""
-                                                                    style="display: none;"><i
-                                                                    class="fa fa-calendar glyphicon glyphicon-calendar"
-                                                                    style="display: none;"></i>
-                                                                <div class="calendar-time" style="display: none;">
-                                                                    <div></div>
-                                                                    <i class="fa fa-clock-o glyphicon glyphicon-time"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="calendar-table">
-                                                                <table class="table-condensed">
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th></th>
-                                                                        <th colspan="5" class="month">Nov 2016</th>
-                                                                        <th class="next available"><i
-                                                                                class="fa fa-chevron-right glyphicon glyphicon-chevron-right"></i>
-                                                                        </th>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Su</th>
-                                                                        <th>Mo</th>
-                                                                        <th>Tu</th>
-                                                                        <th>We</th>
-                                                                        <th>Th</th>
-                                                                        <th>Fr</th>
-                                                                        <th>Sa</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td class="weekend off available"
-                                                                            data-title="r0c0">30
-                                                                        </td>
-                                                                        <td class="off available" data-title="r0c1">31
-                                                                        </td>
-                                                                        <td class="available" data-title="r0c2">1</td>
-                                                                        <td class="available" data-title="r0c3">2</td>
-                                                                        <td class="available" data-title="r0c4">3</td>
-                                                                        <td class="available" data-title="r0c5">4</td>
-                                                                        <td class="weekend available" data-title="r0c6">
-                                                                            5
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="weekend available" data-title="r1c0">
-                                                                            6
-                                                                        </td>
-                                                                        <td class="available" data-title="r1c1">7</td>
-                                                                        <td class="available" data-title="r1c2">8</td>
-                                                                        <td class="available" data-title="r1c3">9</td>
-                                                                        <td class="available" data-title="r1c4">10</td>
-                                                                        <td class="available" data-title="r1c5">11</td>
-                                                                        <td class="weekend available" data-title="r1c6">
-                                                                            12
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="weekend available" data-title="r2c0">
-                                                                            13
-                                                                        </td>
-                                                                        <td class="available" data-title="r2c1">14</td>
-                                                                        <td class="available" data-title="r2c2">15</td>
-                                                                        <td class="available" data-title="r2c3">16</td>
-                                                                        <td class="available" data-title="r2c4">17</td>
-                                                                        <td class="available" data-title="r2c5">18</td>
-                                                                        <td class="weekend available" data-title="r2c6">
-                                                                            19
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="weekend available" data-title="r3c0">
-                                                                            20
-                                                                        </td>
-                                                                        <td class="available" data-title="r3c1">21</td>
-                                                                        <td class="available" data-title="r3c2">22</td>
-                                                                        <td class="available" data-title="r3c3">23</td>
-                                                                        <td class="available" data-title="r3c4">24</td>
-                                                                        <td class="available" data-title="r3c5">25</td>
-                                                                        <td class="weekend available" data-title="r3c6">
-                                                                            26
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="weekend available" data-title="r4c0">
-                                                                            27
-                                                                        </td>
-                                                                        <td class="available" data-title="r4c1">28</td>
-                                                                        <td class="available" data-title="r4c2">29</td>
-                                                                        <td class="available" data-title="r4c3">30</td>
-                                                                        <td class="off available" data-title="r4c4">1
-                                                                        </td>
-                                                                        <td class="off available" data-title="r4c5">2
-                                                                        </td>
-                                                                        <td class="weekend off available"
-                                                                            data-title="r4c6">3
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="weekend off available"
-                                                                            data-title="r5c0">4
-                                                                        </td>
-                                                                        <td class="off available" data-title="r5c1">5
-                                                                        </td>
-                                                                        <td class="off available" data-title="r5c2">6
-                                                                        </td>
-                                                                        <td class="off available" data-title="r5c3">7
-                                                                        </td>
-                                                                        <td class="off available" data-title="r5c4">8
-                                                                        </td>
-                                                                        <td class="off available" data-title="r5c5">9
-                                                                        </td>
-                                                                        <td class="weekend off available"
-                                                                            data-title="r5c6">10
-                                                                        </td>
-                                                                    </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ranges" style="display: none;">
-                                                            <div class="range_inputs">
-                                                                <button class="applyBtn btn btn-sm btn-success"
-                                                                        type="button">Apply
-                                                                </button>
-                                                                <button class="cancelBtn btn btn-sm btn-default"
-                                                                        type="button">Cancel
-                                                                </button>
-                                                            </div>
-                                                        </div>
+                                        <div class="sp-wrap">
+                                            <a href="../../images/car/${carDetail.cdid}/1.jpg"><img
+                                                    src="../../images/car/${carDetail.cdid}/1.jpg"
+                                                    alt=""></a>
+                                            <a href="../../images/car/${carDetail.cdid}/2.jpg"><img
+                                                    src="../../images/car/${carDetail.cdid}/2.jpg"
+                                                    alt=""></a>
+                                            <a href="../../images/car/${carDetail.cdid}/3.jpg"><img
+                                                    src="../../images/car/${carDetail.cdid}/3.jpg"
+                                                    alt=""></a>
+                                            <a href="../../images/car/${carDetail.cdid}/4.jpg"><img
+                                                    src="../../images/car/${carDetail.cdid}/4.jpg"
+                                                    alt=""></a>
+                                            <a href="../../images/car/${carDetail.cdid}/5.jpg"><img
+                                                    src="../../images/car/${carDetail.cdid}/5.jpg"
+                                                    alt=""></a>
+                                            <a href="../../images/car/${carDetail.cdid}/6.jpg"><img
+                                                    src="../../images/car/${carDetail.cdid}/6.jpg"
+                                                    alt=""></a>
+                                        </div>
+                                        <c:if test="${carDetail.isonline == -1}">
+                                            <div class="">
+                                                <form id="myAwesomeDropzone"
+                                                      action="<%=request.getContextPath() %>/uploadCarDetailPictures"
+                                                      class="dropzone" method="POST"
+                                                      enctype="multipart/form-data">
+                                                    <input hidden="hidden" name="carId"
+                                                           value="${carDetail.cdid}">
+                                                    <div class="dz-message">
+                                                        <span>拖入图片以更改预览图</span>
                                                     </div>
-                                                    <fieldset>
-                                                        <div class="control-group">
-                                                            <input hidden="hidden" name="carId" value="${carDetail.carid}">
-                                                            <input hidden="hidden" name="price" value="${carDetail.price}">
-                                                            <div class="col-md-3"><label
-                                                                    for="single_cal4">输入还车日期</label></div>
-                                                            <div class="controls col-md-9">
-                                                                <div class="col-md-11 xdisplay_inputx form-group has-feedback">
-                                                                    <input type="text"
-                                                                           class="form-control has-feedback-left"
-                                                                           id="single_cal4" name="date"
-                                                                           aria-describedby="inputSuccess2Status4">
-                                                                    <span class="fa fa-calendar-o form-control-feedback left"
-                                                                          aria-hidden="true"></span>
-                                                                    <span id="inputSuccess2Status4" class="sr-only">(success)</span>
+                                                </form>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${carDetail.isonline == 1 && userDetail.userType.utypename eq '用户'}">
+                                            <div class="">
+                                                <form action="<%=request.getContextPath() %>/makeOrder"
+                                                      method="post">
+                                                    <div class="col-md-10">
+                                                        <div class="daterangepicker dropdown-menu ltr single opensright show-calendar picker_4 xdisplay">
+                                                            <div class="calendar left single"
+                                                                 style="display: block;">
+                                                                <div class="daterangepicker_input">
+                                                                    <input class="input-mini form-control active"
+                                                                           type="text"
+                                                                           name="daterangepicker_start"
+                                                                           value=""
+                                                                           style="display: none;">
+                                                                    <i class="fa fa-calendar glyphicon glyphicon-calendar"
+                                                                       style="display: none;"></i>
+                                                                    <div class="calendar-time"
+                                                                         style="display: none;">
+                                                                        <div>
+
+                                                                        </div>
+                                                                        <i class="fa fa-clock-o glyphicon glyphicon-time"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="calendar-table">
+                                                                    <table class="table-condensed">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th class="prev available"><i
+                                                                                    class="fa fa-chevron-left glyphicon glyphicon-chevron-left"></i>
+                                                                            </th>
+                                                                            <th colspan="5" class="month">
+                                                                                Oct 2016
+                                                                            </th>
+                                                                            <th class="next available"><i
+                                                                                    class="fa fa-chevron-right glyphicon glyphicon-chevron-right"></i>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Su</th>
+                                                                            <th>Mo</th>
+                                                                            <th>Tu</th>
+                                                                            <th>We</th>
+                                                                            <th>Th</th>
+                                                                            <th>Fr</th>
+                                                                            <th>Sa</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td class="weekend off available"
+                                                                                data-title="r0c0">25
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r0c1">26
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r0c2">27
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r0c3">28
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r0c4">29
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r0c5">30
+                                                                            </td>
+                                                                            <td class="weekend available"
+                                                                                data-title="r0c6">
+                                                                                1
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="weekend available"
+                                                                                data-title="r1c0">
+                                                                                2
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r1c1">3
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r1c2">4
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r1c3">5
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r1c4">6
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r1c5">7
+                                                                            </td>
+                                                                            <td class="weekend available"
+                                                                                data-title="r1c6">
+                                                                                8
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="weekend available"
+                                                                                data-title="r2c0">
+                                                                                9
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r2c1">10
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r2c2">11
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r2c3">12
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r2c4">13
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r2c5">14
+                                                                            </td>
+                                                                            <td class="weekend available"
+                                                                                data-title="r2c6">
+                                                                                15
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="weekend available"
+                                                                                data-title="r3c0">
+                                                                                16
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r3c1">17
+                                                                            </td>
+                                                                            <td class="today active start-date active end-date available"
+                                                                                data-title="r3c2">18
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r3c3">19
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r3c4">20
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r3c5">21
+                                                                            </td>
+                                                                            <td class="weekend available"
+                                                                                data-title="r3c6">
+                                                                                22
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="weekend available"
+                                                                                data-title="r4c0">
+                                                                                23
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r4c1">24
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r4c2">25
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r4c3">26
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r4c4">27
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r4c5">28
+                                                                            </td>
+                                                                            <td class="weekend available"
+                                                                                data-title="r4c6">
+                                                                                29
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="weekend available"
+                                                                                data-title="r5c0">
+                                                                                30
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r5c1">31
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r5c2">1
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r5c3">2
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r5c4">3
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r5c5">4
+                                                                            </td>
+                                                                            <td class="weekend off available"
+                                                                                data-title="r5c6">5
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <div class="calendar right"
+                                                                 style="display: none;">
+                                                                <div class="daterangepicker_input"><input
+                                                                        class="input-mini form-control"
+                                                                        type="text"
+                                                                        name="daterangepicker_end" value=""
+                                                                        style="display: none;"><i
+                                                                        class="fa fa-calendar glyphicon glyphicon-calendar"
+                                                                        style="display: none;"></i>
+                                                                    <div class="calendar-time"
+                                                                         style="display: none;">
+                                                                        <div></div>
+                                                                        <i class="fa fa-clock-o glyphicon glyphicon-time"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="calendar-table">
+                                                                    <table class="table-condensed">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th></th>
+                                                                            <th colspan="5" class="month">
+                                                                                Nov 2016
+                                                                            </th>
+                                                                            <th class="next available"><i
+                                                                                    class="fa fa-chevron-right glyphicon glyphicon-chevron-right"></i>
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Su</th>
+                                                                            <th>Mo</th>
+                                                                            <th>Tu</th>
+                                                                            <th>We</th>
+                                                                            <th>Th</th>
+                                                                            <th>Fr</th>
+                                                                            <th>Sa</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td class="weekend off available"
+                                                                                data-title="r0c0">30
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r0c1">31
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r0c2">1
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r0c3">2
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r0c4">3
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r0c5">4
+                                                                            </td>
+                                                                            <td class="weekend available"
+                                                                                data-title="r0c6">
+                                                                                5
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="weekend available"
+                                                                                data-title="r1c0">
+                                                                                6
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r1c1">7
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r1c2">8
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r1c3">9
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r1c4">10
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r1c5">11
+                                                                            </td>
+                                                                            <td class="weekend available"
+                                                                                data-title="r1c6">
+                                                                                12
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="weekend available"
+                                                                                data-title="r2c0">
+                                                                                13
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r2c1">14
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r2c2">15
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r2c3">16
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r2c4">17
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r2c5">18
+                                                                            </td>
+                                                                            <td class="weekend available"
+                                                                                data-title="r2c6">
+                                                                                19
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="weekend available"
+                                                                                data-title="r3c0">
+                                                                                20
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r3c1">21
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r3c2">22
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r3c3">23
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r3c4">24
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r3c5">25
+                                                                            </td>
+                                                                            <td class="weekend available"
+                                                                                data-title="r3c6">
+                                                                                26
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="weekend available"
+                                                                                data-title="r4c0">
+                                                                                27
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r4c1">28
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r4c2">29
+                                                                            </td>
+                                                                            <td class="available"
+                                                                                data-title="r4c3">30
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r4c4">1
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r4c5">2
+                                                                            </td>
+                                                                            <td class="weekend off available"
+                                                                                data-title="r4c6">3
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="weekend off available"
+                                                                                data-title="r5c0">4
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r5c1">5
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r5c2">6
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r5c3">7
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r5c4">8
+                                                                            </td>
+                                                                            <td class="off available"
+                                                                                data-title="r5c5">9
+                                                                            </td>
+                                                                            <td class="weekend off available"
+                                                                                data-title="r5c6">10
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ranges" style="display: none;">
+                                                                <div class="range_inputs">
+                                                                    <button class="applyBtn btn btn-sm btn-success"
+                                                                            type="button">Apply
+                                                                    </button>
+                                                                    <button class="cancelBtn btn btn-sm btn-default"
+                                                                            type="button">Cancel
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </fieldset>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <button type="submit" class="btn btn-primary btn-sm">下单</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </c:if>
-                                </div>
-
-                                <div class="col-md-5 col-sm-5 col-xs-12" style="border:0px solid #e5e5e5;">
-                                    <h3 class="prod_title">${carDetail.carname}</h3>
-                                    <div class="col-md-12">
-                                        <div class="col-md-6">
-                                            <h2>品牌 </h2>
-                                            <img src="../../images/logo/${carDetail.brandid}.JPG"/>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="col-md-12">
-                                                <h2>类型 </h2>
-                                                <p>${carDetail.carType.ctypename}</p>
+                                                        <fieldset>
+                                                            <div class="control-group">
+                                                                <input hidden="hidden" name="carId"
+                                                                       value="${carDetail.carid}">
+                                                                <input hidden="hidden" name="price"
+                                                                       value="${car.price}">
+                                                                <div class="col-md-3"><label
+                                                                        for="single_cal4">输入还车日期</label>
+                                                                </div>
+                                                                <div class="controls col-md-9">
+                                                                    <div class="col-md-11 xdisplay_inputx form-group has-feedback">
+                                                                        <input type="text"
+                                                                               class="form-control has-feedback-left"
+                                                                               id="single_cal4" name="date"
+                                                                               aria-describedby="inputSuccess2Status4">
+                                                                        <span class="fa fa-calendar-o form-control-feedback left"
+                                                                              aria-hidden="true"></span>
+                                                                        <span id="inputSuccess2Status4"
+                                                                              class="sr-only">(success)</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button type="submit"
+                                                                class="btn btn-primary btn-sm">下单
+                                                        </button>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div class="col-md-12">
-                                                <h2>门店 </h2>
-                                                <p>${carDetail.location.city.province.pname}-${carDetail.location.city.cname}-${carDetail.location.lname}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="col-md-12">
-                                        <div class="col-md-12">
-                                            <h2>描述 </h2>
-                                            <p>${carDetail.detail}</p>
-                                        </div>
-                                    </div>
-                                    <c:if test="${carDetail.isonline==1}">
-                                        <div class="col-md-12">
-                                            <div class="product_price">
-                                                <h2>价格 </h2>
-                                                <h1 class="price">${carDetail.price}</h1>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${carDetail.isonline==0 && userDetail.userType.utypename == '管理员'}">
-                                        <div class="col-md-12">
-                                            <form action="<%=request.getContextPath() %>/backManage/online"
-                                                  method="post">
-                                                <input name="carId" hidden="hidden" value="${carDetail.carid}">
-                                                <input name="price">
-                                                <input type="submit">
-                                            </form>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${carDetail.isonline == -1}">
-                                        <di>
-                                            <form action="<%=request.getContextPath() %>/uploadCarFile" method="post"
-                                                  enctype="multipart/form-data">
-                                                <label for="carId">上传审核文件(将需上传类容放入Word中上传)</label>
-                                                <input hidden="hidden" value="${carDetail.carid}" name="carId"
-                                                       id="carId">
-                                                <input type="file" name="file">
-                                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i>
-                                                    点击上传
-                                                </button>
-                                            </form>
-                                        </di>
-                                        <c:if test="${carDetail.files eq 'true'}">
-                                            <p class="url">
-                                                <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                                <a href="../../files/${carDetail.carid}.docx"><i
-                                                        class="fa fa-paperclip"></i> 审核文件.docx </a>
-                                            </p>
                                         </c:if>
-                                    </c:if>
+                                        <c:if test="${carDetail.isonline == 1 && userDetail.userType.utypename eq '管理员'}">
+                                            <a type="button" class="btn btn-primary"
+                                               href="<%=request.getContextPath() %>/backManage/offline?cdId=${carDetail.cdid}"><i
+                                                    class="fa fa-arrow-circle-o-down"></i> 下线</a>
+                                        </c:if>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-12">
+                                        <div class="col-md-12">
+                                        <h2>基本信息</h2>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <h2>品牌 </h2>
+                                                <p>${car.carBrand.brandname}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h2>类型 </h2>
+                                                <p>${car.carType.ctypename}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <h2>门店 </h2>
+                                                <p>${car.location.city.province.pname}-${car.location.city.cname}-${car.location.lname}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h2>价格 </h2>
+                                                <p>${car.price}</p>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="ln_solid col-md-12"></div>
+                                        <div class="col-md-12">
+                                        <h2>详细信息</h2>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <h2>年代款</h2>
+                                                <p>${carDetail.productyear}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h2>配置款</h2>
+                                                <p>${carDetail.level}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <h2>座位数</h2>
+                                                <p>${carDetail.seats}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h2>车门数</h2>
+                                                <p>${carDetail.doors}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <h2>燃料类型</h2>
+                                                <p>${carDetail.energy.energename}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h2>变速箱类型</h2>
+                                                <p>${carDetail.gear.gearname}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <h2>排量</h2>
+                                                <p>${carDetail.displacement}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h2>驱动方式</h2>
+                                                <p>${carDetail.drive}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <h2>天窗</h2>
+                                                <p>${carDetail.upwindow}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h2>雷达</h2>
+                                                <p>${carDetail.radar}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <h2>证件</h2>
+                                                <p>${carDetail.lisence}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h2>保养记录</h2>
+                                                <p>${carDetail.fsfile}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

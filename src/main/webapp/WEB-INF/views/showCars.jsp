@@ -5,7 +5,7 @@
   Time: 9:39
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"  pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
@@ -53,7 +53,8 @@
                 <div class="profile clearfix">
                     <div class="profile_pic">
                         <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                  <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..." class="img-circle profile_img">
+                                  <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..."
+                             class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>欢迎,</span>
@@ -62,7 +63,7 @@
                 </div>
                 <!-- /menu profile quick info -->
 
-                <br />
+                <br/>
 
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -71,10 +72,11 @@
                         <ul class="nav side-menu">
                             <li><a><i class="fa fa-car"></i> 汽车管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="<%=request.getContextPath() %>/backManage/showCars">所有汽车</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/uploadCar">添加汽车</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/rentCar">所有汽车</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a>
+                                    </li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-newspaper-o"></i> 新闻管理 <span class="fa fa-chevron-down"></span></a>
@@ -91,7 +93,8 @@
                             </li>
                             <li><a><i class="fa fa-dollar"></i> 订单管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="<%=request.getContextPath() %>/backManage/showOrdersNotPaid">未支付订单</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/showOrdersNotPaid">未支付订单</a>
+                                    </li>
                                     <li><a href="<%=request.getContextPath() %>/backManage/showRefund">退款订单</a></li>
                                 </ul>
                             </li>
@@ -112,14 +115,17 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
                                 <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                          <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="">${currentUser.username}
+                                          <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>"
+                                     alt="">${currentUser.username}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 <li><a href="<%=request.getContextPath() %>/userDetail">个人信息</a></li>
-                                <li><a href="<%=request.getContextPath() %>/user/logout"><i class="fa fa-sign-out pull-right"></i>注销</a></li>
+                                <li><a href="<%=request.getContextPath() %>/user/logout"><i
+                                        class="fa fa-sign-out pull-right"></i>注销</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -129,20 +135,254 @@
         <!-- /top navigation -->
 
         <!-- page content -->
+        <!-- page content -->
         <div class="right_col" role="main">
             <div class="">
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2><i class="fa fa-align-left"></i> 选择汽车 </h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                               aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">Settings 1</a>
+                                                </li>
+                                                <li><a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <form action="<%=request.getContextPath() %>/rentCar" method="get">
+                                    <!-- start accordion -->
+                                    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <div class="panel">
+                                            <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse"
+                                               data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                                               aria-controls="collapseOne">
+                                                <h4 class="panel-title">选择地点</h4>
+                                            </a>
+                                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                                 aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    <select id="province" name="province"
+                                                            onchange="chooseProvice(this)">
+                                                        <option>请选择省</option>
+                                                        <c:forEach var="province" items="${locations}">
+                                                            <option value="${province.pid}">${province.pname}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                    <select id="city" name="city" onchange="chooseCity(this)">
+                                                        <option>请选择市</option>
+                                                    </select>
+                                                    <select id="location" name="location" onchange="chooseLocation(this)">
+                                                        <option>请选择门店</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel">
+                                            <a class="panel-heading collapsed" role="tab" id="headingTwo"
+                                               data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+                                               aria-expanded="false" aria-controls="collapseTwo">
+                                                <h4 class="panel-title">选择品牌</h4>
+                                            </a>
+                                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                                                 aria-labelledby="headingTwo">
+                                                <div class="panel-body">
+                                                    <select name="carBrand">
+                                                        <option>请选择品牌</option>
+                                                        <c:forEach items="${carBrands}" var="carBrand">
+                                                            <option value="${carBrand.brandid}">${carBrand.brandname}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel">
+                                            <a class="panel-heading collapsed" role="tab" id="headingThree"
+                                               data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
+                                               aria-expanded="false" aria-controls="collapseThree">
+                                                <h4 class="panel-title">选择类型</h4>
+                                            </a>
+                                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                                                 aria-labelledby="headingThree">
+                                                <div class="panel-body">
+                                                    <select name="carType">
+                                                        <option>请选择类型</option>
+                                                        <c:forEach items="${carTypes}" var="carType">
+                                                            <option value="${carType.ctypeid}">${carType.ctypename}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel">
+                                            <a class="panel-heading collapsed" role="tab" id="headingFour"
+                                               data-toggle="collapse" data-parent="#accordion" href="#collapseFour"
+                                               aria-expanded="false" aria-controls="collapseFour">
+                                                <h4 class="panel-title">选择价格区间</h4>
+                                            </a>
+                                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
+                                                 aria-labelledby="headingFour">
+                                                <div class="panel-body">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <input name="lowPrice" type="text"
+                                                               class="form-control has-feedback-left" id="inputSuccess2"
+                                                               placeholder="请输入低价">
+                                                        <span class="fa fa-dollar form-control-feedback left"
+                                                              aria-hidden="true"></span>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <input name="highPrice" type="text" class="form-control"
+                                                               id="inputSuccess3" placeholder="请输入高价">
+                                                        <span class="fa fa-dollar form-control-feedback right"
+                                                              aria-hidden="true"></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                <button type="submit" class="btn btn-success">确定</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end of accordion -->
+                                    </form>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#myModel"><i class="fa fa-plus"></i> 添加汽车
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModel" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">
+                                                        添加汽车</h5>
+                                                </div>
+                                                <form action="<%=request.getContextPath() %>/uploadCar"
+                                                      method="post" id="demo-form2" data-parsley-validate
+                                                      class="form-horizontal form-label-left" enctype="multipart/form-data">
+                                                    <div class="modal-body">
+                                                        <input hidden="hidden" name="location" id="lInput">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                                   for="carName">汽车名称 <span
+                                                                    class="required">*</span>
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <input type="text" id="carName"
+                                                                       name="carName" required="required"
+                                                                       class="form-control col-md-7 col-xs-12">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                                   for="plate">车牌号 <span
+                                                                    class="required">*</span>
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <input type="text" id="plate" name="plate"
+                                                                       required="required"
+                                                                       class="form-control col-md-7 col-xs-12">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">类型
+                                                                <span class="required">*</span></label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <div id="gender" class="btn-group"
+                                                                     data-toggle="buttons">
+                                                                    <select class="form-control" name="typeId">
+                                                                    <c:forEach items="${carTypes}"
+                                                                               var="carType">
+                                                                        <option value="${carType.ctypeid}">${carType.ctypename}</option>
+                                                                    </c:forEach>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                                   for="price">单价 <span
+                                                                    class="required">*</span>
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <input type="text" id="price" name="price"
+                                                                       required="required"
+                                                                       class="form-control col-md-7 col-xs-12">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">汽车品牌
+                                                                <span class="required">*</span></label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <select class="form-control" name="brandId">
+                                                                    <c:forEach var="carBrand"
+                                                                               items="${carBrands}">
+                                                                        <option value="${carBrand.brandid}">${carBrand.brandname}</option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                                   for="carPicture">单价 <span
+                                                                    class="required">*</span>
+                                                            </label>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <input type="file" id="carPicture" name="carPicture"
+                                                                       required="required"
+                                                                       class="form-control col-md-7 col-xs-12">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">关闭
+                                                        </button>
+                                                        <button type="submit" class="btn btn-secondary">提交
+                                                        </button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+
                 <div class="clearfix"></div>
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>汽车管理</h2>
+                                <h2>汽车列表</h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                     </li>
                                     <li><a class="close-link"><i class="fa fa-close"></i></a>
                                     </li>
@@ -168,8 +408,12 @@
                                             <td>${car.plate}</td>
                                             <td>${car.price}</td>
                                             <td>
-                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}"><i class="fa fa-folder"></i> 查看</a>
-                                                <a href="<%=request.getContextPath() %>/backManage/offline?carId=${car.carid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 下线 </a>
+                                                <a type="button" class="btn btn-primary btn-xs"
+                                                   href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}"><i
+                                                        class="fa fa-folder"></i> 查看</a>
+                                                <a type="button" class="btn btn-primary btn-xs"
+                                                   href="<%=request.getContextPath() %>/uploadCarDetail?carId=${car.carid}"><i
+                                                        class="fa fa-upload"></i> 提交组车信息</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -181,6 +425,7 @@
                 </div>
             </div>
         </div>
+        <!-- /page content -->
         <!-- /page content -->
 
         <!-- footer content -->
@@ -223,6 +468,43 @@
 
 <!-- Custom Theme Scripts -->
 <script src="../../build/js/custom.min.js"></script>
+
+<script>
+    var pTag = document.getElementById("province");
+    var cTag = document.getElementById("city");
+    var lTag = document.getElementById("location");
+
+    function chooseProvice() {
+        $("#city").empty();
+        cTag.add(new Option("请选择市"));
+        <c:forEach var="province" items="${locations}">
+        if (pTag.options[pTag.selectedIndex].text === "${province.pname}") {
+            <c:forEach var="city" items="${province.cities}">
+            cTag.add(new Option("${city.cname}", ${city.cid}));
+            </c:forEach>
+        }
+        </c:forEach>
+    }
+
+    function chooseCity() {
+        $("#location").empty();
+        lTag.add(new Option("请选择门店"));
+        <c:forEach var="province" items="${locations}">
+        if (pTag.options[pTag.selectedIndex].text === "${province.pname}") {
+            <c:forEach var="city" items="${province.cities}">
+            if (cTag.options[cTag.selectedIndex].text === "${city.cname}") {
+                <c:forEach var="location" items="${city.locations}">
+                lTag.add(new Option("${location.lname}", ${location.lid}));
+                </c:forEach>
+            }
+            </c:forEach>
+        }
+        </c:forEach>
+    }
+    function chooseLocation() {
+        $("#lInput").val($('#location option:selected').val());
+    }
+</script>
 
 </body>
 </html>

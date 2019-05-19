@@ -43,10 +43,7 @@ public class UserController {
             User detail = userService.findUserById(user.getUserid());
             session.setAttribute("currentUser", user);
             session.setAttribute("userDetail", detail);
-            String userType = userTypeService.finduTypeNameById(user.getUtypeid());
-            if ("管理员".compareTo(userType) == 0) {
-                return "redirect:/backManage/showCars";
-            } else return "redirect:/rentCar";
+            return "redirect:/rentCar";
         } else {
             model.addAttribute("msg", "用户名或密码错误");
             return "fail";

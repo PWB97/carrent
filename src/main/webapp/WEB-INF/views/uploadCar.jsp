@@ -5,7 +5,7 @@
   Time: 16:05
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"  pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8"/>
 
     <title>
         <c:if test="${userDetail.userType.utypename == '管理员'}">后台管理</c:if>
@@ -61,7 +61,8 @@
                 <div class="profile clearfix">
                     <div class="profile_pic">
                         <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                  <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..." class="img-circle profile_img">
+                                  <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..."
+                             class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>欢迎,</span>
@@ -70,7 +71,7 @@
                 </div>
                 <!-- /menu profile quick info -->
 
-                <br />
+                <br/>
 
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -80,12 +81,13 @@
                             <c:if test="${userDetail.userType.utypename == '管理员'}">
                                 <li><a><i class="fa fa-car"></i> 汽车管理 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="<%=request.getContextPath() %>/backManage/showCars">所有汽车</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/rentCar">所有汽车</a></li>
                                         <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a>
                                         </li>
-                                        <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a>
+                                        <li>
+                                            <a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a>
                                         </li>
-                                        <li><a href="<%=request.getContextPath() %>/uploadCar">添加汽车</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/uploadCarDetail">添加汽车</a></li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-newspaper-o"></i> 新闻管理 <span
@@ -153,14 +155,17 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
                                 <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                          <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="">${currentUser.username}
+                                          <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>"
+                                     alt="">${currentUser.username}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 <li><a href="<%=request.getContextPath() %>/userDetail">个人信息</a></li>
-                                <li><a href="<%=request.getContextPath() %>/user/logout"><i class="fa fa-sign-out pull-right"></i>注销</a></li>
+                                <li><a href="<%=request.getContextPath() %>/user/logout"><i
+                                        class="fa fa-sign-out pull-right"></i>注销</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -178,12 +183,14 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>添加汽车</h2>
+                                <h2>
+                                    添加汽车-${car.carBrand.brandname}/${car.carname}-${car.location.city.province.pname}${car.location.city.cname}${car.location.lname}</h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                     </li>
                                     <li><a class="close-link"><i class="fa fa-close"></i></a>
                                     </li>
@@ -191,81 +198,224 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <form action="<%=request.getContextPath() %>/uploadCar" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
+                                <form action="<%=request.getContextPath() %>/uploadCar" method="post" id="demo-form2"
+                                      data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
+                                    <input hidden="hidden" value="${car.carid}" name="carId">
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="carName">汽车名称 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productYear">汽车年款
+                                            <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="carName" name="carName" required="required" class="form-control col-md-7 col-xs-12">
+                                            <input type="text" id="productYear" name="productYear" required="required"
+                                                   class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="plate">车牌号 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="level">配置款 <span
+                                                class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="plate" name="plate" required="required" class="form-control col-md-7 col-xs-12">
+                                            <input type="text" id="level" name="level" required="required"
+                                                   class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">类型 <span class="required">*</span></label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">座位数 <span
+                                                class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div id="gender" class="btn-group" data-toggle="buttons">
-                                                <c:forEach items="${carTypes}" var="carType">
-                                                    <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                        <input type="radio" name="typeId" value="${carType.ctypeid}"> ${carType.ctypename}&nbsp;
-                                                    </label>
-                                                </c:forEach>
+                                            <div id="seats" class="btn-group" data-toggle="buttons">
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                    <input type="radio" name="seats"
+                                                           value="2"> 两座
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="seats"
+                                                       value="4"> 四座
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="seats"
+                                                       value="5"> 五座
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="seats"
+                                                       value="6"> 六座
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="seats"
+                                                       value="7"> 七座
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="seats"
+                                                       value="8"> 七座以上
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">单价 <span class="required">*</span>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">门数 <span
+                                                class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div id="doors" class="btn-group" data-toggle="buttons">
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="doors"
+                                                       value="2"> 双门
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="doors"
+                                                       value="3"> 三门
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="doors"
+                                                       value="4"> 四门
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="doors"
+                                                       value="5"> 五门
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">燃料类型 <span
+                                                class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="form-control" name="eId">
+                                                <c:forEach var="energy" items="${energyList}">
+                                                    <option value="${energy.energeid}">${energy.energename}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">变速箱类型 <span
+                                                class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select class="form-control" name="eId">
+                                                <c:forEach var="gear" items="${gears}">
+                                                    <option value="${gear.gearid}">${gear.gearname}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productYear">排量
+                                            <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="price" name="price" required="required" class="form-control col-md-7 col-xs-12">
+                                            <input type="text" id="displacement" name="displacement" required="required"
+                                                   class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">汽车品牌 <span class="required">*</span></label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">驱动方式 <span
+                                                class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="brandId">
-                                                <c:forEach var="carBrand" items="${carBrands}">
-                                                    <option value="${carBrand.brandid}">${carBrand.brandname}</option>
-                                                </c:forEach>
-                                            </select>
+                                            <div id="drive" class="btn-group" data-toggle="buttons">
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="drive"
+                                                       value="1"> 前驱
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="drive"
+                                                       value="2"> 后驱
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="drive"
+                                                       value="3"> 四驱
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">门店 <span class="required">*</span></label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">是否有天窗 <span
+                                                class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select id="province"  onchange="chooseProvice(this)" class="form-control">
-                                                <option>请选择省</option>
-                                                <c:forEach var="province" items="${locations}">
-                                                    <option value="${province.pid}">${province.pname}</option>
-                                                </c:forEach>
-                                            </select>
-                                            <br>
-                                            <select id="city"  onchange="chooseCity(this)" class="form-control">
-                                                <option>请选择市</option>
-                                            </select>
-                                            <br>
-                                            <select id="location" name="location" class="form-control">
-                                                <option>请选择门店</option>
-                                            </select>
+                                            <div id="upWindow" class="btn-group" data-toggle="buttons">
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="upWindow"
+                                                       value="0"> 无
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="upWindow"
+                                                       value="1"> 有
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
-                                        <label for="detail">详细 </label>
-                                        <textarea id="detail" required="required" class="form-control" name="detail" data-parsley-trigger="keyup"></textarea>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">是否有雷达 <span
+                                                class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div id="radar" class="btn-group" data-toggle="buttons">
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                    <input type="radio" name="radar"
+                                                           value="0"> 无
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="radar"
+                                                       value="1"> 有
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">是否有GPS <span
+                                                class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div id="gps" class="btn-group" data-toggle="buttons">
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                    <input type="radio" name="gps"
+                                                           value="0"> 无
+                                                </label>
+                                                <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                       data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="gps"
+                                                       value="1"> 有
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lisence">证件
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="file" id="lisence" name="lisence" required="required"
+                                                   class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fsFile">保养记录
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="file" id="fsFile" name="fsFile" required="required"
+                                                   class="form-control col-md-7 col-xs-12">
+                                        </div>
                                     </div>
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button class="btn btn-primary" type="button">Cancel</button>
-                                            <button class="btn btn-primary" type="reset">Reset</button>
-                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button class="btn btn-primary" type="reset">重置</button>
+                                            <button type="submit" class="btn btn-success">提交</button>
                                         </div>
                                     </div>
 
@@ -323,6 +473,7 @@
     var pTag = document.getElementById("province");
     var cTag = document.getElementById("city");
     var lTag = document.getElementById("location");
+
     function chooseProvice() {
         $("#city").empty();
         cTag.add(new Option("请选择市"));

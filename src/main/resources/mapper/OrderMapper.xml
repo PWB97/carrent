@@ -241,8 +241,8 @@
     where orderId = #{orderid,jdbcType=INTEGER}
   </update>
   <select id="selectOrdersWithDetail" resultMap="OrderDetail">
-    select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,tc.isDeleted,price,tc.brandid,cTypeName,brandname,lName,cName,pName
-    from t_order join t_user tu on t_order.userId = tu.userId join t_car tc on t_order.carId = tc.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
+    select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,price,tc.brandid, t_cardetail.isDeleted,cTypeName,brandname,lName,cName,pName
+    from t_order join t_user tu on t_order.userId = tu.userId join t_cardetail on t_order.carId = t_cardetail.cdId join t_car tc on t_cardetail.carId = t_car.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
   </select>
   <resultMap id="OrderDetail" type="com.pu.carrent.entity.Order">
     <id property="orderid" column="orderId"/>
@@ -257,56 +257,53 @@
       <result column="phone" property="phone"/>
       <result column="email" property="email"/>
     </collection>
-    <collection property="car" ofType="com.pu.carrent.entity.Car">
-      <result property="carname" column="carName"/>
-      <result property="plate" column="plate"/>
-      <result property="pictures" column="pictures"/>
+    <collection property="carDetail" ofType="com.pu.carrent.entity.CarDetail">
       <result property="isdeleted" column="isDeleted"/>
-      <result property="price" column="price"/>
-      <result property="brandid" column="brandId"/>
-      <collection property="carType" ofType="com.pu.carrent.entity.CarType">
-        <result column="cTypeName" property="ctypename"/>
-      </collection>
-      <collection property="carBrand" ofType="com.pu.carrent.entity.CarBrand">
-        <result property="brandname" column="brandName"/>
-      </collection>
-      <collection property="location" ofType="com.pu.carrent.entity.Location">
-        <result column="lName" property="lname"/>
-        <collection property="city" ofType="com.pu.carrent.entity.City">
-          <result column="cName" property="cname"/>
-          <collection property="province" ofType="com.pu.carrent.entity.Province">
-            <result column="pName" property="pname"/>
+      <collection property="car" ofType="com.pu.carrent.entity.Car">
+        <collection property="carType" ofType="com.pu.carrent.entity.CarType">
+          <result column="cTypeName" property="ctypename"/>
+        </collection>
+        <collection property="carBrand" ofType="com.pu.carrent.entity.CarBrand">
+          <result property="brandname" column="brandName"/>
+        </collection>
+        <collection property="location" ofType="com.pu.carrent.entity.Location">
+          <result column="lName" property="lname"/>
+          <collection property="city" ofType="com.pu.carrent.entity.City">
+            <result column="cName" property="cname"/>
+            <collection property="province" ofType="com.pu.carrent.entity.Province">
+              <result column="pName" property="pname"/>
+            </collection>
           </collection>
         </collection>
       </collection>
     </collection>
   </resultMap>
   <select id="selectOrdersNotPaidWithDetail" resultMap="OrderDetail">
-    select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,tc.isDeleted,price,tc.brandid,cTypeName,brandname,lName,cName,pName
-    from t_order left join t_user tu on t_order.userId = tu.userId left join t_car tc on t_order.carId = tc.carId left join t_carbrand t on tc.brandId = t.brandId left join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
+     select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,price,tc.brandid, t_cardetail.isDeleted,cTypeName,brandname,lName,cName,pName
+    from t_order join t_user tu on t_order.userId = tu.userId join t_cardetail on t_order.carId = t_cardetail.cdId join t_car tc on t_cardetail.carId = t_car.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
     where isPaid=0
   </select>
   <select id="selectOrderWithDetailById" resultMap="OrderDetail">
-    select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,tc.isDeleted,price,tc.brandid,cTypeName,brandname,lName,cName,pName
-    from t_order left join t_user tu on t_order.userId = tu.userId left join t_car tc on t_order.carId = tc.carId left join t_carbrand t on tc.brandId = t.brandId left join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
+     select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,price,tc.brandid, t_cardetail.isDeleted,cTypeName,brandname,lName,cName,pName
+    from t_order join t_user tu on t_order.userId = tu.userId join t_cardetail on t_order.carId = t_cardetail.cdId join t_car tc on t_cardetail.carId = t_car.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
     where orderId=#{orderId,jdbcType=INTEGER}
   </select>
 
   <select id="findOrdersByUserId" resultMap="OrderDetail">
-    select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,tc.isDeleted,price,tc.brandid,cTypeName,brandname,lName,cName,pName
-    from t_order left join t_user tu on t_order.userId = tu.userId left join t_car tc on t_order.carId = tc.carId left join t_carbrand t on tc.brandId = t.brandId left join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
+     select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,price,tc.brandid, t_cardetail.isDeleted,cTypeName,brandname,lName,cName,pName
+    from t_order join t_user tu on t_order.userId = tu.userId join t_cardetail on t_order.carId = t_cardetail.cdId join t_car tc on t_cardetail.carId = t_car.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
     where t_order.userId=#{userId,jdbcType=INTEGER} order by isPaid
   </select>
 
   <select id="findRefunds" resultMap="OrderDetail">
-    select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,tc.isDeleted,price,tc.brandid,cTypeName,brandname,lName,cName,pName
-    from t_order left join t_user tu on t_order.userId = tu.userId left join t_car tc on t_order.carId = tc.carId left join t_carbrand t on tc.brandId = t.brandId left join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
+     select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,price,tc.brandid, t_cardetail.isDeleted,cTypeName,brandname,lName,cName,pName
+    from t_order join t_user tu on t_order.userId = tu.userId join t_cardetail on t_order.carId = t_cardetail.cdId join t_car tc on t_cardetail.carId = t_car.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
     where isPaid=-1
   </select>
 
   <select id="findRefundsByUserId" resultMap="OrderDetail">
-    select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,tc.isDeleted,price,tc.brandid,cTypeName,brandname,lName,cName,pName
-    from t_order left join t_user tu on t_order.userId = tu.userId left join t_car tc on t_order.carId = tc.carId left join t_carbrand t on tc.brandId = t.brandId left join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
+     select orderId, t_order.userId, isPaid,creatTime,endTime,totalPrice,t_order.carId,userName,phone,email,carname,plate,pictures,price,tc.brandid, t_cardetail.isDeleted,cTypeName,brandname,lName,cName,pName
+    from t_order join t_user tu on t_order.userId = tu.userId join t_cardetail on t_order.carId = t_cardetail.cdId join t_car tc on t_cardetail.carId = t_car.carId join t_carbrand t on tc.brandId =is t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
     where isPaid=-1 and t_order.userId=#{userId,jdbcType=INTEGER}
   </select>
 </mapper>

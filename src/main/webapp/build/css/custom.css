@@ -2338,8 +2338,10 @@ select.parsley-error {
 .btn {
     border-radius: 3px
 }
+a.btn-primary{
+    color: #377BB5;
+}
 a.btn-success,
-a.btn-primary,
 a.btn-warning,
 a.btn-danger {
     color: #fff

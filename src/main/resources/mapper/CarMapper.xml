@@ -8,13 +8,11 @@
     <result column="brandId" property="brandid" jdbcType="INTEGER" />
     <result column="plate" property="plate" jdbcType="VARCHAR" />
     <result column="pictures" property="pictures" jdbcType="VARCHAR" />
-    <result column="detail" property="detail" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="isOnline" property="isonline" jdbcType="INTEGER" />
     <result column="isDeleted" property="isdeleted" jdbcType="INTEGER" />
-    <result column="lId" property="lid" jdbcType="INTEGER" />
-    <result column="userId" property="userid" jdbcType="INTEGER" />
     <result column="files" property="files" jdbcType="VARCHAR" />
+    <result column="lId" property="lid" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    carId, carName, cTypeId, brandId, plate, pictures, detail, price, isOnline, isDeleted, 
-    lId, userId, files
+    carId, carName, cTypeId, brandId, plate, pictures, price, isOnline, isDeleted, files, 
+    lId
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entityExample.CarExample" >
     select
@@ -111,14 +109,12 @@
   <insert id="insert" parameterType="com.pu.carrent.entity.Car" >
     insert into t_car (carId, carName, cTypeId, 
       brandId, plate, pictures, 
-      detail, price, isOnline, 
-      isDeleted, lId, userId, 
-      files)
+      price, isOnline, isDeleted, 
+      files, lId)
     values (#{carid,jdbcType=INTEGER}, #{carname,jdbcType=VARCHAR}, #{ctypeid,jdbcType=INTEGER}, 
       #{brandid,jdbcType=INTEGER}, #{plate,jdbcType=VARCHAR}, #{pictures,jdbcType=VARCHAR}, 
-      #{detail,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{isonline,jdbcType=INTEGER},
-      #{isdeleted,jdbcType=INTEGER}, #{lid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
-      #{files,jdbcType=VARCHAR})
+      #{price,jdbcType=DECIMAL}, #{isonline,jdbcType=INTEGER}, #{isdeleted,jdbcType=INTEGER}, 
+      #{files,jdbcType=VARCHAR}, #{lid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.pu.carrent.entity.Car" >
     insert into t_car
@@ -141,9 +137,6 @@
       <if test="pictures != null" >
         pictures,
       </if>
-      <if test="detail != null" >
-        detail,
-      </if>
       <if test="price != null" >
         price,
       </if>
@@ -153,14 +146,11 @@
       <if test="isdeleted != null" >
         isDeleted,
       </if>
-      <if test="lid != null" >
-        lId,
-      </if>
-      <if test="userid != null" >
-        userId,
-      </if>
       <if test="files != null" >
         files,
+      </if>
+      <if test="lid != null" >
+        lId,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -182,9 +172,6 @@
       <if test="pictures != null" >
         #{pictures,jdbcType=VARCHAR},
       </if>
-      <if test="detail != null" >
-        #{detail,jdbcType=VARCHAR},
-      </if>
       <if test="price != null" >
         #{price,jdbcType=DECIMAL},
       </if>
@@ -194,14 +181,11 @@
       <if test="isdeleted != null" >
         #{isdeleted,jdbcType=INTEGER},
       </if>
-      <if test="lid != null" >
-        #{lid,jdbcType=INTEGER},
-      </if>
-      <if test="userid != null" >
-        #{userid,jdbcType=INTEGER},
-      </if>
       <if test="files != null" >
         #{files,jdbcType=VARCHAR},
+      </if>
+      <if test="lid != null" >
+        #{lid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -232,9 +216,6 @@
       <if test="record.pictures != null" >
         pictures = #{record.pictures,jdbcType=VARCHAR},
       </if>
-      <if test="record.detail != null" >
-        detail = #{record.detail,jdbcType=VARCHAR},
-      </if>
       <if test="record.price != null" >
         price = #{record.price,jdbcType=DECIMAL},
       </if>
@@ -244,14 +225,11 @@
       <if test="record.isdeleted != null" >
         isDeleted = #{record.isdeleted,jdbcType=INTEGER},
       </if>
-      <if test="record.lid != null" >
-        lId = #{record.lid,jdbcType=INTEGER},
-      </if>
-      <if test="record.userid != null" >
-        userId = #{record.userid,jdbcType=INTEGER},
-      </if>
       <if test="record.files != null" >
         files = #{record.files,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lid != null" >
+        lId = #{record.lid,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -266,13 +244,11 @@
       brandId = #{record.brandid,jdbcType=INTEGER},
       plate = #{record.plate,jdbcType=VARCHAR},
       pictures = #{record.pictures,jdbcType=VARCHAR},
-      detail = #{record.detail,jdbcType=VARCHAR},
       price = #{record.price,jdbcType=DECIMAL},
       isOnline = #{record.isonline,jdbcType=INTEGER},
       isDeleted = #{record.isdeleted,jdbcType=INTEGER},
-      lId = #{record.lid,jdbcType=INTEGER},
-      userId = #{record.userid,jdbcType=INTEGER},
-      files = #{record.files,jdbcType=VARCHAR}
+      files = #{record.files,jdbcType=VARCHAR},
+      lId = #{record.lid,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -295,9 +271,6 @@
       <if test="pictures != null" >
         pictures = #{pictures,jdbcType=VARCHAR},
       </if>
-      <if test="detail != null" >
-        detail = #{detail,jdbcType=VARCHAR},
-      </if>
       <if test="price != null" >
         price = #{price,jdbcType=DECIMAL},
       </if>
@@ -307,14 +280,11 @@
       <if test="isdeleted != null" >
         isDeleted = #{isdeleted,jdbcType=INTEGER},
       </if>
-      <if test="lid != null" >
-        lId = #{lid,jdbcType=INTEGER},
-      </if>
-      <if test="userid != null" >
-        userId = #{userid,jdbcType=INTEGER},
-      </if>
       <if test="files != null" >
         files = #{files,jdbcType=VARCHAR},
+      </if>
+      <if test="lid != null" >
+        lId = #{lid,jdbcType=INTEGER},
       </if>
     </set>
     where carId = #{carid,jdbcType=INTEGER}
@@ -326,88 +296,76 @@
       brandId = #{brandid,jdbcType=INTEGER},
       plate = #{plate,jdbcType=VARCHAR},
       pictures = #{pictures,jdbcType=VARCHAR},
-      detail = #{detail,jdbcType=VARCHAR},
       price = #{price,jdbcType=DECIMAL},
       isOnline = #{isonline,jdbcType=INTEGER},
       isDeleted = #{isdeleted,jdbcType=INTEGER},
-      lId = #{lid,jdbcType=INTEGER},
-      userId = #{userid,jdbcType=INTEGER},
-      files = #{files,jdbcType=VARCHAR}
+      files = #{files,jdbcType=VARCHAR},
+      lId = #{lid,jdbcType=INTEGER}
     where carId = #{carid,jdbcType=INTEGER}
   </update>
-  <select id="selectCarsWithDetail" resultMap="CarDetail">
-    select *
-    from t_car c left join t_carbrand tc on c.brandId = tc.brandId left join t_cartype t on c.cTypeId = t.cTypeId left join t_user tu on c.userId = tu.userId left join t_location tl on c.lId = tl.lId left join t_city tc2 on tl.cId = tc2.cId left join t_province tp on tc2.pId = tp.pId
-    where c.isDeleted=0 and c.isOnline=1
-  </select>
-  <resultMap id="CarDetail" type="com.pu.carrent.entity.Car">
-    <id column="carId" property="carid"/>
-    <result column="carName" property="carname"/>
-    <result column="brandId" property="brandid"/>
-    <result column="cTypeId" property="ctypeid"/>
-    <result column="plate" property="plate"/>
-    <result column="pictures" property="pictures"/>
-    <result column="detail" property="detail"/>
-    <result column="price" property="price"/>
-    <result column="isOnline" property="isonline"/>
-    <result column="isDeleted" property="isdeleted"/>
-    <result column="userId" property="userid"/>
-    <result column="files" property="files"/>
-    <collection property="carBrand" ofType="com.pu.carrent.entity.CarBrand">
-      <result column="brandName" property="brandname"/>
-    </collection>
-    <collection property="carType" ofType="com.pu.carrent.entity.CarType">
-      <result column="cTypeName" property="ctypename"/>
-    </collection>
-    <collection property="owner" ofType="com.pu.carrent.entity.User">
-      <result column="userName" property="username"/>
-    </collection>
-    <collection property="location" ofType="com.pu.carrent.entity.Location">
-      <result column="lName" property="lname"/>
-      <collection property="city" ofType="com.pu.carrent.entity.City">
-        <result column="cName" property="cname"/>
-        <collection property="province" ofType="com.pu.carrent.entity.Province">
-          <result column="pName" property="pname"/>
+    <select id="selectCarsWithConditions" resultMap="car">
+        select *
+        from t_car c left join t_carbrand tc on c.brandId = tc.brandId left join t_cartype t on c.cTypeId = t.cTypeId left join t_location tl on c.lId = tl.lId left join t_city tc2 on tl.cId = tc2.cId left join t_province tp on tc2.pId = tp.pId
+        where c.isDeleted = 0
+        <where>
+            <if test="typeId != null">
+                and c.cTypeId = #{typeId,jdbcType=INTEGER}
+            </if>
+            <if test="brandId != null">
+                and c.brandId = #{brandId,jdbcType=INTEGER}
+            </if>
+            <if test="pId != null">
+                and tp.pId = #{pId,jdbcType=INTEGER}
+            </if>
+            <if test="cId != null">
+                and tl.cId = #{cId,jdbcType=INTEGER}
+            </if>
+            <if test="lId != null">
+                and c.lId = #{lId,jdbcType=INTEGER}
+            </if>
+            <if test="lowPrice != null">
+                and c.price <![CDATA[   >=  ]]> #{lowPrice,jdbcType=DECIMAL}
+            </if>
+            <if test="highPrice != null">
+                and c.price <![CDATA[  <=  ]]> #{highPrice,jdbcType=DECIMAL}
+            </if>
+        </where>
+    </select>
+    <resultMap id="car" type="com.pu.carrent.entity.Car">
+        <id column="carId" property="carid"/>
+        <result column="carName" property="carname"/>
+        <result column="brandId" property="brandid"/>
+        <result column="cTypeId" property="ctypeid"/>
+        <result column="plate" property="plate"/>
+        <result column="pictures" property="pictures"/>
+        <result column="detail" property="detail"/>
+        <result column="price" property="price"/>
+        <result column="isOnline" property="isonline"/>
+        <result column="isDeleted" property="isdeleted"/>
+        <result column="files" property="files"/>
+        <collection property="carBrand" ofType="com.pu.carrent.entity.CarBrand">
+            <result column="brandName" property="brandname"/>
         </collection>
-      </collection>
-    </collection>
-  </resultMap>
-  <select id="selectCarsNotOnlineWithDetail" resultMap="CarDetail">
+        <collection property="carType" ofType="com.pu.carrent.entity.CarType">
+            <result column="cTypeName" property="ctypename"/>
+        </collection>
+        <collection property="location" ofType="com.pu.carrent.entity.Location">
+            <result column="lName" property="lname"/>
+            <collection property="city" ofType="com.pu.carrent.entity.City">
+                <result column="cName" property="cname"/>
+                <collection property="province" ofType="com.pu.carrent.entity.Province">
+                    <result column="pName" property="pname"/>
+                </collection>
+            </collection>
+        </collection>
+    </resultMap>
+  <select id="selectCarsWithDetail" resultMap="car">
     select *
-    from t_car c left join t_carbrand tc on c.brandId = tc.brandId left join t_cartype t on c.cTypeId = t.cTypeId left join t_user tu on c.userId = tu.userId left join t_location tl on c.lId = tl.lId left join t_city tc2 on tl.cId = tc2.cId left join t_province tp on tc2.pId = tp.pId
-    where c.isDeleted=0 and c.isOnline &lt;&gt; 1
+    from t_car c left join t_carbrand tc on c.brandId = tc.brandId left join t_cartype t on c.cTypeId = t.cTypeId left join t_location tl on c.lId = tl.lId left join t_city tc2 on tl.cId = tc2.cId left join t_province tp on tc2.pId = tp.pId
   </select>
-  <select id="selctCarWithDetailById" resultMap="CarDetail">
+  <select id="selctCarWithDetailById" resultMap="car">
     select *
-    from t_car c left join t_carbrand tc on c.brandId = tc.brandId left join t_cartype t on c.cTypeId = t.cTypeId left join t_user tu on c.userId = tu.userId left join t_location tl on c.lId = tl.lId left join t_city tc2 on tl.cId = tc2.cId left join t_province tp on tc2.pId = tp.pId
-    where carId=#{carid,jdbcType=INTEGER}
-  </select>
-  <select id="selectCarsWithConditions" resultMap="CarDetail">
-    select *
-    from t_car c left join t_carbrand tc on c.brandId = tc.brandId left join t_cartype t on c.cTypeId = t.cTypeId left join t_user tu on c.userId = tu.userId left join t_location tl on c.lId = tl.lId left join t_city tc2 on tl.cId = tc2.cId left join t_province tp on tc2.pId = tp.pId
-    <where>
-      <if test="typeId != null">
-       and c.cTypeId = #{typeId,jdbcType=INTEGER}
-      </if>
-      <if test="brandId != null">
-       and c.brandId = #{brandId,jdbcType=INTEGER}
-      </if>
-      <if test="pId != null">
-       and tp.pId = #{pId,jdbcType=INTEGER}
-      </if>
-      <if test="cId != null">
-       and tl.cId = #{cId,jdbcType=INTEGER}
-      </if>
-      <if test="lId != null">
-       and c.lId = #{lId,jdbcType=INTEGER}
-      </if>
-      <if test="lowPrice != null">
-       and c.price <![CDATA[   <=  ]]> #{lowPrice,jdbcType=DECIMAL}
-      </if>
-      <if test="highPrice != null">
-       and c.price <![CDATA[  >=  ]]> #{highPrice,jdbcType=DECIMAL}
-      </if>
-      and c.isDeleted = 0 and c.isOnline = 1
-    </where>
+    from t_car c left join t_carbrand tc on c.brandId = tc.brandId left join t_cartype t on c.cTypeId = t.cTypeId left join t_location tl on c.lId = tl.lId left join t_city tc2 on tl.cId = tc2.cId left join t_province tp on tc2.pId = tp.pId
+    where carId=#{carId,jdbcType=INTEGER}
   </select>
 </mapper>

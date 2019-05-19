@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pu.carrent.dao.EnergyMapper" >
+  <resultMap id="BaseResultMap" type="com.pu.carrent.entity.Energy" >
+    <id column="energeId" property="energeid" jdbcType="INTEGER" />
+    <result column="energeName" property="energename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    energeId, energeName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pu.carrent.entityExample.EnergyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_energe
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_energe
+    where energeId = #{energeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_energe
+    where energeId = #{energeid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pu.carrent.entityExample.EnergyExample" >
+    delete from t_energe
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pu.carrent.entity.Energy" >
+    insert into t_energe (energeId, energeName)
+    values (#{energeid,jdbcType=INTEGER}, #{energename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pu.carrent.entity.Energy" >
+    insert into t_energe
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="energeid != null" >
+        energeId,
+      </if>
+      <if test="energename != null" >
+        energeName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="energeid != null" >
+        #{energeid,jdbcType=INTEGER},
+      </if>
+      <if test="energename != null" >
+        #{energename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pu.carrent.entityExample.EnergyExample" resultType="java.lang.Integer" >
+    select count(*) from t_energe
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_energe
+    <set >
+      <if test="record.energeid != null" >
+        energeId = #{record.energeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.energename != null" >
+        energeName = #{record.energename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_energe
+    set energeId = #{record.energeid,jdbcType=INTEGER},
+      energeName = #{record.energename,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pu.carrent.entity.Energy" >
+    update t_energe
+    <set >
+      <if test="energename != null" >
+        energeName = #{energename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where energeId = #{energeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pu.carrent.entity.Energy" >
+    update t_energe
+    set energeName = #{energename,jdbcType=VARCHAR}
+    where energeId = #{energeid,jdbcType=INTEGER}
+  </update>
+</mapper>

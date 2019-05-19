@@ -37,8 +37,6 @@ public interface CarMapper {
 
     List<Car> selectCarsWithDetail();
 
-    List<Car> selectCarsNotOnlineWithDetail();
-
     Car selctCarWithDetailById(Integer carId);
 
     List<Car> selectCarsWithConditions(@Param("typeId") Integer typeId, @Param("brandId") Integer brandId, @Param("pId") Integer pId,

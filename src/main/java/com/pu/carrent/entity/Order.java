@@ -20,7 +20,7 @@ public class Order {
 
     private User user;
 
-    private Car car;
+    private CarDetail carDetail;
 
     public User getUser() {
         return user;
@@ -30,12 +30,12 @@ public class Order {
         this.user = user;
     }
 
-    public Car getCar() {
-        return car;
+    public CarDetail getCarDetail() {
+        return carDetail;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCarDetail(CarDetail carDetail) {
+        this.carDetail = carDetail;
     }
 
     public Integer getOrderid() {

@@ -70,12 +70,11 @@
                             <c:if test="${userDetail.userType.utypename == '管理员'}">
                                 <li><a><i class="fa fa-car"></i> 汽车管理 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="<%=request.getContextPath() %>/backManage/showCars">所有汽车</a></li>
+                                        <li><a href="<%=request.getContextPath() %>/rentCar">所有汽车</a></li>
                                         <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a>
                                         </li>
                                         <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a>
                                         </li>
-                                        <li><a href="<%=request.getContextPath() %>/uploadCar">添加汽车</a></li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-newspaper-o"></i> 新闻管理 <span
@@ -105,7 +104,6 @@
                                 <li><a><i class="fa fa-car"></i> 汽车服务 <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="<%=request.getContextPath() %>/rentCar">租车</a></li>
-                                        <li><a href="<%=request.getContextPath() %>/uploadCar">提交出租信息</a></li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-dollar"></i> 我的订单 <span class="fa fa-chevron-down"></span></a>

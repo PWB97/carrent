@@ -11,12 +11,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.pu.carrent.AlipayConfig;
 import com.pu.carrent.entity.Car;
+import com.pu.carrent.entity.CarDetail;
 import com.pu.carrent.entity.Order;
 import com.pu.carrent.entity.User;
-import com.pu.carrent.service.CarService;
-import com.pu.carrent.service.OrderSerivce;
-import com.pu.carrent.service.UserService;
-import com.pu.carrent.service.UserTypeService;
+import com.pu.carrent.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,17 +43,17 @@ public class OrderController {
     private OrderSerivce orderSerivce;
 
     @Autowired
-    private CarService carService;
+    private CarDetailService carDetailService;
 
     @Autowired
     private UserTypeService userTypeService;
 
     @RequestMapping(value = "/makeOrder", method = RequestMethod.POST)
-    public String makeOrder(Integer carId, String date, String price, HttpSession session, Model model) {
+    public String makeOrder(Integer cdId, String date, String price, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             Order order = new Order();
-            order.setCarid(carId);
+            order.setCarid(cdId);
             order.setUserid(currentUser.getUserid());
             Date createTime = new Date();
             order.setCreattime(createTime);
@@ -71,13 +69,13 @@ public class OrderController {
                 c.setTime(createTime);
                 int day2 = c.get(Calendar.DAY_OF_YEAR);
                 days = day1 - day2 + 1;
-                Car car = new Car();
-                car.setIsdeleted(days);
+                CarDetail carDetail = new CarDetail();
+                carDetail.setIsdeleted(days);
                 order.setTotalprice(new BigDecimal(price).multiply(new BigDecimal(days)));
                 order.setIspaid(0);
                 orderSerivce.addOrder(order);
-                car.setCarid(carId);
-                carService.changeCar(car);
+                carDetail.setCarid(cdId);
+                carDetailService.changeCarDetailById(carDetail);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -121,8 +119,8 @@ public class OrderController {
             String total_amount = String.valueOf(price);
             alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no
                     + "\"," + "\"total_amount\":\"" + total_amount
-                    + "\"," + "\"subject\":\"" + order.getCar().getCarname() + "\","
-                    + "\"body\":\"" + order.getCar().getPlate() + "\","
+                    + "\"," + "\"subject\":\"" + order.getCarDetail().getCar().getCarname() + "\","
+                    + "\"body\":\"" + order.getCarDetail().getCar().getPlate() + "\","
                     + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
             // 请求
             String result = alipayClient.pageExecute(alipayRequest).getBody();
@@ -162,10 +160,10 @@ public class OrderController {
             Order order = orderSerivce.findOrderById(orderId);
             if (order.getIspaid() == 0 || order.getIspaid() == 2) {
                 orderSerivce.deleteOrderById(orderId);
-                Car car = new Car();
-                car.setCarid(order.getCarid());
-                car.setIsdeleted(0);
-                carService.changeCar(car);
+                CarDetail carDetail = new CarDetail();
+                carDetail.setCdid(order.getCarid());
+                carDetail.setIsdeleted(0);
+                carDetailService.changeCarDetailById(carDetail);
                 return "redirect:/orders";
             }  else {
                 model.addAttribute("msg", "订单已支付");
@@ -259,7 +257,6 @@ public class OrderController {
             object = (JSONObject)object.get("alipay_trade_refund_response");
             String msg = object.getString("msg");
             if ("Success".compareTo(msg) == 0) {
-                Order record = new Order();
                 order.setOrderid(orderId);
                 order.setIspaid(2);
                 orderSerivce.changeOrder(order);

@@ -4,17 +4,16 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
     <!--mysql 连接数据库jar 这里选择自己本地位置-->
-    <classPathEntry
-            location="D:\maven-repository\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar"/>
+
     <context id="testTables" targetRuntime="MyBatis3">
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/wbar?serverTimezone=UTC" userId="root"
-                        password="970423">
+                        password="PuWenBo970423">
         </jdbcConnection>
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
            NUMERIC 类型解析为java.math.BigDecimal -->
@@ -47,16 +46,10 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <!-- 指定数据库表  多个表示,可用多个table标签-->
-        <table tableName="t_user" domainObjectName="User"></table>
-        <table tableName="t_news" domainObjectName="News"></table>
-        <table tableName="t_order" domainObjectName="Order"></table>
-        <table tableName="t_usertype" domainObjectName="UserType"></table>
-        <table tableName="t_cartype" domainObjectName="CarType"></table>
-        <table tableName="t_car" domainObjectName="Car"></table>
-        <table tableName="t_carbrand" domainObjectName="CarBrand"></table>
-        <table tableName="t_location" domainObjectName="Location"></table>
-        <table tableName="t_city" domainObjectName="City"></table>
-        <table tableName="t_province" domainObjectName="Province"></table>
 
+<!--        <table tableName="t_car" domainObjectName="Car"></table>-->
+        <table tableName="t_cardetail" domainObjectName="CarDetail"></table>
+<!--        <table tableName="t_energe" domainObjectName="Energy"></table>-->
+<!--        <table tableName="t_gear" domainObjectName="Gear"></table>-->
     </context>
 </generatorConfiguration>

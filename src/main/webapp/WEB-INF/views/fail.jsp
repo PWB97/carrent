@@ -17,8 +17,15 @@
         <c:if test="${msg != null}">
         var str = '${msg}';
         alert(str);
-        </c:if>
+        <c:choose>
+        <c:when test="${msg == '未登录'}">
+        window.location.href = "<%=request.getContextPath() %>/user/login";
+        </c:when>
+        <c:otherwise>
         window.history.back(-1);
+        </c:otherwise>
+        </c:choose>
+        </c:if>
     })
 </script>
 <body>

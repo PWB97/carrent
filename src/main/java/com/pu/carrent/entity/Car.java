@@ -33,11 +33,17 @@ public class Car {
 
     private Integer isdeleted;
 
+    private String files;
+
     private Integer lid;
 
-    private Integer userid;
+    public Integer getLid() {
+        return lid;
+    }
 
-    private String files;
+    public void setLid(Integer lid) {
+        this.lid = lid;
+    }
 
     @DBRef
     private CarBrand carBrand;
@@ -169,22 +175,6 @@ public class Car {
 
     public void setIsdeleted(Integer isdeleted) {
         this.isdeleted = isdeleted;
-    }
-
-    public Integer getLid() {
-        return lid;
-    }
-
-    public void setLid(Integer lid) {
-        this.lid = lid;
-    }
-
-    public Integer getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Integer userid) {
-        this.userid = userid;
     }
 
     public String getFiles() {

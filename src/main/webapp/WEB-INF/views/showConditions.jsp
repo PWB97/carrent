@@ -71,10 +71,9 @@
                         <ul class="nav side-menu">
                             <li><a><i class="fa fa-car"></i> 汽车管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="<%=request.getContextPath() %>/backManage/showCars">所有汽车</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/rentCar">所有汽车</a></li>
                                     <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a></li>
                                     <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/uploadCar">添加汽车</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-newspaper-o"></i> 新闻管理 <span class="fa fa-chevron-down"></span></a>
@@ -285,7 +284,7 @@
                                                     <tr>
                                                         <td>${location.pid}</td>
                                                         <td>${location.pname}</td>
-                                                        <td>无</td>
+                                                        <td></td>
                                                     </tr>
                                                 </c:forEach>
                                                 </tbody>
@@ -395,7 +394,9 @@
                         table.append(tr);
                         td1.innerHTML = ${location.lid};
                         td2.innerHTML = "${location.lname}";
-                        td3.innerHTML = "<td> <a href='<%=request.getContextPath() %>/backManage/deleteLocation?lId=${location.lid}' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i> 删除 </a> </td>";
+                        td3.innerHTML =
+                            "<td> " +
+                             "<a href='<%=request.getContextPath() %>/backManage/deleteLocation?lId=${location.lid}' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i> 删除 </a></td>";
                     </c:forEach>
                 }
             </c:forEach>

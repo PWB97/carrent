@@ -9,7 +9,6 @@ public interface CarService {
 
     List<Car> findAllCars();
 
-    List<Car> findCarsNotOnline();
 
     int addCar(Car record);
 
@@ -21,5 +20,5 @@ public interface CarService {
 
     int changeCar(Car car);
 
-    List<Car> findCarsByUserId(Integer userId);
+    int findCarId(Car car);
 }
