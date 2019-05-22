@@ -23,12 +23,11 @@
     <link href="../../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="../../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Ion.RangeSlider -->
-    <link href="../../vendors/normalize-css/normalize.css" rel="stylesheet">
     <link href="../../vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
     <link href="../../vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="../../build/css/custom.css" rel="stylesheet">
+    <link href="../../build/css/custom.min.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -184,7 +183,7 @@
                     </div>
                     <div class="ln_solid"></div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <table id="datatable" class="table table-striped table-bordered">
+                        <table id="datatable" class="table table-striped table-bordered" style="text-align: center">
                             <thead>
                             <tr>
                                 <th>图片</th>
@@ -196,15 +195,18 @@
                             <tbody>
                             <c:forEach var="car" items="${cars}" varStatus="s">
                                 <tr>
-                                    <td>
-                                        <img src="">
+                                    <td style="vertical-align: middle">
+                                        <img src="../../images/car/${car.carid}.JPG" with="230" height="130">
                                     </td>
-                                    <td>${car.carname}</td>
-                                    <td>${car.price}</td>
-                                    <td>
-                                        <button class="btn btn-primary btn-xs" ><i class="fa fa-folder"></i><a href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}" style="color: #ffffff">查看</a> </button>
-                                        <button class="btn btn-primary btn-xs"><i class="fa fa-upload"></i><a href="<%=request.getContextPath() %>/uploadCarDetail?carId=${car.carid}" style="color:#ffffff">提交组车信息</a> </button>
-                                    </td>
+                                    <td style="vertical-align: middle">${car.carname}</td>
+                                    <td style="vertical-align: middle">${car.price}</td>
+                                    <td style="vertical-align: middle">
+                                        <a type="button" class="btn btn-primary btn-xs"
+                                           href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}"><i
+                                                class="fa fa-folder"></i> 查看</a>
+                                        <a type="button" class="btn btn-primary btn-xs"
+                                           href="<%=request.getContextPath() %>/uploadCarDetail?carId=${car.carid}"><i
+                                                class="fa fa-upload"></i> 提交组车信息</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -294,10 +296,10 @@
 <script>
     $(".slider").ionRangeSlider({
         type: "double",
-        min: 0,
-        max: 1000,
-        from: 200,
-        to: 500,
+        min: 0.00,
+        max: 1000.00,
+        from: 200.00,
+        to: 500.00,
         grid: true
     });
 </script>

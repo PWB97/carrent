@@ -306,29 +306,29 @@
     <select id="selectCarsWithConditions" resultMap="car">
         select *
         from t_car c left join t_carbrand tc on c.brandId = tc.brandId left join t_cartype t on c.cTypeId = t.cTypeId left join t_location tl on c.lId = tl.lId left join t_city tc2 on tl.cId = tc2.cId left join t_province tp on tc2.pId = tp.pId
-        where c.isDeleted = 0
         <where>
-            <if test="typeId != null">
-                and c.cTypeId = #{typeId,jdbcType=INTEGER}
-            </if>
-            <if test="brandId != null">
-                and c.brandId = #{brandId,jdbcType=INTEGER}
-            </if>
-            <if test="pId != null">
-                and tp.pId = #{pId,jdbcType=INTEGER}
-            </if>
-            <if test="cId != null">
-                and tl.cId = #{cId,jdbcType=INTEGER}
-            </if>
-            <if test="lId != null">
-                and c.lId = #{lId,jdbcType=INTEGER}
-            </if>
-            <if test="lowPrice != null">
-                and c.price <![CDATA[   >=  ]]> #{lowPrice,jdbcType=DECIMAL}
-            </if>
-            <if test="highPrice != null">
-                and c.price <![CDATA[  <=  ]]> #{highPrice,jdbcType=DECIMAL}
-            </if>
+          c.isDeleted = 0 and c.isOnline=1
+          <if test="lowPrice != null">
+            and c.price &gt;= #{lowPrice,jdbcType=DECIMAL}
+          </if>
+          <if test="highPrice != null">
+            and c.price &lt;= #{highPrice,jdbcType=DECIMAL}
+          </if>
+          <if test="typeId != null">
+            and c.cTypeId = #{typeId,jdbcType=INTEGER}
+          </if>
+          <if test="brandId != null">
+            and c.brandId = #{brandId,jdbcType=INTEGER}
+          </if>
+          <if test="pId != null">
+            and tp.pId = #{pId,jdbcType=INTEGER}
+          </if>
+          <if test="cId != null">
+            and tl.cId = #{cId,jdbcType=INTEGER}
+          </if>
+          <if test="lId != null">
+            and c.lId = #{lId,jdbcType=INTEGER}
+          </if>
         </where>
     </select>
     <resultMap id="car" type="com.pu.carrent.entity.Car">

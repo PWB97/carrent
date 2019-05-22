@@ -293,13 +293,15 @@
       <result column="endTime" property="endtime"/>
       <result column="totalPrice" property="totalprice"/>
       <result column="isPaid" property="ispaid"/>
-      <collection property="car" ofType="com.pu.carrent.entity.Car">
-        <result column="carName" property="carname"/>
-        <collection property="carType" ofType="com.pu.carrent.entity.CarType">
-          <result column="cTypeName" property="ctypename"/>
-        </collection>
-        <collection property="carBrand" ofType="com.pu.carrent.entity.CarBrand">
-          <result column="brandName" property="brandname"/>
+      <collection property="carDetail" ofType="com.pu.carrent.entity.CarDetail">
+        <collection property="car" ofType="com.pu.carrent.entity.Car">
+          <result column="carName" property="carname"/>
+          <collection property="carType" ofType="com.pu.carrent.entity.CarType">
+            <result column="cTypeName" property="ctypename"/>
+          </collection>
+          <collection property="carBrand" ofType="com.pu.carrent.entity.CarBrand">
+            <result column="brandName" property="brandname"/>
+          </collection>
         </collection>
       </collection>
     </collection>

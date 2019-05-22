@@ -87,8 +87,8 @@ public class CarController {
         if (carType != null && "".compareTo(carType) != 0) typeId = Integer.parseInt(carType);
         if (price != null && "".compareTo(price) != 0 ) {
             String[] strings = price.split(";");
-            lp = new BigDecimal(strings[0]);
-            hp = new BigDecimal(strings[1]);
+            lp = new BigDecimal(strings[0]+".00");
+            hp = new BigDecimal(strings[1]+".00");
         }
         List<Car> cars = carService.findCarsWithConditions(typeId, brandId, pId, cId, lId, lp, hp);
         if (cars != null) {

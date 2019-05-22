@@ -161,7 +161,7 @@
                                     <c:forEach var="order" items="${orders}" varStatus="s">
                                         <tr>
                                             <td>${order.orderid}</td>
-                                            <td>${order.car.carname}</td>
+                                            <td>${order.carDetail.car.carname}</td>
                                             <td>${order.totalprice}</td>
                                             <td><fmt:formatDate value="${order.creattime}" pattern="yyyy-MM-dd" /></td>
                                             <td><fmt:formatDate value="${order.endtime}" pattern="yyyy-MM-dd" /></td>

@@ -17,6 +17,8 @@ import com.pu.carrent.entity.User;
 import com.pu.carrent.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,27 +50,28 @@ public class OrderController {
     @Autowired
     private UserTypeService userTypeService;
 
+    @Transactional
     @RequestMapping(value = "/makeOrder", method = RequestMethod.POST)
-    public String makeOrder(Integer cdId, String date, String price, HttpSession session, Model model) {
+    public String makeOrder(Integer cdId, String startDate, String endDate, String price, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             Order order = new Order();
             order.setCarid(cdId);
             order.setUserid(currentUser.getUserid());
-            Date createTime = new Date();
-            order.setCreattime(createTime);
             DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
             Date end;
             int days;
             try {
-                end = format.parse(date);
-                order.setEndtime(end);
+                Date start = format.parse(startDate);
+                end = format.parse(endDate);
                 Calendar c = Calendar.getInstance();
                 c.setTime(end);
                 int day1 = c.get(Calendar.DAY_OF_YEAR);
-                c.setTime(createTime);
+                c.setTime(start);
                 int day2 = c.get(Calendar.DAY_OF_YEAR);
                 days = day1 - day2 + 1;
+                order.setCreattime(start);
+                order.setEndtime(end);
                 CarDetail carDetail = new CarDetail();
                 carDetail.setIsdeleted(days);
                 order.setTotalprice(new BigDecimal(price).multiply(new BigDecimal(days)));
@@ -77,6 +80,7 @@ public class OrderController {
                 carDetail.setCarid(cdId);
                 carDetailService.changeCarDetailById(carDetail);
             } catch (ParseException e) {
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 e.printStackTrace();
             }
             return "redirect:/orders";

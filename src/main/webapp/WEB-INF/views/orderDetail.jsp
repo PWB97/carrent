@@ -206,8 +206,8 @@
                                         <div class="col-sm-4 invoice-col">
                                             提车地址
                                             <address>
-                                                <strong>${orderDetail.car.location.lname}</strong>
-                                                <br>${orderDetail.car.location.city.province.pname} ${orderDetail.car.location.city.cname}
+                                                <strong>${orderDetail.carDetail.car.location.lname}</strong>
+                                                <br>${orderDetail.carDetail.car.location.city.province.pname} ${orderDetail.carDetail.car.location.city.cname}
                                                 <br>手机: ${orderDetail.user.phone}
                                                 <br>邮箱: ${orderDetail.user.email}
                                             </address>
@@ -230,11 +230,11 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td><img src="../../images/logo/${orderDetail.car.brandid}.JPG"></td>
-                                                    <td style="vertical-align: middle">${orderDetail.car.carname}</td>
-                                                    <td style="vertical-align: middle">${orderDetail.car.plate}</td>
-                                                    <td style="vertical-align: middle">${orderDetail.car.carType.ctypename}</td>
-                                                    <td style="vertical-align: middle">¥${orderDetail.car.price}</td>
+                                                    <td><img src="../../images/logo/${orderDetail.carDetail.car.brandid}.JPG"></td>
+                                                    <td style="vertical-align: middle">${orderDetail.carDetail.car.carname}</td>
+                                                    <td style="vertical-align: middle">${orderDetail.carDetail.plate}</td>
+                                                    <td style="vertical-align: middle">${orderDetail.carDetail.car.carType.ctypename}</td>
+                                                    <td style="vertical-align: middle">¥${orderDetail.carDetail.car.price}</td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -268,7 +268,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th>天数</th>
-                                                        <td>${orderDetail.car.isdeleted}</td>
+                                                        <td>${orderDetail.carDetail.isdeleted}</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>

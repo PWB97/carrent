@@ -342,7 +342,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                                   for="carPicture">单价 <span
+                                                                   for="carPicture">汽车图片 <span
                                                                     class="required">*</span>
                                                             </label>
                                                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -356,7 +356,7 @@
                                                         <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">关闭
                                                         </button>
-                                                        <button type="submit" class="btn btn-secondary">提交
+                                                        <button type="submit" class="btn btn-primary">提交
                                                         </button>
 
                                                     </div>
@@ -395,7 +395,7 @@
                                     <tr>
                                         <th>编号</th>
                                         <th>汽车名称</th>
-                                        <th>车牌</th>
+                                        <th>图片</th>
                                         <th>单价</th>
                                         <th>操作</th>
                                     </tr>
@@ -404,7 +404,7 @@
                                     <c:forEach var="car" items="${cars}" varStatus="s">
                                         <tr>
                                             <td>${car.carid}</td>
-                                            <td>${car.carname}</td>
+                                            <td><img src="../../images/car/${car.carid}.JPG" with="230" height="130"></td>
                                             <td>${car.plate}</td>
                                             <td>${car.price}</td>
                                             <td>
@@ -467,7 +467,7 @@
 <script src="../../vendors/pdfmake/build/vfs_fonts.js"></script>
 
 <!-- Custom Theme Scripts -->
-<script src="../../build/js/custom.min.js"></script>
+<script src="../../build/js/custom.js"></script>
 
 <script>
     var pTag = document.getElementById("province");
