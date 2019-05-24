@@ -148,7 +148,6 @@
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>编号</th>
                                         <th>汽车名称</th>
                                         <th>车牌</th>
                                         <th>状态</th>
@@ -158,7 +157,6 @@
                                     <tbody>
                                     <c:forEach var="car" items="${userCars}" varStatus="s">
                                         <tr>
-                                            <td>${car.carid}</td>
                                             <td>${car.carname}</td>
                                             <td>${car.plate}</td>
                                             <td>

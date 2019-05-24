@@ -149,18 +149,17 @@
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>编号</th>
                                         <th>汽车名称</th>
                                         <th>价格</th>
                                         <th>生成时间</th>
                                         <th>还车时间</th>
                                         <th>操作</th>
+                                        <th>状态</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach var="order" items="${orders}" varStatus="s">
                                         <tr>
-                                            <td>${order.orderid}</td>
                                             <td>${order.carDetail.car.carname}</td>
                                             <td>${order.totalprice}</td>
                                             <td><fmt:formatDate value="${order.creattime}" pattern="yyyy-MM-dd" /></td>
@@ -175,8 +174,18 @@
                                                     <a href="<%=request.getContextPath() %>/refund?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 退款 </a>
                                                 </c:if>
                                                 <c:if test="${order.ispaid == 2}">
-                                                    退款成功
                                                     <a href="<%=request.getContextPath() %>/cancelOrder?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
+                                                </c:if>
+                                            </td>
+                                            <td>
+                                                <c:if test="${order.ispaid == 0}">
+                                                    未支付
+                                                </c:if>
+                                                <c:if test="${order.ispaid == 1}">
+                                                    已支付
+                                                </c:if>
+                                                <c:if test="${order.ispaid == 2}">
+                                                    退款成功
                                                 </c:if>
                                             </td>
                                         </tr>

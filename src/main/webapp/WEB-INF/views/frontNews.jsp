@@ -149,7 +149,6 @@
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>编号</th>
                                         <th>标题</th>
                                         <th>内容</th>
                                         <th>时间</th>
@@ -160,7 +159,6 @@
                                     <tbody>
                                     <c:forEach var="news" items="${newsList}" varStatus="s">
                                         <tr>
-                                            <td>${news.newsid}</td>
                                             <td>${news.title}</td>
                                             <td>${news.content}</td>
                                             <td><fmt:formatDate value="${news.creattime}" pattern="yyyy-MM-dd hh:mm" /></td>

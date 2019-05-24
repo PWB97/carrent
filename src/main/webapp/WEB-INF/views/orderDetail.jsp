@@ -189,95 +189,67 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-
-                                <section class="content invoice">
-                                    <!-- title row -->
-                                    <div class="row">
-                                        <div class="col-xs-12 invoice-header">
-                                            <h1>
-                                                <i class="fa fa-user"></i> ${orderDetail.user.username}
-                                                <small class="pull-right">到期时间: <fmt:formatDate value="${orderDetail.endtime}" pattern="yyyy-MM-dd" /></small>
-                                            </h1>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-6">
+                                            <img src="../../images/car/${orderDetail.carDetail.car.carid}.JPG" width="180" height="105">
                                         </div>
-                                        <!-- /.col -->
-                                    </div>
-                                    <!-- info row -->
-                                    <div class="row invoice-info">
-                                        <div class="col-sm-4 invoice-col">
-                                            提车地址
-                                            <address>
-                                                <strong>${orderDetail.carDetail.car.location.lname}</strong>
-                                                <br>${orderDetail.carDetail.car.location.city.province.pname} ${orderDetail.carDetail.car.location.city.cname}
-                                                <br>手机: ${orderDetail.user.phone}
-                                                <br>邮箱: ${orderDetail.user.email}
-                                            </address>
+                                        <div class="col-xs-6">
+                                            <h3>${orderDetail.carDetail.car.carname}</h3>
+                                            <h4>${orderDetail.carDetail.level}</h4>
+                                            <a class="btn btn-primary btn-sm" href="<%=request.getContextPath() %>/carDetail?carId=${orderDetail.carDetail.car.carid}&cdId=${orderDetail.carDetail.cdid}">查看配置信息</a>
                                         </div>
                                     </div>
-                                    <!-- /.row -->
-
-                                    <!-- Table row -->
-                                    <div class="row">
-                                        <div class="col-xs-12 table">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                <tr>
-                                                    <th>汽车品牌</th>
-                                                    <th>汽车名称</th>
-                                                    <th>车牌</th>
-                                                    <th>类型</th>
-                                                    <th>单价</th>
-                                                </tr>
-                                                </thead>
+                                    <div class="col-xs-6">
+                                        <div class="col-xs-6">
+                                            <h3><i class="fa fa-arrow-circle-up"></i>取车</h3>
+                                            <h4><i class="fa fa-clock-o"></i><fmt:formatDate value="${orderDetail.creattime}" pattern="yyyy-MM-dd" /></h4>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <h3><i class="fa fa-arrow-circle-down"></i>还车</h3>
+                                            <h4><i class="fa fa-clock-o"></i><fmt:formatDate value="${orderDetail.endtime}" pattern="yyyy-MM-dd" /></h4>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <h4><i class="fa fa-location-arrow"></i>门店地址：${orderDetail.carDetail.car.location.city.province.pname} ${orderDetail.carDetail.car.location.city.cname} ${orderDetail.carDetail.car.location.lname}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h3>费用明细</h3>
+                                        <div class="table-responsive">
+                                            <table class="table">
                                                 <tbody>
                                                 <tr>
-                                                    <td><img src="../../images/logo/${orderDetail.carDetail.car.brandid}.JPG"></td>
-                                                    <td style="vertical-align: middle">${orderDetail.carDetail.car.carname}</td>
-                                                    <td style="vertical-align: middle">${orderDetail.carDetail.plate}</td>
-                                                    <td style="vertical-align: middle">${orderDetail.carDetail.car.carType.ctypename}</td>
-                                                    <td style="vertical-align: middle">¥${orderDetail.carDetail.car.price}</td>
+                                                    <th style="width:50%">总计:</th>
+                                                    <td>¥${orderDetail.totalprice}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>天数</th>
+                                                    <td>${orderDetail.carDetail.isdeleted}</td>
                                                 </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <!-- /.col -->
                                     </div>
-                                    <!-- /.row -->
-
-                                    <div class="row">
-                                        <c:if test="${orderDetail.ispaid==0}">
-                                        <!-- accepted payments column -->
-                                        <div class="col-xs-6">
-                                            <p class="lead">支付方式:</p>
-                                            <a class="btn btn-primary" href="<%=request.getContextPath() %>/alipay?orderId=${orderDetail.orderid}&price=${orderDetail.totalprice}">支付宝</a>
-                                        </div>
-                                        </c:if>
-                                        <c:if test="${orderDetail.ispaid!=0}">
-                                            <div class="col-xs-6">
-                                                <p class="lead">已支付</p>
-                                            </div>
-                                        </c:if>
-                                        <!-- /.col -->
-                                        <div class="col-xs-6">
-                                            <p class="lead">下单时间<fmt:formatDate value="${orderDetail.creattime}" pattern="yyyy-MM-dd" /></p>
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <tbody>
-                                                    <tr>
-                                                        <th style="width:50%">总计:</th>
-                                                        <td>¥${orderDetail.totalprice}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>天数</th>
-                                                        <td>${orderDetail.carDetail.isdeleted}</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <!-- /.col -->
+                                    <div class="col-xs-6">
+                                        <h3>订单状态</h3>
+                                    <c:if test="${orderDetail.ispaid==0}">
+                                        <p class="lead">支付方式:</p>
+                                        <a class="btn btn-primary" href="<%=request.getContextPath() %>/alipay?orderId=${orderDetail.orderid}&price=${orderDetail.totalprice}">支付宝</a>
+                                    </c:if>
+                                    <c:if test="${orderDetail.ispaid==1}">
+                                        <p class="lead">已支付</p>
+                                    </c:if>
+                                    <c:if test="${orderDetail.ispaid==2}">
+                                        <p class="lead">退款成功</p>
+                                    </c:if>
+                                    <c:if test="${orderDetail.ispaid==-1}">
+                                        <p class="lead">正在退款</p>
+                                    </c:if>
                                     </div>
-                                    <!-- /.row -->
-                                </section>
+                                </div>
                             </div>
                         </div>
                     </div>

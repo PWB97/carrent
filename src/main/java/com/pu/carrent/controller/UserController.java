@@ -1,5 +1,14 @@
 package com.pu.carrent.controller;
 
+import com.aliyuncs.CommonRequest;
+import com.aliyuncs.CommonResponse;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.IAcsClient;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.exceptions.ServerException;
+import com.aliyuncs.http.MethodType;
+import com.aliyuncs.profile.DefaultProfile;
+import com.pu.carrent.RandomUtil;
 import com.pu.carrent.dao.UserDao;
 import com.pu.carrent.entity.User;
 import com.pu.carrent.entity.UserType;
@@ -57,9 +66,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
-    public String register(String userName, String password, String phone, Model model) {
+    public String register(String userName, String password, String phone, String code, Model model, HttpSession session) {
+        String sCode = (String) session.getAttribute("code");
         if ("".compareTo(userName) == 0 || "".compareTo(password) == 0 || "".compareTo(phone) == 0) {
             model.addAttribute("msg", "字段不能为空");
+            return "fail";
+        }
+        if (code.compareTo(sCode) != 0) {
+            model.addAttribute("msg", "验证码不符");
             return "fail";
         }
         User user = new User();
@@ -71,6 +85,30 @@ public class UserController {
         else {
             model.addAttribute("msg", "注册失败");
             return "fail";
+        }
+    }
+
+    @RequestMapping(value = "/user/phoneCode", method = RequestMethod.POST)
+    public void phoneCode(String phone, HttpSession session) {
+        String code = RandomUtil.getRandom();
+        DefaultProfile profile = DefaultProfile.getProfile("default", "LTAIbtUOUbo6Tij9", "sfN5ZwWw66kdvwWuFl57j3G3fooEoN");
+        IAcsClient client = new DefaultAcsClient(profile);
+        CommonRequest request = new CommonRequest();
+        //request.setProtocol(ProtocolType.HTTPS);
+        request.setMethod(MethodType.POST);
+        request.setDomain("dysmsapi.aliyuncs.com");
+        request.setVersion("2017-05-25");
+        request.setAction("SendSms");
+        request.putQueryParameter("PhoneNumbers", phone);
+        request.putQueryParameter("SignName", "汽车租赁");
+        request.putQueryParameter("TemplateCode", "SMS_166375044");
+        request.putQueryParameter("TemplateParam", "{'code':"+code+"}");
+        try {
+            CommonResponse response = client.getCommonResponse(request);
+            session.setAttribute("code", code);
+            System.out.println(response.getData());
+        } catch (ClientException e) {
+            e.printStackTrace();
         }
     }
 

@@ -74,7 +74,15 @@
                         <input type="text" class="form-control" placeholder="用户名" id="userName" name="userName" required="required" />
                     </div>
                     <div>
-                        <input type="email" class="form-control" placeholder="手机号" id="phone" name="phone" required="required" />
+                        <input type="text" class="form-control" placeholder="手机号" id="phone" name="phone" required="required" />
+                    </div>
+                    <div>
+                        <div class="col-xs-6" style="padding-left:0">
+                            <input type="text" class="form-control" placeholder="验证码" id="code" name="code" />
+                        </div>
+                        <div class="col-xs-6">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="getCode(this)">获取验证码</button>
+                        </div>
                     </div>
                     <div>
                         <input type="password" class="form-control" placeholder="密码" id="password" name="password" required="required" />
@@ -112,6 +120,30 @@
             })
         }
     );
+</script>
+<script>
+    var wait = 120;
+    function getCode(that) {
+        var phoneNum = $('#phone').val();
+        setButtonStatus(that);
+        $.post("<%=request.getContextPath() %>/user/phoneCode", {
+            phone : phoneNum
+        });
+    }
+    function setButtonStatus(that) {
+        if (wait == 0) {
+            that.removeAttribute("disabled");
+            that.innerHTML="免费获取验证码";
+            wait = 60;
+        } else {
+            that.setAttribute("disabled", true);
+            that.innerHTML=wait+"秒后可以重新发送";
+            wait--;
+            setTimeout(function() {
+                setButtonStatus(that)
+            }, 1000)
+        }
+    }
 </script>
 </body>
 </html>

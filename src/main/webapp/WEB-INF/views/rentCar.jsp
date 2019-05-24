@@ -117,7 +117,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" style="background-color: #FFFFFF">
             <div class="">
 
                 <div class="row">
@@ -183,7 +183,7 @@
                     </div>
                     <div class="ln_solid"></div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <table id="datatable" class="table table-striped table-bordered" style="text-align: center">
+                        <table id="datatable" class="table table-bordered" style="text-align: center">
                             <thead>
                             <tr>
                                 <th>图片</th>
@@ -196,7 +196,7 @@
                             <c:forEach var="car" items="${cars}" varStatus="s">
                                 <tr>
                                     <td style="vertical-align: middle">
-                                        <img src="../../images/car/${car.carid}.JPG" with="230" height="130">
+                                        <img src="../../images/car/${car.carid}.JPG" width="230" height="130">
                                     </td>
                                     <td style="vertical-align: middle">${car.carname}</td>
                                     <td style="vertical-align: middle">${car.price}</td>

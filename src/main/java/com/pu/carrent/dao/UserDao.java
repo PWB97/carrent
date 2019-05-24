@@ -1,6 +1,7 @@
 package com.pu.carrent.dao;
 
 import com.pu.carrent.entity.*;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -57,7 +58,8 @@ public class UserDao {
     }
 
     public List<User> findUserByUserId(Integer userId) {
-        return mongoTemplate.find(new Query(Criteria.where("userid").is(userId)), User.class);
+
+        return mongoTemplate.find(new Query(Criteria.where("userid").is(userId)).with(new Sort(Sort.Direction.DESC, "browseDate")), User.class);
     }
 
     public void deleteRecords(Integer userId) {

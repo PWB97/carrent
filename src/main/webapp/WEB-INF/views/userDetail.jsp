@@ -315,7 +315,7 @@
                                                             <img src="../../images/logo/${item.carRecord.brandid}.JPG" class="avatar" alt="Avatar">
                                                             <div class="message_date">
                                                                 <h3 class="date text-info"><fmt:formatDate value="${item.browseDate}" pattern="MM月dd" /></h3>
-                                                                <p class="month"><fmt:formatDate value="${item.browseDate}" pattern="hh:mm" /></p>
+                                                                <p class="month"><fmt:formatDate value="${item.browseDate}" pattern="HH:mm" /></p>
                                                             </div>
                                                             <div class="message_wrapper">
                                                                 <h4 class="heading">${item.carRecord.carname}</h4>

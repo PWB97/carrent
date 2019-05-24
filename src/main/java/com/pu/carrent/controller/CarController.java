@@ -113,9 +113,14 @@ public class CarController {
             Car car = carService.findCarById(carId);
             List<CarDetail> carDetails = carDetailService.findAllCarDetailByCarId(carId);
             if (cdId == null)
-                model.addAttribute("carDetail", carDetails.get(0));
-            else
+                if (carDetails.size() == 0) {
+                    model.addAttribute("msg", "无此类型的汽车");
+                    return "fail";
+                } else
+                    model.addAttribute("carDetail", carDetails.get(0));
+            else {
                 model.addAttribute("carDetail", carDetailService.findCarDetailById(cdId));
+                }
             User currentUser = (User) session.getAttribute("userDetail");
             if (currentUser != null && car.getIsonline() == 1) {
                 currentUser.setCarRecord(car);
