@@ -1,5 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
+  User: pu
+  Date: 2019-05-25
+  Time: 21:57
+  To change this template use File | Settings | File Templates.
+--%>
+<%--
+  Created by IntelliJ IDEA.
   User: PWB
   Date: 2019/4/16
   Time: 15:59
@@ -15,7 +22,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>登陆</title>
+    <title>忘记密码</title>
 
     <!-- Bootstrap -->
     <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -38,43 +45,10 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form action="<%=request.getContextPath() %>/user/login" id ="login" method="post">
-                    <h1>登陆</h1>
+                <form action="<%=request.getContextPath() %>/forget" id ="login" method="post">
+                    <h1>忘记密码</h1>
                     <div>
-                        <input type="text" class="form-control" placeholder="用户名" name="userName"/>
-                    </div>
-                    <div>
-                        <input type="password" class="form-control" placeholder="密码" name="password"/>
-                    </div>
-                    <div>
-                        <a class="btn btn-default submit" onclick="document:login.submit()">登陆</a>
-                        <a class="reset_pass" href="<%=request.getContextPath() %>/forget">忘记密码?</a>
-                    </div>
-
-                    <div class="clearfix"></div>
-
-                    <div class="separator">
-                        <p class="change_link">新来的?
-                            <a href="#signup" class="to_register">注册</a>
-                        </p>
-
-                        <div class="clearfix"></div>
-                        <br />
-
-                    </div>
-                </form>
-            </section>
-        </div>
-
-        <div id="register" class="animate form registration_form">
-            <section class="login_content">
-                <form action="<%=request.getContextPath() %>/user/register" method="post" id = "registerForm">
-                    <h1>注册</h1>
-                    <div>
-                        <input type="text" class="form-control" placeholder="用户名" id="userName" name="userName" required="required" />
-                    </div>
-                    <div>
-                        <input type="text" class="form-control" placeholder="手机号" id="phone" name="phone" required="required" />
+                        <input type="text" class="form-control" placeholder="手机号" name="phone" id="phone"/>
                     </div>
                     <div>
                         <div class="col-xs-6" style="padding-left:0">
@@ -85,21 +59,13 @@
                         </div>
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="密码" id="password" name="password" required="required" />
+                        <input type="password" class="form-control" placeholder="密码" name="password"/>
                     </div>
                     <div>
-                        <a class="btn btn-default submit" onclick="document:registerForm.submit()">提交</a>
+                        <input type="password" class="form-control" placeholder="再次输入密码" name="rPassword"/>
                     </div>
-
-                    <div class="clearfix"></div>
-
-                    <div class="separator">
-                        <p class="change_link">已经注册?
-                            <a href="#signin" class="to_register">登陆</a>
-                        </p>
-
-                        <div class="clearfix"></div>
-                        <br />
+                    <div>
+                        <a class="btn btn-default submit" onclick="document:login.submit()">确定修改</a>
                     </div>
                 </form>
             </section>
@@ -109,13 +75,13 @@
 <script src="../../vendors/jquery/dist/jquery.min.js"></script>
 <script src="../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <script>
-    $("#userName").blur(
+    $("#phone").blur(
         function () {
-            $.post("<%=request.getContextPath() %>/user/isValidName",{
-                userName : $(this).val()
+            $.post("<%=request.getContextPath() %>/user/isValidPhone",{
+                phone : $(this).val()
             } , function (data) {
-                if (data > 0) {
-                    alert("用户名重复");
+                if (data === 0) {
+                    alert("无此用户");
                 }
             })
         }

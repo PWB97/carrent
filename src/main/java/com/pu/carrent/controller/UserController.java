@@ -87,6 +87,34 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/forget", method = RequestMethod.GET)
+    public String forget() {
+        return "forget";
+    }
+
+    @RequestMapping(value = "/forget", method = RequestMethod.POST)
+    public String forget(String phone, String code, String password, String rPassword, HttpSession session, Model model) {
+        String sCode = (String) session.getAttribute("code");
+        if ("".compareTo(phone) == 0 || "".compareTo(password) == 0 || "".compareTo(rPassword) == 0) {
+            model.addAttribute("msg", "字段不能为空");
+            return "fail";
+        }
+        if (code.compareTo(sCode) != 0) {
+            model.addAttribute("msg", "验证码不符");
+            return "fail";
+        }
+        if (password.compareTo(rPassword) == 0) {
+            User user = userService.findUserByPhone(phone);
+            user.setPassword(password);
+            userService.changeUser(user);
+            model.addAttribute("msg", "修改成功,重新登陆");
+            return "fail";
+        } else {
+            model.addAttribute("msg", "两次密码不一致");
+            return "fail";
+        }
+    }
+
     @RequestMapping(value = "/user/phoneCode", method = RequestMethod.POST)
     public void phoneCode(String phone, HttpSession session) {
         String code = RandomUtil.getRandom();
@@ -118,7 +146,9 @@ public class UserController {
 
     @RequestMapping(value = "/user/isValidPhone", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public @ResponseBody int isValidPhone(String phone) {
-        return userService.findUserByPhone(phone).size();
+        if (userService.findUserByPhone(phone) != null)
+            return 1;
+        else return 0;
     }
 
     @RequestMapping(value = "/backManage/addManager", method = RequestMethod.POST)

@@ -84,7 +84,7 @@ public class CarController {
         if (city != null && "请选择市".compareTo(city) != 0) cId = Integer.parseInt(city);
         if (location != null && "请选择门店".compareTo(location) != 0) lId = Integer.parseInt(location);
         if (carBrand != null && "请选择品牌".compareTo(carBrand) != 0) brandId = Integer.parseInt(carBrand);
-        if (carType != null && "".compareTo(carType) != 0) typeId = Integer.parseInt(carType);
+        if (carType != null && "".compareTo(carType) != 0 && "请选择类型".compareTo(carType) != 0) typeId = Integer.parseInt(carType);
         if (price != null && "".compareTo(price) != 0 ) {
             String[] strings = price.split(";");
             lp = new BigDecimal(strings[0]+".00");

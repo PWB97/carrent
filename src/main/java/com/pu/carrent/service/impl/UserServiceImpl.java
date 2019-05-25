@@ -57,9 +57,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUserByPhone(String phone) {
+    public User findUserByPhone(String phone) {
         UserExample example = new UserExample();
-        example.createCriteria().andUsernameEqualTo(phone);
-        return userMapper.selectByExample(example);
+        example.createCriteria().andPhoneEqualTo(phone);
+        List<User> users =  userMapper.selectByExample(example);
+        if (users.size() == 0) return null;
+        else return users.get(0);
     }
 }

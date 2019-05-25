@@ -138,18 +138,18 @@
                                     </div>
                                 </c:forEach>
                             </div>
-                            <div class="ln_solid"></div>
+                            <div class="ln_solid" style="margin: 10px 0"></div>
                             <div>
                                 <p>价格区间</p>
                                 <div>
                                     <input type="text" class="slider" name="price" value="" />
                                 </div>
                             </div>
-                            <div class="ln_solid"></div>
+                            <div class="ln_solid" style="margin: 10px 0"></div>
                             <div>
-                                <p>品牌</p>
+                                <p style="margin: 0 0 0 0">品牌</p>
                                 <div class="panel-body">
-                                    <select name="carBrand">
+                                    <select name="carBrand" class="form-control">
                                         <option>请选择品牌</option>
                                         <c:forEach items="${carBrands}" var="carBrand">
                                             <option value="${carBrand.brandid}">${carBrand.brandname}</option>
@@ -157,31 +157,31 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="ln_solid"></div>
+                            <div class="ln_solid" style="margin: 10px 0"></div>
                             <div>
-                                <p>门店</p>
+                                <p style="margin: 0 0 0 0">门店</p>
                                 <div class="panel-body">
-                                    <select id="province" name="province"
-                                            onchange="chooseProvice(this)">
+                                    <select id="province" name="province" onchange="chooseProvice(this)" class="form-control">
                                         <option>请选择省</option>
                                         <c:forEach var="province" items="${locations}">
                                             <option value="${province.pid}">${province.pname}</option>
                                         </c:forEach>
                                     </select>
                                     <br>
-                                    <select id="city" name="city" onchange="chooseCity(this)">
+                                    <select id="city" name="city" onchange="chooseCity(this)" class="form-control">
                                         <option>请选择市</option>
                                     </select>
                                     <br>
-                                    <select id="location" name="location">
+                                    <select id="location" name="location" class="form-control">
                                         <option>请选择门店</option>
                                     </select>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">确定</button>
+                            <div style="text-align: center">
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i> 筛选</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="ln_solid"></div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <table id="datatable" class="table table-bordered" style="text-align: center">
                             <thead>
@@ -206,7 +206,7 @@
                                                 class="fa fa-folder"></i> 查看</a>
                                         <a type="button" class="btn btn-primary btn-xs"
                                            href="<%=request.getContextPath() %>/uploadCarDetail?carId=${car.carid}"><i
-                                                class="fa fa-upload"></i> 提交组车信息</a></td>
+                                                class="fa fa-upload"></i> 提交租车信息</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
