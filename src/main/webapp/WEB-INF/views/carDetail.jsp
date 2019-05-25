@@ -190,7 +190,21 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>${car.carBrand.brandname}/${car.carname}</h2>
+                                <h2 style="width:30%">${car.carBrand.brandname}/${car.carname}</h2>
+                                <c:if test="${carDetail.isonline == 1}">
+                                    <div class="col-md-4 col-md-offset-1">
+                                        <form action="<%=request.getContextPath() %>/carDetail" method="get">
+                                            <label for="carId">选择其他同款</label>
+                                            <input hidden="hidden" value="${car.carid}" name="carId" id="carId">
+                                            <select name="cdId">
+                                                <c:forEach items="${carDetails}" var="carDetail">
+                                                    <option value="${carDetail.cdid}">${carDetail.level}</option>
+                                                </c:forEach>
+                                            </select>
+                                            <button type="submit" class="btn-primary btn-xs">确定</button>
+                                        </form>
+                                    </div>
+                                </c:if>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -207,20 +221,6 @@
                                     <li><a class="close-link"><i class="fa fa-close"></i></a>
                                     </li>
                                 </ul>
-                                <c:if test="${carDetail.isonline == 1}">
-                                <div class="col-md-4 col-md-offset-3">
-                                    <form action="<%=request.getContextPath() %>/carDetail" method="get">
-                                        <label for="carId">选择其他同款</label>
-                                        <input hidden="hidden" value="${car.carid}" name="carId" id="carId">
-                                        <select name="cdId">
-                                            <c:forEach items="${carDetails}" var="carDetail">
-                                                <option value="${carDetail.cdid}">${carDetail.level}</option>
-                                            </c:forEach>
-                                        </select>
-                                        <button type="submit" class="btn-primary btn-xs">确定</button>
-                                    </form>
-                                </div>
-                                </c:if>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">

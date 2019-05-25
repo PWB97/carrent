@@ -16,6 +16,16 @@ public class News {
 
     private User creator;
 
+    private String sContent;
+
+    public String getsContent() {
+        return sContent;
+    }
+
+    public void setsContent(String sContent) {
+        this.sContent = sContent;
+    }
+
     public User getCreator() {
         return creator;
     }

@@ -1,5 +1,6 @@
 package com.pu.carrent.service.impl;
 
+import com.pu.carrent.Util.ShortContentUtil;
 import com.pu.carrent.dao.NewsMapper;
 import com.pu.carrent.entity.News;
 import com.pu.carrent.service.NewsService;
@@ -16,7 +17,11 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<News> findAllNews() {
-        return newsMapper.selectNewsWithDetail();
+        List<News> newsList =  newsMapper.selectNewsWithDetail();
+        for (News news : newsList) {
+            news.setsContent(ShortContentUtil.shorContent(news.getContent()));
+        }
+        return newsList;
     }
 
     @Override
@@ -36,6 +41,6 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public News findNewsById(Integer newsId) {
-        return newsMapper.selecNewsWithDetailById(newsId);
+        return newsMapper.selectNewsWithDetailById(newsId).get(0);
     }
 }

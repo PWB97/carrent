@@ -160,31 +160,11 @@
                                     <c:forEach var="news" items="${newsList}" varStatus="s">
                                         <tr>
                                             <td>${news.title}</td>
-                                            <td>${news.content}</td>
-                                            <td><fmt:formatDate value="${news.creattime}" pattern="yyyy-MM-dd hh:mm" /></td>
+                                            <td>${news.sContent}</td>
+                                            <td><fmt:formatDate value="${news.creattime}" pattern="yyyy-MM-dd HH:mm" /></td>
                                             <td>${news.creator.username}</td>
                                             <td>
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModel${news.newsid}"><i class="fa fa-folder"></i> 查看</button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="myModel${news.newsid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLongTitle">查看新闻</h5>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>${news.title}</p>
-                                                                <p>${news.creator.username}</p>
-                                                                <p><fmt:formatDate value="${news.creattime}" pattern="yyyy-MM-dd hh:mm" /></p>
-                                                                <p>${news.content}</p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <a href="<%=request.getContextPath() %>/newsDetail?newsId=${news.newsid}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> 查看 </a>
                                             </td>
                                         </tr>
                                     </c:forEach>

@@ -158,10 +158,10 @@
                                         <li role="presentation" class=""><a href="#tab_content33" role="tab" id="profile-tabb3" data-toggle="tab" aria-controls="profile" aria-expanded="false">门店</a>
                                         </li>
                                     </ul>
-                                    <div id="myTabContent2" class="tab-content">
+                                    <div id="myTabContent2" class="tab-content" style="text-align: center">
                                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content11" aria-labelledby="home-tab">
                                             <!-- Small modal -->
-                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".addCarType">添加汽车类型</button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".addCarType"><i class="fa fa-plus"></i> 添加汽车类型</button>
 
                                             <div class="modal fade addCarType" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog modal-sm">
@@ -185,10 +185,10 @@
                                                 </div>
                                             </div>
                                             <!-- /modals -->
+                                            <div class="ln_solid"></div>
                                             <table id="datatable" class="table table-striped table-bordered">
                                                 <thead>
                                                 <tr>
-                                                    <th>编号</th>
                                                     <th>汽车类别</th>
                                                     <th>操作</th>
                                                 </tr>
@@ -196,7 +196,6 @@
                                                 <tbody>
                                                 <c:forEach var="carType" items="${carTypes}" varStatus="s">
                                                     <tr>
-                                                        <td>${carType.ctypeid}</td>
                                                         <td>${carType.ctypename}</td>
                                                         <td>
                                                             <a href="<%=request.getContextPath() %>/backManage/deleteCarType?cTypeId=${carType.ctypeid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
@@ -208,12 +207,11 @@
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="tab_content22" aria-labelledby="profile-tab">
                                             <!-- Small modal -->
-                                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".addCarBrand">添加汽车品牌</button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".addCarBrand"><i class="fa fa-plus"></i> 添加汽车品牌</button>
 
                                             <div class="modal fade addCarBrand" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog modal-sm">
                                                     <div class="modal-content">
-
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                                                             </button>
@@ -234,10 +232,11 @@
                                                 </div>
                                             </div>
                                             <!-- /modals -->
-                                            <table id="datatable-fixed-header" class="table table-striped table-bordered">
+                                            <div class="ln_solid"></div>
+                                            <table id="datatable-fixed-header" class="table table-bordered">
                                                 <thead>
                                                 <tr>
-                                                    <th>编号</th>
+                                                    <th>品牌号</th>
                                                     <th>汽车品牌</th>
                                                     <th>品牌商标</th>
                                                     <th>操作</th>
@@ -246,10 +245,10 @@
                                                 <tbody>
                                                 <c:forEach var="carBrand" items="${carBrands}" varStatus="s">
                                                     <tr>
-                                                        <td>${carBrand.brandid}</td>
-                                                        <td>${carBrand.brandname}</td>
-                                                        <td><img src="../../images/logo/${carBrand.brandid}.JPG"></td>
-                                                        <td>
+                                                        <td style="vertical-align: middle">${carBrand.brandid}</td>
+                                                        <td style="vertical-align: middle">${carBrand.brandname}</td>
+                                                        <td style="vertical-align: middle"><img src="../../images/logo/${carBrand.brandid}.JPG"></td>
+                                                        <td style="vertical-align: middle">
                                                             <a href="<%=request.getContextPath() %>/backManage/deleteCarBrand?brandId=${carBrand.brandid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
                                                         </td>
                                                     </tr>
@@ -268,13 +267,32 @@
                                                 <select id="city" name="cId" onchange="chooseCity(this)">
                                                     <option>请选择市</option>
                                                 </select>
-                                                <input id="name" name="name" placeholder="在这输入门店名">
-                                                <button type="submit" class="btn btn-default btn-sm" id="button-show" >添加</button>
+                                                <!-- Small modal -->
+                                                <button style="display: none" id="addLocation" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".addlocation"><i class="fa fa-plus"></i> 添加门店</button>
+
+                                                <div class="modal fade addlocation" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                                                </button>
+                                                                <h4 class="modal-title">输入门店名</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <input type="text" name="name">
+                                                            </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                                    <button type="submit" class="btn btn-primary">保存</button>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- /modals -->
                                             </form>
                                             <table id="datatable-responsive" class="table table-striped table-bordered">
                                                 <thead>
                                                 <tr>
-                                                    <th>编号</th>
                                                     <th>名称</th>
                                                     <th>操作</th>
                                                 </tr>
@@ -282,7 +300,6 @@
                                                 <tbody id="table">
                                                 <c:forEach var="location" items="${locations}" varStatus="s">
                                                     <tr>
-                                                        <td>${location.pid}</td>
                                                         <td>${location.pname}</td>
                                                         <td></td>
                                                     </tr>
@@ -357,14 +374,11 @@
            if (pTag.options[pTag.selectedIndex].text === "${province.pname}") {
                <c:forEach var="city" items="${province.cities}">
                     var tr = document.createElement("tr");
-                    var td1 = document.createElement("td");
                     var td2 = document.createElement("td");
                     var td3 = document.createElement("td");
-                    tr.append(td1);
                     tr.append(td2);
                     tr.append(td3);
                     table.append(tr);
-                    td1.innerHTML = ${city.cid};
                     td2.innerHTML = "${city.cname}";
                     td3.innerHTML = "无";
                     cTag.add(new Option("${city.cname}", ${city.cid}));
@@ -374,6 +388,7 @@
     }
 
     function chooseCity() {
+        $("#addLocation").css("display","inline-block");
         var l = table.rows.length;
         for (var r = 0; r < l; r++) {
             console.warn(r);
@@ -385,14 +400,11 @@
                 if (cTag.options[cTag.selectedIndex].text === "${city.cname}") {
                     <c:forEach var="location" items="${city.locations}">
                         var tr = document.createElement("tr");
-                        var td1 = document.createElement("td");
                         var td2 = document.createElement("td");
                         var td3 = document.createElement("td");
-                        tr.append(td1);
                         tr.append(td2);
                         tr.append(td3);
                         table.append(tr);
-                        td1.innerHTML = ${location.lid};
                         td2.innerHTML = "${location.lname}";
                         td3.innerHTML =
                             "<td> " +

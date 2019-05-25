@@ -37,6 +37,12 @@ public class NewsController {
         }
     }
 
+    @RequestMapping(value = "/newsDetail", method = RequestMethod.GET)
+    public String newsDetail(Integer newsId, Model model) {
+        model.addAttribute("news", newsService.findNewsById(newsId));
+        return "newsDetail";
+    }
+
     @RequestMapping(value = "/backManage/addNews", method = RequestMethod.GET)
     public String addNews(HttpSession session, Model model) {
         User user = (User)session.getAttribute("currentUser");

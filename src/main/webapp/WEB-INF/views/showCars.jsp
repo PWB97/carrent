@@ -254,116 +254,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                <button type="submit" class="btn btn-success">确定</button>
-                                            </div>
+                                        <div class="form-group" style="text-align: center">
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-filter"></i>筛选</button>
                                         </div>
                                     </div>
                                     <!-- end of accordion -->
                                     </form>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#myModel"><i class="fa fa-plus"></i> 添加汽车
-                                    </button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="myModel" tabindex="-1" role="dialog"
-                                         aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">
-                                                        添加汽车</h5>
-                                                </div>
-                                                <form action="<%=request.getContextPath() %>/uploadCar"
-                                                      method="post" id="demo-form2" data-parsley-validate
-                                                      class="form-horizontal form-label-left" enctype="multipart/form-data">
-                                                    <div class="modal-body">
-                                                        <input hidden="hidden" name="location" id="lInput">
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                                   for="carName">汽车名称 <span
-                                                                    class="required">*</span>
-                                                            </label>
-                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                <input type="text" id="carName"
-                                                                       name="carName" required="required"
-                                                                       class="form-control col-md-7 col-xs-12">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                                   for="plate">车牌号 <span
-                                                                    class="required">*</span>
-                                                            </label>
-                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                <input type="text" id="plate" name="plate"
-                                                                       required="required"
-                                                                       class="form-control col-md-7 col-xs-12">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">类型
-                                                                <span class="required">*</span></label>
-                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                <div id="gender" class="btn-group"
-                                                                     data-toggle="buttons">
-                                                                    <select class="form-control" name="typeId">
-                                                                    <c:forEach items="${carTypes}"
-                                                                               var="carType">
-                                                                        <option value="${carType.ctypeid}">${carType.ctypename}</option>
-                                                                    </c:forEach>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                                   for="price">单价 <span
-                                                                    class="required">*</span>
-                                                            </label>
-                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                <input type="text" id="price" name="price"
-                                                                       required="required"
-                                                                       class="form-control col-md-7 col-xs-12">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">汽车品牌
-                                                                <span class="required">*</span></label>
-                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                <select class="form-control" name="brandId">
-                                                                    <c:forEach var="carBrand"
-                                                                               items="${carBrands}">
-                                                                        <option value="${carBrand.brandid}">${carBrand.brandname}</option>
-                                                                    </c:forEach>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                                   for="carPicture">汽车图片 <span
-                                                                    class="required">*</span>
-                                                            </label>
-                                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                                <input type="file" id="carPicture" name="carPicture"
-                                                                       required="required"
-                                                                       class="form-control col-md-7 col-xs-12">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">关闭
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary">提交
-                                                        </button>
-
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 
@@ -376,7 +272,111 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>汽车列表</h2>
+                                <h2 style="width: 13%">汽车列表</h2>
+                                <!-- Button trigger modal -->
+                                <div style="text-align: center" class="col-md-4 col-md-offset-2">
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-target="#myModel"><i class="fa fa-plus"></i> 添加汽车
+                                    </button>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModel" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">
+                                                    添加汽车</h5>
+                                            </div>
+                                            <form action="<%=request.getContextPath() %>/uploadCar"
+                                                  method="post" id="demo-form2" data-parsley-validate
+                                                  class="form-horizontal form-label-left" enctype="multipart/form-data">
+                                                <div class="modal-body">
+                                                    <input hidden="hidden" name="location" id="lInput">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                               for="carName">汽车名称 <span
+                                                                class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="text" id="carName"
+                                                                   name="carName" required="required"
+                                                                   class="form-control col-md-7 col-xs-12">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                               for="plate">车牌号 <span
+                                                                class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="text" id="plate" name="plate"
+                                                                   required="required"
+                                                                   class="form-control col-md-7 col-xs-12">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">类型
+                                                            <span class="required">*</span></label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <div id="gender" class="btn-group"
+                                                                 data-toggle="buttons">
+                                                                <select class="form-control" name="typeId">
+                                                                    <c:forEach items="${carTypes}"
+                                                                               var="carType">
+                                                                        <option value="${carType.ctypeid}">${carType.ctypename}</option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                               for="price">单价 <span
+                                                                class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="text" id="price" name="price"
+                                                                   required="required"
+                                                                   class="form-control col-md-7 col-xs-12">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">汽车品牌
+                                                            <span class="required">*</span></label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <select class="form-control" name="brandId">
+                                                                <c:forEach var="carBrand"
+                                                                           items="${carBrands}">
+                                                                    <option value="${carBrand.brandid}">${carBrand.brandname}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                               for="carPicture">汽车图片 <span
+                                                                class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="file" id="carPicture" name="carPicture"
+                                                                   required="required"
+                                                                   class="form-control col-md-7 col-xs-12">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">关闭
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">提交
+                                                    </button>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -390,7 +390,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <table id="datatable" class="table table-striped table-bordered">
+                                <table id="datatable" class="table table-bordered">
                                     <thead>
                                     <tr>
                                         <th>编号</th>
@@ -403,11 +403,11 @@
                                     <tbody>
                                     <c:forEach var="car" items="${cars}" varStatus="s">
                                         <tr>
-                                            <td>${car.carid}</td>
-                                            <td><img src="../../images/car/${car.carid}.JPG" with="230" height="130"></td>
-                                            <td>${car.plate}</td>
-                                            <td>${car.price}</td>
-                                            <td>
+                                            <td style="vertical-align: middle">${car.carid}</td>
+                                            <td style="vertical-align: middle"><img src="../../images/car/${car.carid}.JPG" with="230" height="130"></td>
+                                            <td style="vertical-align: middle">${car.plate}</td>
+                                            <td style="vertical-align: middle">${car.price}</td>
+                                            <td style="vertical-align: middle">
                                                 <a type="button" class="btn btn-primary btn-xs"
                                                    href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}"><i
                                                         class="fa fa-folder"></i> 查看</a>

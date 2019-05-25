@@ -35,5 +35,5 @@ public interface NewsMapper {
 
     List<News> selectNewsWithDetail();
 
-    News selecNewsWithDetailById(Integer newsId);
+    List<News> selectNewsWithDetailById(Integer newsId);
 }
