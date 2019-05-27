@@ -1,20 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
-  User: PWB
-  Date: 2019/4/23
-  Time: 9:56
-  To change this template use File | Settings | File Templates.
---%>
-<%--
-  Created by IntelliJ IDEA.
-  User: PWB
-  Date: 2019/4/20
-  Time: 9:56
+  User: pu
+  Date: 2019-05-26
+  Time: 11:20
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -144,34 +136,86 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>退款中</h2>
+                                <h2>在租汽车</h2>
+
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>编号</th>
-                                        <th>用户</th>
                                         <th>汽车名称</th>
-                                        <th>价格</th>
-                                        <th>生成时间</th>
-                                        <th>还车时间</th>
+                                        <th>车牌</th>
+                                        <th>用户</th>
+                                        <th>状态</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach var="order" items="${orders}" varStatus="s">
                                         <tr>
-                                            <td>${order.orderid}</td>
+                                            <td>${order.carDetail.car.carBrand.brandname}${order.carDetail.car.carname}${order.carDetail.level}</td>
+                                            <td>${order.carDetail.plate}</td>
                                             <td>${order.user.username}</td>
-                                            <td>${order.carDetail.car.carname}</td>
-                                            <td>${order.totalprice}</td>
-                                            <td><fmt:formatDate value="${order.creattime}" pattern="yyyy-MM-dd" /></td>
-                                            <td><fmt:formatDate value="${order.endtime}" pattern="yyyy-MM-dd" /></td>
+                                            <td>
+                                                <c:if test="${order.carDetail.accidentType == 0}">
+                                                    租期还剩：${order.carDetail.isdeleted}天
+                                                </c:if>
+                                                <c:if test="${order.carDetail.accidentType == -1}">
+                                                    车辆事故
+                                                </c:if>
+                                                <c:if test="${order.carDetail.accidentType == 1}">
+                                                    <c:if test="${order.carDetail.isDamage == 1}">
+                                                        车辆损坏
+                                                    </c:if>
+                                                    <c:if test="${order.carDetail.isScrap == 1}">
+                                                        车辆报废
+                                                    </c:if>
+                                                    <c:if test="${order.carDetail.thirdParty == 1}">
+                                                        第三者责任
+                                                    </c:if>
+                                                    <c:if test="${order.carDetail.injury == 1}">
+                                                        驾驶员人身伤亡
+                                                    </c:if>
+                                                    <c:if test="${order.carDetail.robbing == 1}">
+                                                        全车盗抢
+                                                    </c:if>
+                                                </c:if>
+                                            </td>
                                             <td>
                                                 <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/showOrderDetail?orderId=${order.orderid}"><i class="fa fa-folder"></i> 查看</a>
-                                                <a href="<%=request.getContextPath() %>/backManage/refund?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 退款 </a>
+                                                <c:if test="${order.carDetail.accidentType == -1}">
+                                                    <!-- 按钮触发模态框 -->
+                                                    <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-exclamation-triangle"></i> 事故定性</button>
+                                                    <!-- 模态框（Modal） -->
+                                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                    <h4 class="modal-title" id="myModalLabel">事故定性</h4>
+                                                                </div>
+                                                                <form action="<%=request.getContextPath() %>/defineAccident" method="post">
+                                                                    <div class="modal-body">
+                                                                        <input hidden="hidden" name="cdId" value="${order.carDetail.cdid}">
+                                                                        <label><input name="isDamage" type="checkbox" value="1" />车辆损坏</label>
+                                                                        <label><input name="isScrap" type="checkbox" value="1" />车辆报废</label>
+                                                                        <label><input name="thirdParty" type="checkbox" value="1" />第三者责任</label>
+                                                                        <label><input name="injury" type="checkbox" value="1" />驾驶员人身伤亡</label>
+                                                                        <label><input name="robbing" type="checkbox" value="1" />全车盗抢</label>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                                        <button type="submit" class="btn btn-primary">提交</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div><!-- /.modal-content -->
+                                                        </div><!-- /.modal -->
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${car.isonline == -1}">
+                                                    <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/backManage/offline?carId=${car.carid}"><i class="fa fa-folder"></i> 通过审核</a>
+                                                </c:if>
                                             </td>
                                         </tr>
                                     </c:forEach>

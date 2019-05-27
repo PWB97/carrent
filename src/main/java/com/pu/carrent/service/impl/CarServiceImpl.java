@@ -17,11 +17,6 @@ public class CarServiceImpl implements CarService {
     private CarMapper carMapper;
 
     @Override
-    public List<Car> findAllCars() {
-        return carMapper.selectCarsWithDetail();
-    }
-
-    @Override
     public int addCar(Car record) {
         return carMapper.insert(record);
     }

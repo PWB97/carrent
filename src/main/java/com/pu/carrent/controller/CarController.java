@@ -1,8 +1,10 @@
 package com.pu.carrent.controller;
 
+import com.pu.carrent.dao.CarDetailDao;
 import com.pu.carrent.dao.UserDao;
 import com.pu.carrent.entity.*;
 import com.pu.carrent.service.*;
+import org.hibernate.validator.cfg.defs.ISBNDef;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -56,6 +59,12 @@ public class CarController {
 
     @Autowired
     private EnergyService energyService;
+
+    @Autowired
+    private OrderSerivce orderSerivce;
+
+    @Autowired
+    private CarDetailDao carDetailDao;
 
     @RequestMapping(value = "/rentCar", method = RequestMethod.GET)
     public String showCarsWithConditions(String carBrand, String carType, String province, String city, String location, String price, Model model, HttpSession session){
@@ -490,6 +499,70 @@ public class CarController {
             }
         } else {
             model.addAttribute("msg", "未登录");
+            return "fail";
+        }
+    }
+
+    @RequestMapping(value = "/findCarOnRent", method = RequestMethod.GET)
+    public String findCarOnRent(HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
+            List<Order> orders = orderSerivce.findAllOrders();
+            List<CarDetail> carDetails = carDetailDao.findCarDetail();
+            CarDetail record;
+            for (Order order : orders) {
+                record = order.getCarDetail();
+                for (CarDetail carDetail : carDetails) {
+                    if (order.getCarDetail().getCdid().equals(carDetail.getCdid())) {
+                        record.setAccidentType(carDetail.getAccidentType());
+                        record.setAccidentTime(carDetail.getAccidentTime());
+                        record.setIsDamage(carDetail.getIsDamage());
+                        record.setIsScrap(carDetail.getIsScrap());
+                        record.setThirdParty(carDetail.getThirdParty());
+                        record.setInjury(carDetail.getInjury());
+                        record.setRobbing(carDetail.getRobbing());
+                        order.setCarDetail(record);
+                    }
+                }
+            }
+            model.addAttribute("orders", orders);
+            return "findCarOnRent";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
+    }
+
+    @RequestMapping(value = "/accident", method = RequestMethod.GET)
+    public String accident(Integer cdId, HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        List<Order> orders =  orderSerivce.findOrdersByUserId(currentUser.getUserid());
+        for (Order order : orders) {
+            if (order.getCarDetail().getCdid().equals(cdId)) {
+                CarDetail carDetail = carDetailService.findCarDetailById(cdId);
+                carDetail.setAccidentTime(new Date());
+                carDetail.setAccidentType(-1);
+                carDetailDao.insertCarDetail(carDetail);
+                return "redirect:/orders";
+            }
+        }
+        model.addAttribute("msg", "无权限访问");
+        return "fail";
+    }
+
+    @RequestMapping(value = "/defineAccident", method = RequestMethod.POST)
+    public String defineAccident(Integer cdId, Integer isDamage, Integer isScrap, Integer thirdParty, Integer injury, Integer robbing, HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
+            if (isDamage == null) isDamage = 0;
+            if (isScrap == null) isScrap = 0;
+            if (thirdParty == null) thirdParty = 0;
+            if (injury == null) injury = 0;
+            if (robbing == null) robbing = 0;
+            carDetailDao.changeCarDetail(cdId, isDamage, isScrap, thirdParty, injury, robbing);
+            return "redirect:/findCarOnRent";
+        } else {
+            model.addAttribute("msg", "无权限访问");
             return "fail";
         }
     }

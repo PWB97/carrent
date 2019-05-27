@@ -7,6 +7,7 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.pu.carrent.Util.AlipayConfig;
+import com.pu.carrent.dao.CarDetailDao;
 import com.pu.carrent.entity.CarDetail;
 import com.pu.carrent.entity.Order;
 import com.pu.carrent.entity.User;
@@ -45,6 +46,9 @@ public class OrderController {
 
     @Autowired
     private UserTypeService userTypeService;
+
+    @Autowired
+    private CarDetailDao carDetailDao;
 
     @Transactional
     @RequestMapping(value = "/makeOrder", method = RequestMethod.POST)
@@ -91,6 +95,20 @@ public class OrderController {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             List<Order> orders = orderSerivce.findOrdersByUserId(currentUser.getUserid());
+            List<CarDetail> carDetails = carDetailDao.findCarDetail();
+            int f = 0;
+            CarDetail record;
+            for (Order order : orders) {
+                record = order.getCarDetail();
+                for (CarDetail carDetail : carDetails) {
+                    if (order.getCarDetail().getCdid().equals(carDetail.getCdid())) {
+                        record.setAccidentType(carDetail.getAccidentType());
+                        record.setAccidentTime(carDetail.getAccidentTime());
+                        order.setCarDetail(record);
+                        f = 1;
+                    }
+                } if (f == 0) record.setAccidentType(-2);
+            }
             model.addAttribute("orders", orders);
             return "orders";
         }  else {
@@ -278,6 +296,21 @@ public class OrderController {
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0
             || orderSerivce.findOrderById(orderId).getUserid().equals(currentUser.getUserid())) {
             Order order = orderSerivce.findOrderById(orderId);
+            List<CarDetail> carDetails = carDetailDao.findCarDetail();
+            CarDetail record;
+            for (CarDetail carDetail : carDetails) {
+                record = order.getCarDetail();
+                if (carDetail.getCdid().equals(order.getCarDetail().getCdid())) {
+                    record.setAccidentType(carDetail.getAccidentType());
+                    record.setAccidentTime(carDetail.getAccidentTime());
+                    record.setIsDamage(carDetail.getIsDamage());
+                    record.setIsScrap(carDetail.getIsScrap());
+                    record.setThirdParty(carDetail.getThirdParty());
+                    record.setInjury(carDetail.getInjury());
+                    record.setRobbing(carDetail.getRobbing());
+                    order.setCarDetail(record);
+                }
+            }
             model.addAttribute("orderDetail", order);
             return "orderDetail";
         } else {

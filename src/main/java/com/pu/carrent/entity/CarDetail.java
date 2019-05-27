@@ -1,53 +1,163 @@
 package com.pu.carrent.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
+
+@Document(collection = "carDetail")
 public class CarDetail {
+
+    @Id
+    private String id;
+
     private Integer cdid;
 
+    @Transient
     private String productyear;
 
     private String level;
 
+    @Transient
     private Integer seats;
 
+    @Transient
     private Integer doors;
 
+    @Transient
     private Integer energyid;
 
+    @Transient
     private Integer gearid;
 
+    @Transient
     private String displacement;
 
+    @Transient
     private Integer drive;
 
+    @Transient
     private Integer upwindow;
 
+    @Transient
     private Integer radar;
 
+    @Transient
     private Integer gps;
 
+    @Transient
     private Integer carid;
 
+    @Transient
     private Integer lisence;
 
+    @Transient
     private Integer fsfile;
 
     private Integer isdeleted;
 
     private Integer isonline;
 
+    @Transient
     private Integer userid;
 
+    @Transient
     private String plate;
 
+    @Transient
     private Energy energy;
 
+    @Transient
     private Gear gear;
 
+    @Transient
     private Integer photos;
 
+    @DBRef
     private Car car;
 
+    @Transient
     private User owner;
+
+    private int accidentType;
+
+    private Date accidentTime;
+
+    private int isDamage;
+
+    private int isScrap;
+
+    private int thirdParty;
+
+    private int injury;
+
+    private int robbing;
+
+    public int getIsDamage() {
+        return isDamage;
+    }
+
+    public void setIsDamage(int isDamage) {
+        this.isDamage = isDamage;
+    }
+
+    public int getIsScrap() {
+        return isScrap;
+    }
+
+    public void setIsScrap(int isScrap) {
+        this.isScrap = isScrap;
+    }
+
+    public int getThirdParty() {
+        return thirdParty;
+    }
+
+    public void setThirdParty(int thirdParty) {
+        this.thirdParty = thirdParty;
+    }
+
+    public int getInjury() {
+        return injury;
+    }
+
+    public void setInjury(int injury) {
+        this.injury = injury;
+    }
+
+    public int getRobbing() {
+        return robbing;
+    }
+
+    public void setRobbing(int robbing) {
+        this.robbing = robbing;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getAccidentType() {
+        return accidentType;
+    }
+
+    public void setAccidentType(int accidentType) {
+        this.accidentType = accidentType;
+    }
+
+    public Date getAccidentTime() {
+        return accidentTime;
+    }
+
+    public void setAccidentTime(Date accidentTime) {
+        this.accidentTime = accidentTime;
+    }
 
     public Car getCar() {
         return car;

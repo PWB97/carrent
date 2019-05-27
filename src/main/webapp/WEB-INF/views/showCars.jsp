@@ -75,6 +75,7 @@
                                     <li><a href="<%=request.getContextPath() %>/rentCar">所有汽车</a></li>
                                     <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a>
                                     </li>
+                                    <li><a href="<%=request.getContextPath() %>/findCarOnRent">在租汽车</a></li>
                                     <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a>
                                     </li>
                                 </ul>
@@ -145,22 +146,6 @@
                             <div class="x_panel">
                                 <div class="x_title">
                                     <h2><i class="fa fa-align-left"></i> 选择汽车 </h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        </li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                               aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Settings 1</a>
-                                                </li>
-                                                <li><a href="#">Settings 2</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                        </li>
-                                    </ul>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
@@ -377,16 +362,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    </li>
-                                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
@@ -404,8 +379,8 @@
                                     <c:forEach var="car" items="${cars}" varStatus="s">
                                         <tr>
                                             <td style="vertical-align: middle">${car.carid}</td>
+                                            <td style="vertical-align: middle">${car.carname}</td>
                                             <td style="vertical-align: middle"><img src="../../images/car/${car.carid}.JPG" with="230" height="130"></td>
-                                            <td style="vertical-align: middle">${car.plate}</td>
                                             <td style="vertical-align: middle">${car.price}</td>
                                             <td style="vertical-align: middle">
                                                 <a type="button" class="btn btn-primary btn-xs"

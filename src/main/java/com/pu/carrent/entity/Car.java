@@ -37,14 +37,6 @@ public class Car {
 
     private Integer lid;
 
-    public Integer getLid() {
-        return lid;
-    }
-
-    public void setLid(Integer lid) {
-        this.lid = lid;
-    }
-
     @DBRef
     private CarBrand carBrand;
 
@@ -56,6 +48,14 @@ public class Car {
 
     @DBRef
     private Location location;
+
+    public Integer getLid() {
+        return lid;
+    }
+
+    public void setLid(Integer lid) {
+        this.lid = lid;
+    }
 
     public String getId() {
         return id;

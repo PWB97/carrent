@@ -205,22 +205,7 @@
                                         </form>
                                     </div>
                                 </c:if>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">Settings 1</a>
-                                            </li>
-                                            <li><a href="#">Settings 2</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
+
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
@@ -251,7 +236,7 @@
                                                     src="../../images/carDetail/${carDetail.cdid}/6.jpg"
                                                     alt=""></a>
                                         </div>
-                                        <c:if test="${carDetail.isonline == -1}">
+                                        <c:if test="${carDetail.isonline == -1 || userDetail.userType.utypename eq '管理员'}">
                                             <div class="">
                                                 <form id="myAwesomeDropzone"
                                                       action="<%=request.getContextPath() %>/uploadCarDetailPictures"
@@ -306,9 +291,11 @@
                                             </div>
                                         </c:if>
                                         <c:if test="${carDetail.isonline == 1 && userDetail.userType.utypename eq '管理员'}">
+                                           <div style="text-align: center">
                                             <a type="button" class="btn btn-primary"
                                                href="<%=request.getContextPath() %>/backManage/offline?cdId=${carDetail.cdid}"><i
                                                     class="fa fa-arrow-circle-o-down"></i> 下线</a>
+                                           </div>
                                         </c:if>
                                     </div>
                                     <div class="col-md-5 col-sm-5 col-xs-12">

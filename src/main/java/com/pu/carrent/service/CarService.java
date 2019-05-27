@@ -7,9 +7,6 @@ import java.util.List;
 
 public interface CarService {
 
-    List<Car> findAllCars();
-
-
     int addCar(Car record);
 
     int deleteCarByCarId(Integer carId);

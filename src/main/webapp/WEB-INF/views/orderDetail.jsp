@@ -75,6 +75,7 @@
                                         <li><a href="<%=request.getContextPath() %>/rentCar">所有汽车</a></li>
                                         <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a>
                                         </li>
+                                        <li><a href="<%=request.getContextPath() %>/findCarOnRent">在租汽车</a></li>
                                         <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a>
                                         </li>
                                     </ul>
@@ -171,21 +172,6 @@
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>订单详细</h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">Settings 1</a>
-                                            </li>
-                                            <li><a href="#">Settings 2</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
@@ -235,19 +221,39 @@
                                     </div>
                                     <div class="col-xs-6">
                                         <h3>订单状态</h3>
-                                    <c:if test="${orderDetail.ispaid==0}">
-                                        <p class="lead">支付方式:</p>
-                                        <a class="btn btn-primary" href="<%=request.getContextPath() %>/alipay?orderId=${orderDetail.orderid}&price=${orderDetail.totalprice}">支付宝</a>
-                                    </c:if>
-                                    <c:if test="${orderDetail.ispaid==1}">
-                                        <p class="lead">已支付</p>
-                                    </c:if>
-                                    <c:if test="${orderDetail.ispaid==2}">
-                                        <p class="lead">退款成功</p>
-                                    </c:if>
-                                    <c:if test="${orderDetail.ispaid==-1}">
-                                        <p class="lead">正在退款</p>
-                                    </c:if>
+                                        <c:if test="${orderDetail.ispaid==0}">
+                                            <p class="lead">支付方式:</p>
+                                            <a class="btn btn-primary" href="<%=request.getContextPath() %>/alipay?orderId=${orderDetail.orderid}&price=${orderDetail.totalprice}">支付宝</a>
+                                        </c:if>
+                                        <c:if test="${orderDetail.ispaid==1}">
+                                            <p class="lead">已支付</p>
+                                        </c:if>
+                                        <c:if test="${orderDetail.ispaid==2}">
+                                            <p class="lead">退款成功</p>
+                                        </c:if>
+                                        <c:if test="${orderDetail.ispaid==-1}">
+                                            <p class="lead">正在退款</p>
+                                        </c:if>
+                                        <c:if test="${orderDetail.carDetail.accidentType == 1}">
+                                            <p class="lead">已报险 时间：<fmt:formatDate value="${orderDetail.carDetail.accidentTime}" pattern="yyyy-MM-dd HH:mm" /></p>
+                                            <p class="lead">
+                                                <c:if test="${orderDetail.carDetail.isDamage == 1}">
+                                                    车辆损坏
+                                                </c:if>
+                                                <c:if test="${orderDetail.carDetail.isScrap == 1}">
+                                                    车辆报废
+                                                </c:if>
+                                                <c:if test="${orderDetail.carDetail.thirdParty == 1}">
+                                                    第三者责任
+                                                </c:if>
+                                                <c:if test="${orderDetail.carDetail.injury == 1}">
+                                                    驾驶员人身伤亡
+                                                </c:if>
+                                                <c:if test="${order.carDetail.robbing == 1}">
+                                                    全车盗抢
+                                                </c:if>
+                                            </p>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>

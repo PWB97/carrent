@@ -464,6 +464,7 @@
     <result column="plate" property="plate" />
     <result column="isDeleted" property="isdeleted" />
     <result column="isOnline" property="isonline" />
+    <result column="carId" property="carid"/>
     <collection ofType="com.pu.carrent.entity.Energy" property="energy">
       <result column="energeName" property="energename" />
     </collection>
@@ -479,11 +480,11 @@
         where t_cardetail.cdId=#{cdId,jdbcType=INTEGER}
     </select>
   <select id="selectCarDetailNotOnline" resultMap="carDetail">
-    select * from  t_cardetail left join t_energe te on t_cardetail.energyId = te.energeId left join t_gear tg on t_cardetail.gearId = tg.gearId left join t_user tu on t_cardetail.userId = tu.userId
-    where t_cardetail.isOnline &lt;&gt; 1 and t_cardetail.isDeleted=0
+        select * from  t_cardetail left join t_energe te on t_cardetail.energyId = te.energeId left join t_gear tg on t_cardetail.gearId = tg.gearId left join t_user tu on t_cardetail.userId = tu.userId
+        where t_cardetail.isOnline &lt;&gt; 1 and t_cardetail.isDeleted=0
   </select>
   <select id="selectCarDetailByUserId" resultMap="carDetail">
-    select * from  t_cardetail left join t_energe te on t_cardetail.energyId = te.energeId left join t_gear tg on t_cardetail.gearId = tg.gearId left join t_user tu on t_cardetail.userId = tu.userId
-    where t_cardetail.userId=#{userId,jdbcType=INTEGER}
+        select * from  t_cardetail left join t_energe te on t_cardetail.energyId = te.energeId left join t_gear tg on t_cardetail.gearId = tg.gearId left join t_user tu on t_cardetail.userId = tu.userId
+        where t_cardetail.userId=#{userId,jdbcType=INTEGER}
   </select>
 </mapper>
