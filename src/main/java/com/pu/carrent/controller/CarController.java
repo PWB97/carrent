@@ -533,8 +533,8 @@ public class CarController {
         }
     }
 
-    @RequestMapping(value = "/accident", method = RequestMethod.GET)
-    public String accident(Integer cdId, HttpSession session, Model model) {
+    @RequestMapping(value = "/accident", method = RequestMethod.POST)
+    public String accident(Integer cdId, String aLocation,HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         List<Order> orders =  orderSerivce.findOrdersByUserId(currentUser.getUserid());
         for (Order order : orders) {
@@ -542,6 +542,7 @@ public class CarController {
                 CarDetail carDetail = carDetailService.findCarDetailById(cdId);
                 carDetail.setAccidentTime(new Date());
                 carDetail.setAccidentType(-1);
+                carDetail.setaLocation(aLocation);
                 carDetailDao.insertCarDetail(carDetail);
                 return "redirect:/orders";
             }

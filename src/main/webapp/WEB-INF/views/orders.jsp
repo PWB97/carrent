@@ -168,7 +168,29 @@
                                                     <a href="<%=request.getContextPath() %>/cancelOrder?orderId=${order.orderid}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除 </a>
                                                 </c:if>
                                                 <c:if test="${order.ispaid == 1 && order.carDetail.accidentType == -2}">
-                                                <a type="button" class="btn btn-danger btn-xs" href="<%=request.getContextPath() %>/accident?cdId=${order.carDetail.cdid}"><i class="fa fa-exclamation-triangle"></i> 报险</a>
+                                                    <!-- 按钮触发模态框 -->
+                                                    <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-exclamation-triangle"></i> 报险</button>
+                                                    <!-- 模态框（Modal） -->
+                                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                    <h4 class="modal-title" id="myModalLabel">事故定性</h4>
+                                                                </div>
+                                                                <form action="<%=request.getContextPath() %>/accident" method="post">
+                                                                    <div class="modal-body">
+                                                                        <input hidden="hidden" name="cdId" value="${order.carDetail.cdid}">
+                                                                        <label><input name="aLocation" type="checkbox" value="1" />事故发生地</label>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                                        <button type="submit" class="btn btn-primary">提交</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div><!-- /.modal-content -->
+                                                        </div><!-- /.modal -->
+                                                    </div>
                                                 </c:if>
                                             </td>
                                             <td>

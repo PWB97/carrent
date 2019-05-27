@@ -1,5 +1,7 @@
 package com.pu.carrent.entity;
 
+import com.pu.carrent.dao.CarTypeMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -94,6 +96,16 @@ public class CarDetail {
     private int injury;
 
     private int robbing;
+
+    private String aLocation;
+
+    public String getaLocation() {
+        return aLocation;
+    }
+
+    public void setaLocation(String aLocation) {
+        this.aLocation = aLocation;
+    }
 
     public int getIsDamage() {
         return isDamage;
