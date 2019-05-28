@@ -308,6 +308,7 @@ public class OrderController {
                     record.setThirdParty(carDetail.getThirdParty());
                     record.setInjury(carDetail.getInjury());
                     record.setRobbing(carDetail.getRobbing());
+                    record.setaLocation(carDetail.getaLocation());
                     order.setCarDetail(record);
                 }
             }

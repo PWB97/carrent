@@ -236,6 +236,7 @@
                                         </c:if>
                                         <c:if test="${orderDetail.carDetail.accidentType == 1}">
                                             <p class="lead">已报险 时间：<fmt:formatDate value="${orderDetail.carDetail.accidentTime}" pattern="yyyy-MM-dd HH:mm" /></p>
+                                            <p class="lead">地点：${orderDetail.carDetail.aLocation}
                                             <p class="lead">
                                                 <c:if test="${orderDetail.carDetail.isDamage == 1}">
                                                     车辆损坏

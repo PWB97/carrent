@@ -163,6 +163,7 @@
                                                 </c:if>
                                                 <c:if test="${order.carDetail.accidentType == -1}">
                                                     车辆事故
+                                                    地点: ${order.carDetail.aLocation}
                                                 </c:if>
                                                 <c:if test="${order.carDetail.accidentType == 1}">
                                                     <c:if test="${order.carDetail.isDamage == 1}">

@@ -551,6 +551,7 @@ public class CarController {
                         record.setIsScrap(carDetail.getIsScrap());
                         record.setThirdParty(carDetail.getThirdParty());
                         record.setInjury(carDetail.getInjury());
+                        record.setaLocation(carDetail.getaLocation());
                         record.setRobbing(carDetail.getRobbing());
                         order.setCarDetail(record);
                     }

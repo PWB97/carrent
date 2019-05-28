@@ -181,7 +181,7 @@
                                                                 <form action="<%=request.getContextPath() %>/accident" method="post">
                                                                     <div class="modal-body">
                                                                         <input hidden="hidden" name="cdId" value="${order.carDetail.cdid}">
-                                                                        <label><input name="aLocation" type="checkbox" value="1" />事故发生地</label>
+                                                                        <label>事故发生地: <input name="aLocation" type="text"/></label>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
