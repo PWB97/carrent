@@ -197,8 +197,12 @@
                                             <label for="carId">选择其他同款</label>
                                             <input hidden="hidden" value="${car.carid}" name="carId" id="carId">
                                             <select name="cdId">
-                                                <c:forEach items="${carDetails}" var="carDetail">
-                                                    <option value="${carDetail.cdid}">${carDetail.level}</option>
+                                                <c:forEach items="${carDetails}" var="cd">
+                                                    <option value="${cd.cdid}"
+                                                            <c:if test="${cd.cdid == carDetail.cdid}">
+                                                                selected="selected"
+                                                            </c:if>
+                                                    >${cd.level}</option>
                                                 </c:forEach>
                                             </select>
                                             <button type="submit" class="btn-primary btn-xs">确定</button>
@@ -242,7 +246,7 @@
                                                       action="<%=request.getContextPath() %>/uploadCarDetailPictures"
                                                       class="dropzone" method="POST"
                                                       enctype="multipart/form-data">
-                                                    <input hidden="hidden" name="carId"
+                                                    <input hidden="hidden" name="cdId"
                                                            value="${carDetail.cdid}">
                                                     <div class="dz-message">
                                                         <span>拖入图片以更改预览图</span>
@@ -292,10 +296,15 @@
                                         </c:if>
                                         <c:if test="${carDetail.isonline == 1 && userDetail.userType.utypename eq '管理员'}">
                                            <div style="text-align: center">
-                                            <a type="button" class="btn btn-primary"
+                                            <a type="button" class="btn btn-danger"
                                                href="<%=request.getContextPath() %>/backManage/offline?cdId=${carDetail.cdid}"><i
                                                     class="fa fa-arrow-circle-o-down"></i> 下线</a>
                                            </div>
+                                        </c:if>
+                                        <c:if test="${carDetail.isonline == -1 && userDetail.userType.utypename eq '管理员'}">
+                                            <div style="text-align: center">
+                                                <a type="button" class="btn btn-success" href="<%=request.getContextPath() %>/backManage/online?cdId=${carDetail.cdid}"><i class="fa fa-check-circle"></i> 通过审核</a>
+                                            </div>
                                         </c:if>
                                     </div>
                                     <div class="col-md-5 col-sm-5 col-xs-12">
@@ -362,27 +371,41 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <h2>驱动方式</h2>
-                                                <p>${carDetail.drive}</p>
+                                                <p>
+                                                    <c:if test="${carDetail.drive == 1}">前驱</c:if>
+                                                    <c:if test="${carDetail.drive == 2}">后驱</c:if>
+                                                    <c:if test="${carDetail.drive == 3}">四驱</c:if>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="col-md-6">
                                                 <h2>天窗</h2>
-                                                <p>${carDetail.upwindow}</p>
+                                                <p>
+                                                    <c:if test="${carDetail.upwindow == 0}">无</c:if>
+                                                    <c:if test="${carDetail.upwindow == 1}">有</c:if>
+                                                </p>
                                             </div>
                                             <div class="col-md-6">
                                                 <h2>雷达</h2>
-                                                <p>${carDetail.radar}</p>
+                                                <p>
+                                                    <c:if test="${carDetail.radar == 0}">无</c:if>
+                                                    <c:if test="${carDetail.radar == 1}">有</c:if>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="col-md-6">
                                                 <h2>证件</h2>
-                                                <p>${carDetail.lisence}</p>
+                                                <c:if test="${carDetail.lisence == 1}">
+                                                    <a href="../../files/lisence${carDetail.cdid}.docx">点击下载驾驶证</a>
+                                                </c:if>
                                             </div>
                                             <div class="col-md-6">
                                                 <h2>保养记录</h2>
-                                                <p>${carDetail.fsfile}</p>
+                                                <c:if test="${carDetail.fsfile == 1}">
+                                                    <a href="../../files/fsFile${carDetail.cdid}.docx">点击保养记录</a>
+                                                </c:if>
                                             </div>
                                         </div>
                                     </div>

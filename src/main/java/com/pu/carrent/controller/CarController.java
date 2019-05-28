@@ -125,27 +125,27 @@ public class CarController {
                 if (carDetails.size() == 0) {
                     model.addAttribute("msg", "无此类型的汽车");
                     return "fail";
-                } else
+                } else {
                     model.addAttribute("carDetail", carDetails.get(0));
+                    User currentUser = (User) session.getAttribute("userDetail");
+                    if (currentUser != null && carDetails.get(0).getIsonline() == 1) {
+                        currentUser.setCarRecord(car);
+                        userDao.insertUserRecord(currentUser);
+                    }
+                }
             else {
                 model.addAttribute("carDetail", carDetailService.findCarDetailById(cdId));
-                }
-            User currentUser = (User) session.getAttribute("userDetail");
-            if (currentUser != null && car.getIsonline() == 1) {
-                currentUser.setCarRecord(car);
-                userDao.insertUserRecord(currentUser);
             }
             model.addAttribute("car", car);
             model.addAttribute("carDetails", carDetails);
         } else
             model.addAttribute("carDetail", carDetailService.findCarDetailById(cdId));
-
         return "carDetail";
     }
 
     @Transactional
     @RequestMapping(value = "/uploadCar", method = RequestMethod.POST)
-    public String uploadCar(String carName, Integer brandId, Integer typeId, String plate, String detail,
+    public String uploadCar(String carName, Integer brandId, Integer typeId, String detail,
                             Integer location, MultipartFile carPicture, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
@@ -153,7 +153,6 @@ public class CarController {
             if (carName != null) car.setCarname(carName);
             if (brandId != null) car.setBrandid(brandId);
             if (typeId != null) car.setCtypeid(typeId);
-            if (plate != null) car.setPlate(plate);
             if (detail != null) car.setDetail(detail);
             if (location != null) car.setLid(location);
             if (carPicture.isEmpty()) {
@@ -162,7 +161,7 @@ public class CarController {
             }
             try {
                 car.setIsdeleted(0);
-                car.setIsonline(-1);
+                car.setIsonline(1);
                 carService.addCar(car);
                 int carId = carService.findCarId(car);
                 String pictureName = "" + carId + ".JPG";
@@ -178,13 +177,13 @@ public class CarController {
                 return "fail";
             }
         } else {
-            model.addAttribute("msg", "未登录");
+            model.addAttribute("msg", "无权限");
             return "fail";
         }
     }
 
     @RequestMapping(value = "/uploadCarDetail", method = RequestMethod.GET)
-    public String uploadCar(Integer carId, HttpSession session, Model model) {
+    public String uploadCarDetail(Integer carId, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             Car car = carService.findCarById(carId);
@@ -202,7 +201,7 @@ public class CarController {
 
     @Transactional
     @RequestMapping(value = "/uploadCarDetail", method = RequestMethod.POST)
-    public String uploadCar(Integer carId, String productYear, String level, Integer seats,
+    public String uploadCarDetail(Integer carId, String productYear, String level, Integer seats,
                             Integer doors, Integer eId, Integer gId, String displacement,
                             Integer drive, Integer upWindow, Integer radar, Integer gps,
                             MultipartFile lisence, MultipartFile fsFile, HttpSession session, Model model) {
@@ -226,13 +225,14 @@ public class CarController {
             carDetail.setIsonline(-1);
             carDetailService.addCarDetail(carDetail);
             int cdId = carDetailService.findCdId(carDetail);
+            carDetail.setCdid(cdId);
             if (lisence.isEmpty()) {
                 model.addAttribute("msg", "上传失败，请选择文件");
                 return "fail";
             }
             try {
-                String lisenceNmae = "lisence" + cdId + ".JPG";
-                String fsFileName = "fsFileName" + cdId + ".docx";
+                String lisenceNmae = "lisence" + cdId + ".docx";
+                String fsFileName = "fsFile" + cdId + ".docx";
                 String filePath = "/Users/pu/Desktop/carrent/src/main/webapp/files/";
                 File dest = new File(filePath + lisenceNmae);
                 lisence.transferTo(dest);
@@ -241,7 +241,7 @@ public class CarController {
                 fsFile.transferTo(dest);
                 carDetail.setFsfile(1);
                 carDetailService.changeCarDetailById(carDetail);
-                return "redirect:/uploadCar";
+                return "redirect:/uploadCarDetail";
             } catch (Exception e) {
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 model.addAttribute("msg", "上传失败");
@@ -260,7 +260,8 @@ public class CarController {
         Integer times = (Integer) session.getAttribute("times");
         if (currentUser != null) {
             CarDetail record = carDetailService.findCarDetailById(cdId);
-            if (currentUser.getUserid().compareTo(record.getUserid()) == 0) {
+            if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0 ||
+                    currentUser.getUserid().compareTo(record.getUserid()) == 0) {
                 if (file.isEmpty()) {
                     model.addAttribute("msg", "上传失败，请选择文件");
                     return "fail";
@@ -293,7 +294,7 @@ public class CarController {
         }
     }
 
-    @RequestMapping(value = "/backManage/online", method = RequestMethod.POST)
+    @RequestMapping(value = "/backManage/online", method = RequestMethod.GET)
     public String online(Integer cdId, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
@@ -308,11 +309,29 @@ public class CarController {
         }
     }
 
+    @RequestMapping(value = "/backManage/refuseOnline", method = RequestMethod.GET)
+    public String refuseOnline(Integer cdId, HttpSession session, Model model) {
+        User currentUser = (User)session.getAttribute("currentUser");
+        if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
+            CarDetail carDetail = new CarDetail();
+            carDetail.setCdid(cdId);
+            carDetail.setIsonline(-2);
+            carDetailService.changeCarDetailById(carDetail);
+            return "redirect:/backManage/carsNotOnline";
+        } else {
+            model.addAttribute("msg", "无权限访问");
+            return "fail";
+        }
+    }
+
     @RequestMapping(value = "/backManage/carsNotOnline", method = RequestMethod.GET)
     public String showCarsNotOnline(HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             List<CarDetail> carDetails = carDetailService.findCarDetailNotOnline();
+            for (CarDetail carDetail : carDetails) {
+                carDetail.setCar(carService.findCarById(carDetail.getCarid()));
+            }
             model.addAttribute("carDetails", carDetails);
             return "carsNotOnline";
         } else {
@@ -424,7 +443,7 @@ public class CarController {
         }
     }
 
-    @RequestMapping(value = "/backManage/deleteCarType", method = RequestMethod.POST)
+    @RequestMapping(value = "/backManage/deleteCarType", method = RequestMethod.GET)
     public  String deleteCarType(Integer cTypeId, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
@@ -448,7 +467,7 @@ public class CarController {
         }
     }
 
-    @RequestMapping(value = "/backManage/deleteLocation", method = RequestMethod.POST)
+    @RequestMapping(value = "/backManage/deleteLocation", method = RequestMethod.GET)
     public  String deleteLocation(Integer lId, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
@@ -464,7 +483,16 @@ public class CarController {
     public String deleteCar(Integer carId, HttpSession session, Model model) {
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
-            carService.deleteCarByCarId(carId);
+            for (CarDetail carDetail : carDetailService.findAllCarDetailByCarId(carId)) {
+                if (carDetail.getIsdeleted() == 0) {
+                    model.addAttribute("msg", "有具体车辆未下线，无法删除");
+                    return "fail";
+                }
+            }
+            Car car = carService.findCarById(carId);
+            car.setIsdeleted(1);
+            car.setIsonline(0);
+            carService.changeCar(car);
             return "redirect:/backManage/carsNotOnline";
         } else {
             model.addAttribute("msg", "无权限访问");
@@ -477,6 +505,9 @@ public class CarController {
         User currentUser = (User)session.getAttribute("currentUser");
         if (currentUser != null) {
             List<CarDetail> userCars = carDetailService.findCarDetailByUserId(currentUser.getUserid());
+            for (CarDetail userCar : userCars) {
+                userCar.setCar(carService.findCarById(userCar.getCarid()));
+            }
             model.addAttribute("userCars", userCars);
             return "showMyUploadCars";
         } else {

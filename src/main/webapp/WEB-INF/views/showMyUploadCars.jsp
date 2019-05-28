@@ -140,23 +140,24 @@
                                     <thead>
                                     <tr>
                                         <th>汽车名称</th>
-                                        <th>车牌</th>
+                                        <th>车型</th>
                                         <th>状态</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="car" items="${userCars}" varStatus="s">
+                                    <c:forEach var="carDetail" items="${userCars}" varStatus="s">
                                         <tr>
-                                            <td>${car.carname}</td>
-                                            <td>${car.plate}</td>
+                                            <td>${carDetail.car.carname}</td>
+                                            <td>${carDetail.level}</td>
                                             <td>
-                                                <c:if test="${car.isonline==-1}">等待审核</c:if>
-                                                <c:if test="${car.isonline==0}">审核通过，请到店办理</c:if>
+                                                <c:if test="${carDetail.isonline==-1}">等待审核</c:if>
+                                                <c:if test="${carDetail.isonline==-2}">已被拒绝</c:if>
+                                                <c:if test="${carDetail.isonline==0}">审核通过，请到店办理</c:if>
                                             </td>
                                             <td>
-                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}"><i class="fa fa-folder"></i> 查看</a>
-                                                <a type="button" class="btn btn-danger btn-xs" href="<%=request.getContextPath() %>/DeleteMyUploadCar?carId=${car.carid}"><i class="fa fa-trash-o"></i> 删除</a>
+                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/carDetail?carId=${carDetail.carid}&cdId=${carDetail.cdid}"><i class="fa fa-folder"></i> 查看</a>
+                                                <a type="button" class="btn btn-danger btn-xs" href="<%=request.getContextPath() %>/DeleteMyUploadCar?cdId=${carDetail.cdid}"><i class="fa fa-trash-o"></i> 删除</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

@@ -465,6 +465,7 @@
     <result column="isDeleted" property="isdeleted" />
     <result column="isOnline" property="isonline" />
     <result column="carId" property="carid"/>
+    <result column="userId" property="userid"/>
     <collection ofType="com.pu.carrent.entity.Energy" property="energy">
       <result column="energeName" property="energename" />
     </collection>

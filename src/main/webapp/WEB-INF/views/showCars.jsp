@@ -290,17 +290,6 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                               for="plate">车牌号 <span
-                                                                class="required">*</span>
-                                                        </label>
-                                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                                            <input type="text" id="plate" name="plate"
-                                                                   required="required"
-                                                                   class="form-control col-md-7 col-xs-12">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
                                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">类型
                                                             <span class="required">*</span></label>
                                                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -389,6 +378,9 @@
                                                 <a type="button" class="btn btn-primary btn-xs"
                                                    href="<%=request.getContextPath() %>/uploadCarDetail?carId=${car.carid}"><i
                                                         class="fa fa-upload"></i> 提交组车信息</a>
+                                                <a type="button" class="btn btn-danger btn-xs"
+                                                   href="<%=request.getContextPath() %>/backManage/deleteCar?carId=${car.carid}"><i
+                                                        class="fa fa-trash"></i> 删除</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

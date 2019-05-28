@@ -26,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Controller
 public class UserController {
@@ -71,6 +72,11 @@ public class UserController {
             model.addAttribute("msg", "字段不能为空");
             return "fail";
         }
+        Pattern pattern = Pattern.compile("[0-9]*");
+        if (phone.length() != 11 || !pattern.matcher(phone).matches()) {
+            model.addAttribute("msg", "电话号码异常");
+            return "fail";
+        }
         if (code.compareTo(sCode) != 0) {
             model.addAttribute("msg", "验证码不符");
             return "fail";
@@ -95,8 +101,13 @@ public class UserController {
     @RequestMapping(value = "/forget", method = RequestMethod.POST)
     public String forget(String phone, String code, String password, String rPassword, HttpSession session, Model model) {
         String sCode = (String) session.getAttribute("code");
-        if ("".compareTo(phone) == 0 || "".compareTo(password) == 0 || "".compareTo(rPassword) == 0) {
+        if ("".compareTo(password) == 0 || "".compareTo(rPassword) == 0) {
             model.addAttribute("msg", "字段不能为空");
+            return "fail";
+        }
+        Pattern pattern = Pattern.compile("[0-9]*");
+        if ("".compareTo(phone) == 0 || phone.length() != 11 || !pattern.matcher(phone).matches()) {
+            model.addAttribute("msg", "电话号码异常");
             return "fail";
         }
         if (code.compareTo(sCode) != 0) {
@@ -116,7 +127,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/phoneCode", method = RequestMethod.POST)
-    public void phoneCode(String phone, HttpSession session) {
+    @ResponseBody
+    public String phoneCode(String phone, HttpSession session) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        if ("".compareTo(phone) == 0 || phone.length() != 11 || !pattern.matcher(phone).matches()) {
+            return "fail";
+        }
         String code = RandomUtil.getRandom();
         DefaultProfile profile = DefaultProfile.getProfile("default", "LTAIbtUOUbo6Tij9", "sfN5ZwWw66kdvwWuFl57j3G3fooEoN");
         IAcsClient client = new DefaultAcsClient(profile);
@@ -137,6 +153,7 @@ public class UserController {
         } catch (ClientException e) {
             e.printStackTrace();
         }
+        return "OK";
     }
 
     @RequestMapping(value = "/user/isValidName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -153,6 +170,15 @@ public class UserController {
 
     @RequestMapping(value = "/backManage/addManager", method = RequestMethod.POST)
     public String addManager(String userName, String password, String email, String phone, HttpSession session, Model model) {
+        if ("".compareTo(userName) == 0 || "".compareTo(phone) == 0 || "".compareTo(password) == 0 || "".compareTo(email) == 0) {
+            model.addAttribute("msg", "字段不能为空");
+            return "fail";
+        }
+        Pattern pattern = Pattern.compile("[0-9]*");
+        if (phone.length() != 11 && !pattern.matcher(phone).matches()) {
+            model.addAttribute("msg", "电话号码异常");
+            return "fail";
+        }
         User currentUser = (User)session.getAttribute("currentUser");
         if ("管理员".compareTo(userTypeService.finduTypeNameById(currentUser.getUtypeid())) == 0) {
             User user = new User();

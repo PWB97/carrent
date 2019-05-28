@@ -143,7 +143,6 @@
                                 <table id="datatable" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>编号</th>
                                         <th>汽车名称</th>
                                         <th>车牌</th>
                                         <th>单价</th>
@@ -151,19 +150,24 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="car" items="${cars}" varStatus="s">
+                                    <c:forEach var="carDetail" items="${carDetails}" varStatus="s">
+                                        <c:if test="${carDetail.isonline != -2}">
                                         <tr>
-                                            <td>${car.carid}</td>
-                                            <td>${car.carname}</td>
-                                            <td>${car.plate}</td>
-                                            <td>${car.price}</td>
+                                            <td>${carDetail.car.carBrand.brandname}${carDetail.car.carname}${carDetail.level}</td>
+                                            <td>${carDetail.plate}</td>
+                                            <td>${carDetail.car.price}</td>
                                             <td>
-                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/carDetail?carId=${car.carid}"><i class="fa fa-folder"></i> 查看</a>
-                                                <c:if test="${car.isonline == -1}">
-                                                    <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/backManage/offline?carId=${car.carid}"><i class="fa fa-folder"></i> 通过审核</a>
+                                                <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/carDetail?carId=${carDetail.carid}&cdId=${carDetail.cdid}"><i class="fa fa-folder"></i> 查看</a>
+                                                <c:if test="${carDetail.isonline == -1}">
+                                                    <a type="button" class="btn btn-success btn-xs" href="<%=request.getContextPath() %>/backManage/offline?cdId=${carDetail.cdid}"><i class="fa fa-check-circle"></i> 通过审核</a>
+                                                    <a type="button" class="btn btn-danger btn-xs" href="<%=request.getContextPath() %>/backManage/refuseOnline?cdId=${carDetail.cdid}"><i class="fa fa-close"></i> 拒绝</a>
+                                                </c:if>
+                                                <c:if test="${carDetail.isonline == 0}">
+                                                    <a type="button" class="btn btn-success btn-xs" href="<%=request.getContextPath() %>/backManage/online?cdId=${carDetail.cdid}"><i class="fa fa-arrow-circle-up"></i> 上线</a>
                                                 </c:if>
                                             </td>
                                         </tr>
+                                        </c:if>
                                     </c:forEach>
                                     </tbody>
                                 </table>

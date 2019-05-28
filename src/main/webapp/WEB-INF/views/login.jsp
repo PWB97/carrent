@@ -125,10 +125,16 @@
     var wait = 120;
     function getCode(that) {
         var phoneNum = $('#phone').val();
-        setButtonStatus(that);
         $.post("<%=request.getContextPath() %>/user/phoneCode", {
             phone : phoneNum
+        }, function(responseData,status){
+            if(status=="success"){
+                if(responseData=="fail") {
+                    alert("手机号格式错误！");
+                } else {setButtonStatus(that);}
+            }
         });
+
     }
     function setButtonStatus(that) {
         if (wait == 0) {

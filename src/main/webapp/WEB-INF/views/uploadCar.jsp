@@ -189,8 +189,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <form action="<%=request.getContextPath() %>/uploadCar" method="post" id="demo-form2"
-                                      data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
+                                <form action="<%=request.getContextPath() %>/uploadCarDetail" method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
                                     <input hidden="hidden" value="${car.carid}" name="carId">
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="productYear">汽车年款
@@ -409,7 +408,6 @@
                                             <button type="submit" class="btn btn-success">提交</button>
                                         </div>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
