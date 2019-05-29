@@ -2,6 +2,7 @@ package com.pu.carrent.service.impl;
 
 import com.pu.carrent.dao.OrderMapper;
 import com.pu.carrent.entity.Order;
+import com.pu.carrent.entity.OrderData;
 import com.pu.carrent.service.OrderSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,11 @@ public class OrderServiceImpl implements OrderSerivce {
     @Override
     public List<Order> findRefundsByUserId(Integer userId) {
         return orderMapper.findRefundsByUserId(userId);
+    }
+
+    @Override
+    public List<OrderData> findOrderDataByProvince() {
+        return orderMapper.findOrderDataByProvince();
     }
 
     @Override

@@ -314,4 +314,9 @@
     from t_order join t_user tu on t_order.userId = tu.userId join t_cardetail on t_order.carId = t_cardetail.cdId join t_car tc on t_cardetail.carId = tc.carId join t_carbrand t on tc.brandId = t.brandId join t_cartype tc2 on tc.cTypeId = tc2.cTypeId join t_location tl on tc.lId = tl.lId join t_city tc3 on tl.cId = tc3.cId join t_province tp on tc3.pId = tp.pId
     where isPaid=-1 and t_order.userId=#{userId,jdbcType=INTEGER}
   </select>
+
+  <select id="findOrderDataByProvince" resultType="com.pu.carrent.entity.OrderData">
+        select count(orderId) as orderNum, pName from t_order left join t_cardetail tc on t_order.carId = tc.cdId left join t_car t on tc.carId = t.carId left join t_location tl on t.lId = tl.lId left join t_city tc2 on tl.cId = tc2.cId left join t_province tp on tc2.pId = tp.pId
+        group by tp.pId
+  </select>
 </mapper>

@@ -1,11 +1,8 @@
 package com.pu.carrent.service;
 
-import com.alipay.api.AlipayApiException;
 import com.pu.carrent.entity.Order;
+import com.pu.carrent.entity.OrderData;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 public interface OrderSerivce {
@@ -27,4 +24,6 @@ public interface OrderSerivce {
     List<Order> findRefunds();
 
     List<Order> findRefundsByUserId(Integer userId);
+
+    List<OrderData> findOrderDataByProvince();
 }

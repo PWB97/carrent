@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Document(collection = "car")
 public class Car {
@@ -48,6 +49,16 @@ public class Car {
 
     @DBRef
     private Location location;
+
+    private Date recordDate;
+
+    public Date getRecordDate() {
+        return recordDate;
+    }
+
+    public void setRecordDate(Date recordDate) {
+        this.recordDate = recordDate;
+    }
 
     public Integer getLid() {
         return lid;

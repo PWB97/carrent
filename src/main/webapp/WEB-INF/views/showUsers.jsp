@@ -66,7 +66,7 @@
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section">
-                        <h3>General</h3>
+                        <h3>功能</h3>
                         <ul class="nav side-menu">
                             <li><a><i class="fa fa-car"></i> 汽车管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
@@ -92,6 +92,12 @@
                                 <ul class="nav child_menu">
                                     <li><a href="<%=request.getContextPath() %>/backManage/showOrdersNotPaid">未支付订单</a></li>
                                     <li><a href="<%=request.getContextPath() %>/backManage/showRefund">退款订单</a></li>
+                                </ul>
+                            </li>
+                            <li><a><i class="fa fa-bar-chart-o"></i> 数据展示 <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="<%=request.getContextPath() %>/findTopCarData">汽车数据</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/findTopCityData">城市数据</a></li>
                                 </ul>
                             </li>
                         </ul>

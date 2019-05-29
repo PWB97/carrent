@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: PWB
-  Date: 2019/4/20
-  Time: 9:08
+  User: pu
+  Date: 2019-05-29
+  Time: 14:44
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
@@ -22,23 +22,12 @@
     <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="../../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-    <!-- bootstrap-wysiwyg -->
-    <link href="../../vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
-    <!-- Select2 -->
-    <link href="../../vendors/select2/dist/css/select2.min.css" rel="stylesheet">
-    <!-- Switchery -->
-    <link href="../../vendors/switchery/dist/switchery.min.css" rel="stylesheet">
-    <!-- starrr -->
-    <link href="../../vendors/starrr/dist/starrr.css" rel="stylesheet">
-    <!-- bootstrap-daterangepicker -->
-    <link href="../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="../../build/css/custom.min.css" rel="stylesheet">
+
+    <script src="../../vendors/echarts/dist/echarts.min.js"></script>
+    <script src="../../js/china.js"></script>
+    <style>#china-map {width:1000px; height: 1000px;margin: auto;}</style>
 </head>
 
 <body class="nav-md">
@@ -75,7 +64,8 @@
                             <li><a><i class="fa fa-car"></i> 汽车管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="<%=request.getContextPath() %>/rentCar">所有汽车</a></li>
-                                    <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a></li>
+                                    <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a>
+                                    </li>
                                     <li><a href="<%=request.getContextPath() %>/findCarOnRent">在租汽车</a></li>
                                     <li><a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a>
                                     </li>
@@ -142,56 +132,110 @@
         <!-- page content -->
         <div class="right_col" role="main">
             <div class="">
-
                 <div class="clearfix"></div>
+
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>用户管理 </h2>
+                                <h2>省份订单量化图</h2>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <br />
-                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="<%=request.getContextPath() %>/backManage/addManager" method="post">
+                                <div id="china-map"></div>
+                                <script type="text/javascript">
+                                    var option = {
+                                        title : {
+                                            text: '省份订单量化图',
+                                            x:'center'
+                                        },
+                                        tooltip : {//提示框组件。
+                                            trigger: 'item'//数据项图形触发，主要在散点图，饼图等无类目轴的图表中使用。
+                                        },
+                                        legend: {
+                                            orient: 'horizontal',//图例的排列方向
+                                            x:'left',//图例的位置
+                                            data:['订单量']
+                                        },
 
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="userName">用户名 <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="userName" name="userName" required="required" class="form-control col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">邮箱 <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone" class="control-label col-md-3 col-sm-3 col-xs-12">电话</label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="phone" class="form-control col-md-7 col-xs-12" type="text" name="phone">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">密码 <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="password" name="password" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="ln_solid"></div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                                            <button class="btn btn-primary" type="reset">重置</button>
-                                            <button type="submit" class="btn btn-success">提交</button>
-                                        </div>
-                                    </div>
-
-                                </form>
+                                        visualMap: {//颜色的设置  dataRange
+                                            x: 'left',
+                                            y: 'center',
+                                            splitList: [
+                                                {start: 1500},
+                                                {start: 900, end: 1500},
+                                                {start: 310, end: 1000},
+                                                {start: 200, end: 300},
+                                                {start: 10, end: 200, label: '10 到 200（自定义label）'},
+                                                {start: 5, end: 5, label: '5（自定义特殊颜色）', color: 'black'},
+                                                {end: 10}
+                                            ],
+                                            text:['高','低'],// 文本，默认为数值文本
+                                            color: ['#E0022B', '#E09107', '#A3E00B']
+                                        },
+                                        toolbox: {//工具栏
+                                            show: true,
+                                            orient : 'vertical',//工具栏 icon 的布局朝向
+                                            x: 'right',
+                                            y: 'center',
+                                            feature : {//各工具配置项。
+                                                mark : {show: true},
+                                                dataView : {show: true, readOnly: false},//数据视图工具，可以展现当前图表所用的数据，编辑后可以动态更新。
+                                                restore : {show: true},//配置项还原。
+                                                saveAsImage : {show: true}//保存为图片。
+                                            }
+                                        },
+                                        roamController: {//控制地图的上下左右放大缩小 图上没有显示
+                                            show: true,
+                                            x: 'right',
+                                            mapTypeControl: {
+                                                'china': true
+                                            }
+                                        },
+                                        series : [
+                                            {
+                                                name: '订单量',
+                                                type: 'map',
+                                                mapType: 'china',
+                                                roam: false,//是否开启鼠标缩放和平移漫游
+                                                itemStyle:{//地图区域的多边形 图形样式
+                                                    normal:{//是图形在默认状态下的样式
+                                                        label:{
+                                                            show:true,//是否显示标签
+                                                            textStyle: {
+                                                                color: "rgb(249, 249, 249)"
+                                                            }
+                                                        }
+                                                    },
+                                                    emphasis:{//是图形在高亮状态下的样式,比如在鼠标悬浮或者图例联动高亮时
+                                                        label:{show:true}
+                                                    }
+                                                },
+                                                top:"3%",//组件距离容器的距离
+                                                data:[
+                                                    <c:forEach items="${provinces}" var="province">
+                                                    {
+                                                        <c:set var="flag" value="0"/>
+                                                        name: '${province.pname}',
+                                                        value:
+                                                        <c:forEach var="data" items="${orderData}">
+                                                        <c:if test="${province.pname eq data.pName}">
+                                                        ${data.orderNum}
+                                                        <c:set var="flag" value="1"/>
+                                                        </c:if>
+                                                        </c:forEach>
+                                                        <c:if test="${flag == 0}">
+                                                        0
+                                                        </c:if>
+                                                    },
+                                                    </c:forEach>
+                                                ]
+                                            }
+                                        ]
+                                    };
+                                    var myChart = echarts.init(document.getElementById('china-map'));
+                                    myChart.setOption(option);
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -215,38 +259,7 @@
 <script src="../../vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="../../vendors/fastclick/lib/fastclick.js"></script>
-<!-- NProgress -->
-<script src="../../vendors/nprogress/nprogress.js"></script>
-<!-- bootstrap-progressbar -->
-<script src="../../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-<!-- iCheck -->
-<script src="../../vendors/iCheck/icheck.min.js"></script>
-<!-- bootstrap-daterangepicker -->
-<script src="../../vendors/moment/min/moment.min.js"></script>
-<script src="../../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- bootstrap-wysiwyg -->
-<script src="../../vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-<script src="../../vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-<script src="../../vendors/google-code-prettify/src/prettify.js"></script>
-<!-- jQuery Tags Input -->
-<script src="../../vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-<!-- Switchery -->
-<script src="../../vendors/switchery/dist/switchery.min.js"></script>
-<!-- Select2 -->
-<script src="../../vendors/select2/dist/js/select2.full.min.js"></script>
-<!-- Parsley -->
-<script src="../../vendors/parsleyjs/dist/parsley.min.js"></script>
-<!-- Autosize -->
-<script src="../../vendors/autosize/dist/autosize.min.js"></script>
-<!-- jQuery autocomplete -->
-<script src="../../vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-<!-- starrr -->
-<script src="../../vendors/starrr/dist/starrr.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="../../build/js/custom.min.js"></script>
-
-
 </body>
 </html>

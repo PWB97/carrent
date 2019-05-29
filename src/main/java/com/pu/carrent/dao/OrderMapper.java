@@ -1,6 +1,7 @@
 package com.pu.carrent.dao;
 
 import com.pu.carrent.entity.Order;
+import com.pu.carrent.entity.OrderData;
 import com.pu.carrent.entityExample.OrderExample;
 import java.util.List;
 
@@ -44,4 +45,6 @@ public interface OrderMapper {
     List<Order> findRefunds();
 
     List<Order> findRefundsByUserId(Integer userId);
+
+    List<OrderData> findOrderDataByProvince();
 }
