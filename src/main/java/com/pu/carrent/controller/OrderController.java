@@ -95,10 +95,10 @@ public class OrderController {
         if (currentUser != null) {
             List<Order> orders = orderSerivce.findOrdersByUserId(currentUser.getUserid());
             List<CarDetail> carDetails = carDetailDao.findCarDetail();
-            int f = 0;
             CarDetail record;
             for (Order order : orders) {
                 record = order.getCarDetail();
+                int f = 0;
                 for (CarDetail carDetail : carDetails) {
                     if (order.getCarDetail().getCdid().equals(carDetail.getCdid())) {
                         record.setAccidentType(carDetail.getAccidentType());
