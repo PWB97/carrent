@@ -5,7 +5,6 @@ import com.pu.carrent.dao.ProvinceMapper;
 import com.pu.carrent.entity.City;
 import com.pu.carrent.entity.Province;
 import com.pu.carrent.entityExample.CityExample;
-import com.pu.carrent.service.CityService;
 import com.pu.carrent.service.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

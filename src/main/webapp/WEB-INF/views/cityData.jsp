@@ -44,8 +44,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                  <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..." class="img-circle profile_img">
+                        <img src="<c:if test="${userDetail.icon == 'true'}">../../images/user/${currentUser.userid}.JPG</c:if><c:if test="${userDetail.icon != 'true'}">../../images/user/user.JPG</c:if>" class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>欢迎,</span>
@@ -114,8 +113,7 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                          <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="">${currentUser.username}
+                                <img src="<c:if test="${userDetail.icon == 'true'}">../../images/user/${currentUser.userid}.JPG</c:if><c:if test="${userDetail.icon != 'true'}">../../images/user/user.JPG</c:if>" >${currentUser.username}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -162,13 +160,11 @@
                                             x: 'left',
                                             y: 'center',
                                             splitList: [
-                                                {start: 1500},
-                                                {start: 900, end: 1500},
-                                                {start: 310, end: 1000},
-                                                {start: 200, end: 300},
-                                                {start: 10, end: 200, label: '10 到 200（自定义label）'},
-                                                {start: 5, end: 5, label: '5（自定义特殊颜色）', color: 'black'},
-                                                {end: 10}
+                                                {start: 901},
+                                                {start: 601, end: 900},
+                                                {start: 301, end: 600},
+                                                {start: 101, end: 300},
+                                                {start: 1, end: 100}
                                             ],
                                             text:['高','低'],// 文本，默认为数值文本
                                             color: ['#E0022B', '#E09107', '#A3E00B']

@@ -60,9 +60,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                  <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..."
-                             class="img-circle profile_img">
+                        <img src="<c:if test="${userDetail.icon == 'true'}">../../images/user/${currentUser.userid}.JPG</c:if><c:if test="${userDetail.icon != 'true'}">../../images/user/user.JPG</c:if>" class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>欢迎,</span>
@@ -83,7 +81,7 @@
                                     <ul class="nav child_menu">
                                         <li><a href="<%=request.getContextPath() %>/rentCar">所有汽车</a></li>
                                         <li><a href="<%=request.getContextPath() %>/backManage/carsNotOnline">汽车上线审核</a>
-                                        </li>、
+                                        </li>
                                         <li><a href="<%=request.getContextPath() %>/findCarOnRent">在租汽车</a></li>
                                         <li>
                                             <a href="<%=request.getContextPath() %>/backManage/showCarConditions">添加条件</a>
@@ -164,9 +162,7 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                          <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>"
-                                     alt="">${currentUser.username}
+                                <img src="<c:if test="${userDetail.icon == 'true'}">../../images/user/${currentUser.userid}.JPG</c:if><c:if test="${userDetail.icon != 'true'}">../../images/user/user.JPG</c:if>">${currentUser.username}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -212,6 +208,15 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" id="level" name="level" required="required"
+                                                   class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="plate">车牌 <span
+                                                class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="plate" name="plate" required="required"
                                                    class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
@@ -296,7 +301,7 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">变速箱类型 <span
                                                 class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="eId">
+                                            <select class="form-control" name="gId">
                                                 <c:forEach var="gear" items="${gears}">
                                                     <option value="${gear.gearid}">${gear.gearname}</option>
                                                 </c:forEach>

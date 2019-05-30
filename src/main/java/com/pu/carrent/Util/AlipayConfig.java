@@ -8,9 +8,9 @@ public class AlipayConfig {
 
     public static String alipay_public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjCQyYcO+ZR4BYG6nnMcdoviWX0/ix8opiDe6oMtbx8YBo8KtoTGQhKHJf4LdfYV0U5xl8dRDdyySSTxbzJenSO5lUfEjaCadh1C+/7ljqVJCwd83KCS3fgbzcXTLeWBkwKl+ww2LgGJ6BW1D+NYxyTVyrZhp7YbQk9CdLsMcXzPIgiZhSWunXs3+OwTxW8gTj0cWpAZA3zzd++Yoha/wN1i/XB76mBWOOZ3saKDpgF7nEjLgIgNYwMb08hV17dGlNcyalW4JpXxwACYUFfNRLhBiGrmvzd9fYwrJWQZ3qaDwcgsDs7CEoLnneR2GrMeZPR38PJtGa5GHX9DsRsVNywIDAQAB";
 
-    public static String notify_url = "http://qgmh4c.natappfree.cc/notify_url";
+    public static String notify_url = "http://2yzd9y.natappfree.cc/notify_url";
 
-    public static String return_url = "http://qgmh4c.natappfree.cc/return_url";
+    public static String return_url = "http://2yzd9y.natappfree.cc/return_url";
 
     public static String sign_type = "RSA2";
 

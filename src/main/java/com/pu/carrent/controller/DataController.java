@@ -1,7 +1,6 @@
 package com.pu.carrent.controller;
 
 import com.pu.carrent.dao.CarDao;
-import com.pu.carrent.dao.UserDao;
 import com.pu.carrent.entity.OrderData;
 import com.pu.carrent.entity.Province;
 import com.pu.carrent.entity.User;

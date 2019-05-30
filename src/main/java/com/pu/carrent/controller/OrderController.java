@@ -58,7 +58,7 @@ public class OrderController {
             Order order = new Order();
             order.setCarid(cdId);
             order.setUserid(currentUser.getUserid());
-            DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
             Date end;
             int days;
             try {
@@ -72,12 +72,11 @@ public class OrderController {
                 days = day1 - day2 + 1;
                 order.setCreattime(start);
                 order.setEndtime(end);
-                CarDetail carDetail = new CarDetail();
+                CarDetail carDetail = carDetailService.findCarDetailById(cdId);
                 carDetail.setIsdeleted(days);
                 order.setTotalprice(new BigDecimal(price).multiply(new BigDecimal(days)));
                 order.setIspaid(0);
                 orderSerivce.addOrder(order);
-                carDetail.setCarid(cdId);
                 carDetailService.changeCarDetailById(carDetail);
             } catch (ParseException e) {
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -142,8 +141,6 @@ public class OrderController {
                     + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
             // 请求
             String result = alipayClient.pageExecute(alipayRequest).getBody();
-            // System.out.println(result);
-//            AlipayConfig.logResult(result);// 记录支付日志
             response.setContentType("text/html; charset=gbk");
             PrintWriter out = response.getWriter();
             out.print(result);
@@ -167,7 +164,7 @@ public class OrderController {
     }
 
     @RequestMapping("return_url")
-    public String Return_url() throws InterruptedException {
+    public String Return_url() {
         return "redirect:/orders";
     }
 
@@ -275,9 +272,10 @@ public class OrderController {
             object = (JSONObject)object.get("alipay_trade_refund_response");
             String msg = object.getString("msg");
             if ("Success".compareTo(msg) == 0) {
-                order.setOrderid(orderId);
-                order.setIspaid(2);
-                orderSerivce.changeOrder(order);
+                Order record = new Order();
+                record.setOrderid(orderId);
+                record.setIspaid(2);
+                orderSerivce.changeOrder(record);
                 model.addAttribute("msg", "完成");
                 return "fail";
             } else {

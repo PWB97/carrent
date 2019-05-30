@@ -33,6 +33,9 @@
     <link href="../../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="../../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="../../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <!-- Ion.RangeSlider -->
+    <link href="../../vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="../../vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="../../build/css/custom.min.css" rel="stylesheet">
@@ -52,9 +55,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                  <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..."
-                             class="img-circle profile_img">
+                        <img src="<c:if test="${userDetail.icon == 'true'}">../../images/user/${currentUser.userid}.JPG</c:if><c:if test="${userDetail.icon != 'true'}">../../images/user/user.JPG</c:if>" class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>欢迎,</span>
@@ -124,9 +125,7 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                          <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>"
-                                     alt="">${currentUser.username}
+                                <img src="<c:if test="${userDetail.icon == 'true'}">../../images/user/${currentUser.userid}.JPG</c:if><c:if test="${userDetail.icon != 'true'}">../../images/user/user.JPG</c:if>" >${currentUser.username}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -226,22 +225,9 @@
                                                 <h4 class="panel-title">选择价格区间</h4>
                                             </a>
                                             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
-                                                 aria-labelledby="headingFour">
+                                                 aria-labelledby="headingThree">
                                                 <div class="panel-body">
-                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                        <input name="lowPrice" type="text"
-                                                               class="form-control has-feedback-left" id="inputSuccess2"
-                                                               placeholder="请输入低价">
-                                                        <span class="fa fa-dollar form-control-feedback left"
-                                                              aria-hidden="true"></span>
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                        <input name="highPrice" type="text" class="form-control"
-                                                               id="inputSuccess3" placeholder="请输入高价">
-                                                        <span class="fa fa-dollar form-control-feedback right"
-                                                              aria-hidden="true"></span>
-                                                    </div>
-
+                                                    <input type="text" class="slider" name="price" value="" />
                                                 </div>
                                             </div>
                                         </div>
@@ -438,6 +424,8 @@
 <script src="../../vendors/jszip/dist/jszip.min.js"></script>
 <script src="../../vendors/pdfmake/build/pdfmake.min.js"></script>
 <script src="../../vendors/pdfmake/build/vfs_fonts.js"></script>
+<!-- Ion.RangeSlider -->
+<script src="../../vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="../../build/js/custom.js"></script>
@@ -477,6 +465,16 @@
     function chooseLocation() {
         $("#lInput").val($('#location option:selected').val());
     }
+</script>
+<script>
+    $(".slider").ionRangeSlider({
+        type: "double",
+        min: 0.00,
+        max: 1000.00,
+        from: 200.00,
+        to: 500.00,
+        grid: true
+    });
 </script>
 
 </body>

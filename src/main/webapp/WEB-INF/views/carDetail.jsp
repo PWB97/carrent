@@ -67,9 +67,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                  <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..."
-                             class="img-circle profile_img">
+                        <img src="<c:if test="${userDetail.icon == 'true'}">../../images/user/${currentUser.userid}.JPG</c:if><c:if test="${userDetail.icon != 'true'}">../../images/user/user.JPG</c:if>" class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>欢迎,</span>
@@ -171,9 +169,7 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                          <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>"
-                                     alt="">${currentUser.username}
+                                <img src="<c:if test="${userDetail.icon == 'true'}">../../images/user/${currentUser.userid}.JPG</c:if><c:if test="${userDetail.icon != 'true'}">../../images/user/user.JPG</c:if>">${currentUser.username}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -404,13 +400,13 @@
                                             <div class="col-md-6">
                                                 <h2>证件</h2>
                                                 <c:if test="${carDetail.lisence == 1}">
-                                                    <a href="../../files/lisence${carDetail.cdid}.docx">点击下载驾驶证</a>
+                                                    <a href="../../files/lisence${carDetail.cdid}.docx"><i class="fa fa-file-word-o"></i> 点击下载驾驶证</a>
                                                 </c:if>
                                             </div>
                                             <div class="col-md-6">
                                                 <h2>保养记录</h2>
                                                 <c:if test="${carDetail.fsfile == 1}">
-                                                    <a href="../../files/fsFile${carDetail.cdid}.docx">点击保养记录</a>
+                                                    <a href="../../files/fsFile${carDetail.cdid}.docx"><i class="fa fa-file-word-o"></i> 点击下载保养记录</a>
                                                 </c:if>
                                             </div>
                                         </div>

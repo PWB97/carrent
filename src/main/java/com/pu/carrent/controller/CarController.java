@@ -4,7 +4,6 @@ import com.pu.carrent.dao.CarDetailDao;
 import com.pu.carrent.dao.UserDao;
 import com.pu.carrent.entity.*;
 import com.pu.carrent.service.*;
-import org.hibernate.validator.cfg.defs.ISBNDef;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -67,7 +63,8 @@ public class CarController {
     private CarDetailDao carDetailDao;
 
     @RequestMapping(value = "/rentCar", method = RequestMethod.GET)
-    public String showCarsWithConditions(String carBrand, String carType, String province, String city, String location, String price, Model model, HttpSession session){
+    public String showCarsWithConditions(String carBrand, String carType, String province, String city, String location,
+                                         String price, Model model, HttpSession session){
 
         if (session.getAttribute("carTypes") == null) {
             List<CarType> carTypes = carTypeService.findAllCarType();
@@ -96,8 +93,8 @@ public class CarController {
         if (carType != null && "".compareTo(carType) != 0 && "请选择类型".compareTo(carType) != 0) typeId = Integer.parseInt(carType);
         if (price != null && "".compareTo(price) != 0 ) {
             String[] strings = price.split(";");
-            lp = new BigDecimal(strings[0]+".00");
-            hp = new BigDecimal(strings[1]+".00");
+            lp = new BigDecimal(strings[0] + ".00");
+            hp = new BigDecimal(strings[1] + ".00");
         }
         List<Car> cars = carService.findCarsWithConditions(typeId, brandId, pId, cId, lId, lp, hp);
         if (cars != null) {
@@ -201,15 +198,16 @@ public class CarController {
 
     @Transactional
     @RequestMapping(value = "/uploadCarDetail", method = RequestMethod.POST)
-    public String uploadCarDetail(Integer carId, String productYear, String level, Integer seats,
-                            Integer doors, Integer eId, Integer gId, String displacement,
-                            Integer drive, Integer upWindow, Integer radar, Integer gps,
-                            MultipartFile lisence, MultipartFile fsFile, HttpSession session, Model model) {
+    public String uploadCarDetail(Integer carId, String productYear, String level, String plate, Integer seats,
+                                  Integer doors, Integer eId, Integer gId, String displacement, Integer drive,
+                                  Integer upWindow, Integer radar, Integer gps, MultipartFile lisence,
+                                  MultipartFile fsFile, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             CarDetail carDetail = new CarDetail();
             if (productYear != null) carDetail.setProductyear(productYear);
             if (level != null) carDetail.setLevel(level);
+            if (plate != null) carDetail.setPlate(plate);
             if (seats != null) carDetail.setSeats(seats);
             if (doors != null) carDetail.setDoors(doors);
             if (eId != null) carDetail.setEnergyid(eId);
@@ -267,7 +265,7 @@ public class CarController {
                     return "fail";
                 }
                 try {
-                    if (times == null) times = 1;
+                    if (times == null || times == 6) times = 1;
                     else times += 1;
                     session.setAttribute("times", times);
                     String fileName = "" + times + ".jpg";

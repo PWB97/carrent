@@ -51,8 +51,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                  <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="..." class="img-circle profile_img">
+                        <img src="<c:if test="${userDetail.icon == 'true'}">../../images/user/${currentUser.userid}.JPG</c:if><c:if test="${userDetail.icon != 'true'}">../../images/user/user.JPG</c:if>" class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>欢迎,</span>
@@ -108,8 +107,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="<c:choose><c:when test="${userDetail.icon == 'true'}">/../../images/user/${currentUser.userid}.JPG</c:when>
-                                          <c:otherwise>/../../images/user/user.JPG</c:otherwise></c:choose>" alt="">${currentUser.username}
+                                <img src="<c:if test="${userDetail.icon == 'true'}">../../images/user/${currentUser.userid}.JPG</c:if><c:if test="${userDetail.icon != 'true'}">../../images/user/user.JPG</c:if>" >${currentUser.username}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -154,10 +152,13 @@
                                                 <c:if test="${carDetail.isonline==-1}">等待审核</c:if>
                                                 <c:if test="${carDetail.isonline==-2}">已被拒绝</c:if>
                                                 <c:if test="${carDetail.isonline==0}">审核通过，请到店办理</c:if>
+                                                <c:if test="${carDetail.isonline==1}">已上线</c:if>
                                             </td>
                                             <td>
                                                 <a type="button" class="btn btn-primary btn-xs" href="<%=request.getContextPath() %>/carDetail?carId=${carDetail.carid}&cdId=${carDetail.cdid}"><i class="fa fa-folder"></i> 查看</a>
+                                                <c:if test="${carDetail.isonline!=1}">
                                                 <a type="button" class="btn btn-danger btn-xs" href="<%=request.getContextPath() %>/DeleteMyUploadCar?cdId=${carDetail.cdid}"><i class="fa fa-trash-o"></i> 删除</a>
+                                                </c:if>
                                             </td>
                                         </tr>
                                     </c:forEach>
